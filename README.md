@@ -1,75 +1,44 @@
-# Nuxt 3 Minimal Starter
+# LikeMind
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+LikeMind is an open source app that aims to keep track of various companies and brands in an effort to associate relevant activities that they engage in.
+
+## Requirements
+
+- Node 18+
+- Docker
 
 ## Setup
 
-Make sure to install the dependencies:
-
+Setup your `.env` file with the necessary config:
 ```bash
-# npm
-npm install
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_USER=user
+POSTGRES_PASSWORD=password
+POSTGRES_DB=likemind
+```
 
-# pnpm
-pnpm install
-
-# yarn
+Install the dependencies:
+```bash
 yarn install
+```
 
-# bun
-bun install
+Create the docker image:
+```bash
+docker compose up
 ```
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Start the database on `http://localhost:5432` and the development server on `http://localhost:3000` in two separate terminals:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
+docker compose up
 yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+Single terminal development will be enabled once installs are more stable.
 
-Build the application for production:
+## Acknowledgements
 
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Special thanks to my sweet little babies for making my world so much brighter: Bobo, Noah, Yue, and Zym! <3
