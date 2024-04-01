@@ -22,3 +22,6 @@ logs
 .env
 .env.*
 !.env.example
+
+# postgres config
+db/data

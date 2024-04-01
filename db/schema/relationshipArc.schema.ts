@@ -1,0 +1,12 @@
+import { date, pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { relationship } from "./relationship.schema";
+import { entity } from "./entity.schema";
+
+export const relationshipArc = pgTable("relationship_arc", {
+    id: uuid("id").primaryKey().defaultRandom(),
+    relationshipId: uuid("relationship_id").notNull().references(() => relationship.id),
+    startEntityId: uuid("start_entity_id").notNull().references(() => entity.id),
+    endEntityId: uuid("end_entity_id").notNull().references(() => entity.id),
+    type: text("type").notNull(),
+    createdAt: date("created_at").notNull().defaultNow()
+})
