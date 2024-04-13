@@ -1,5 +1,5 @@
 {
-  "id": "4136c84f-858a-49d2-ad4a-af207b8b306b",
+  "id": "59f1fcb1-8b82-4304-917f-eb2d9ac234f5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -63,8 +63,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "entity_id": {
-          "name": "entity_id",
+        "evidence_id": {
+          "name": "evidence_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -92,12 +92,12 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "activity_evidence_entity_id_entity_id_fk": {
-          "name": "activity_evidence_entity_id_entity_id_fk",
+        "activity_evidence_evidence_id_evidence_id_fk": {
+          "name": "activity_evidence_evidence_id_evidence_id_fk",
           "tableFrom": "activity_evidence",
-          "tableTo": "entity",
+          "tableTo": "evidence",
           "columnsFrom": [
-            "entity_id"
+            "evidence_id"
           ],
           "columnsTo": [
             "id"
@@ -217,78 +217,6 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "community_subscription": {
-      "name": "community_subscription",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "community_id": {
-          "name": "community_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "community_subscription_user_id_user_id_fk": {
-          "name": "community_subscription_user_id_user_id_fk",
-          "tableFrom": "community_subscription",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "community_subscription_community_id_community_id_fk": {
-          "name": "community_subscription_community_id_community_id_fk",
-          "tableFrom": "community_subscription",
-          "tableTo": "community",
-          "columnsFrom": [
-            "community_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "community_subscription_user_id_community_id_unique": {
-          "name": "community_subscription_user_id_community_id_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "user_id",
-            "community_id"
-          ]
-        }
-      }
-    },
     "entity": {
       "name": "entity",
       "schema": "",
@@ -355,6 +283,78 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
+    "membership": {
+      "name": "membership",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "community_id": {
+          "name": "community_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "membership_user_id_user_id_fk": {
+          "name": "membership_user_id_user_id_fk",
+          "tableFrom": "membership",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "membership_community_id_community_id_fk": {
+          "name": "membership_community_id_community_id_fk",
+          "tableFrom": "membership",
+          "tableTo": "community",
+          "columnsFrom": [
+            "community_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "membership_user_id_community_id_unique": {
+          "name": "membership_user_id_community_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "user_id",
+            "community_id"
+          ]
+        }
+      }
+    },
     "involvement": {
       "name": "involvement",
       "schema": "",
@@ -378,6 +378,18 @@
           "primaryKey": false,
           "notNull": true
         },
+        "activity_id": {
+          "name": "activity_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "entity_id": {
+          "name": "entity_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
         "created_at": {
           "name": "created_at",
           "type": "date",
@@ -387,7 +399,34 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "involvement_activity_id_activity_id_fk": {
+          "name": "involvement_activity_id_activity_id_fk",
+          "tableFrom": "involvement",
+          "tableTo": "activity",
+          "columnsFrom": [
+            "activity_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "involvement_entity_id_entity_id_fk": {
+          "name": "involvement_entity_id_entity_id_fk",
+          "tableFrom": "involvement",
+          "tableTo": "entity",
+          "columnsFrom": [
+            "entity_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -401,6 +440,18 @@
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
+        },
+        "sentiment": {
+          "name": "sentiment",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "impact": {
+          "name": "impact",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
         },
         "involvement_id": {
           "name": "involvement_id",
@@ -592,8 +643,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "entity_id": {
-          "name": "entity_id",
+        "evidence_id": {
+          "name": "evidence_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -621,12 +672,12 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "relationship_evidence_entity_id_entity_id_fk": {
-          "name": "relationship_evidence_entity_id_entity_id_fk",
+        "relationship_evidence_evidence_id_evidence_id_fk": {
+          "name": "relationship_evidence_evidence_id_evidence_id_fk",
           "tableFrom": "relationship_evidence",
-          "tableTo": "entity",
+          "tableTo": "evidence",
           "columnsFrom": [
-            "entity_id"
+            "evidence_id"
           ],
           "columnsTo": [
             "id"
@@ -648,6 +699,12 @@
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
+        },
+        "significance": {
+          "name": "significance",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
         },
         "relationship_id": {
           "name": "relationship_id",

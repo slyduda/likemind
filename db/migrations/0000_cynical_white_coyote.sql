@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS "activity" (
 CREATE TABLE IF NOT EXISTS "activity_evidence" (
 	"id" uuid DEFAULT gen_random_uuid(),
 	"activity_id" uuid NOT NULL,
-	"entity_id" uuid NOT NULL,
+	"evidence_id" uuid NOT NULL,
 	"created_at" date DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
@@ -27,14 +27,6 @@ CREATE TABLE IF NOT EXISTS "community" (
 	"created_at" date DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "community_subscription" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"user_id" uuid NOT NULL,
-	"community_id" uuid NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL,
-	CONSTRAINT "community_subscription_user_id_community_id_unique" UNIQUE("user_id","community_id")
-);
---> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "entity" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
@@ -48,15 +40,27 @@ CREATE TABLE IF NOT EXISTS "evidence" (
 	"created_at" date DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "membership" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"user_id" uuid NOT NULL,
+	"community_id" uuid NOT NULL,
+	"created_at" date DEFAULT now() NOT NULL,
+	CONSTRAINT "membership_user_id_community_id_unique" UNIQUE("user_id","community_id")
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "involvement" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"source" text NOT NULL,
 	"description" text NOT NULL,
+	"activity_id" uuid NOT NULL,
+	"entity_id" uuid NOT NULL,
 	"created_at" date DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "involvement_review" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"sentiment" smallint NOT NULL,
+	"impact" smallint NOT NULL,
 	"involvement_id" uuid NOT NULL,
 	"user_id" uuid NOT NULL,
 	"created_at" date DEFAULT now() NOT NULL,
@@ -80,12 +84,13 @@ CREATE TABLE IF NOT EXISTS "relationship_arc" (
 CREATE TABLE IF NOT EXISTS "relationship_evidence" (
 	"id" uuid DEFAULT gen_random_uuid(),
 	"relationship_id" uuid NOT NULL,
-	"entity_id" uuid NOT NULL,
+	"evidence_id" uuid NOT NULL,
 	"created_at" date DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "relationship_review" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"significance" smallint NOT NULL,
 	"relationship_id" uuid NOT NULL,
 	"user_id" uuid NOT NULL,
 	"created_at" date DEFAULT now() NOT NULL,
@@ -112,7 +117,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "activity_evidence" ADD CONSTRAINT "activity_evidence_entity_id_entity_id_fk" FOREIGN KEY ("entity_id") REFERENCES "entity"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "activity_evidence" ADD CONSTRAINT "activity_evidence_evidence_id_evidence_id_fk" FOREIGN KEY ("evidence_id") REFERENCES "evidence"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -130,13 +135,25 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "community_subscription" ADD CONSTRAINT "community_subscription_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "membership" ADD CONSTRAINT "membership_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "community_subscription" ADD CONSTRAINT "community_subscription_community_id_community_id_fk" FOREIGN KEY ("community_id") REFERENCES "community"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "membership" ADD CONSTRAINT "membership_community_id_community_id_fk" FOREIGN KEY ("community_id") REFERENCES "community"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "involvement" ADD CONSTRAINT "involvement_activity_id_activity_id_fk" FOREIGN KEY ("activity_id") REFERENCES "activity"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "involvement" ADD CONSTRAINT "involvement_entity_id_entity_id_fk" FOREIGN KEY ("entity_id") REFERENCES "entity"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -178,7 +195,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "relationship_evidence" ADD CONSTRAINT "relationship_evidence_entity_id_entity_id_fk" FOREIGN KEY ("entity_id") REFERENCES "entity"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "relationship_evidence" ADD CONSTRAINT "relationship_evidence_evidence_id_evidence_id_fk" FOREIGN KEY ("evidence_id") REFERENCES "evidence"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

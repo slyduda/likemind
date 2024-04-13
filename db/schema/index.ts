@@ -2,7 +2,7 @@ export * from "./activity.schema";
 export * from "./activityEvidence.schema";
 export * from "./activityTag.schema";
 export * from "./community.schema";
-export * from "./communitySubscription.schema";
+export * from "./membership.schema";
 export * from "./entity.schema";
 export * from "./evidence.schema";
 export * from "./involvement.schema";

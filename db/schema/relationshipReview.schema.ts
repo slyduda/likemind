@@ -1,14 +1,38 @@
-import { date, pgTable, unique, uuid } from "drizzle-orm/pg-core";
+import { date, pgTable, smallint, unique, uuid } from "drizzle-orm/pg-core";
 import { relationship } from "./relationship.schema";
 import { user } from "./user.schema";
+import { relations } from "drizzle-orm";
 
-export const relationshipReview = pgTable("relationship_review", {
+export const relationshipReview = pgTable(
+  "relationship_review",
+  {
     id: uuid("id").primaryKey().defaultRandom(),
-    relationshipId: uuid("relationship_id").notNull().references(() => relationship.id),
-    userId: uuid("user_id").notNull().references(() => user.id),
-    createdAt: date("created_at").notNull().defaultNow()
-}, (table) => {
+    significance: smallint("significance").notNull(),
+    relationshipId: uuid("relationship_id")
+      .notNull()
+      .references(() => relationship.id),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => user.id),
+    createdAt: date("created_at").notNull().defaultNow(),
+  },
+  (table) => {
     return {
-        unq: unique().on(table.relationshipId, table.userId),
-    }
-})
+      unq: unique().on(table.relationshipId, table.userId),
+    };
+  }
+);
+
+export const relationshipReviewRelations = relations(
+  relationshipReview,
+  ({ one }) => ({
+    user: one(user, {
+      fields: [relationshipReview.userId],
+      references: [user.id],
+    }),
+    relationship: one(relationship, {
+      fields: [relationshipReview.relationshipId],
+      references: [relationship.id],
+    }),
+  })
+);
