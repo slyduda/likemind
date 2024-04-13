@@ -25,10 +25,12 @@ export const relationshipArcRelations = relations(relationshipArc, ({ one }) => 
   }),
   startEntities: one(entity, {
     fields: [relationshipArc.startEntityId],
-    references: [entity.id]
+    references: [entity.id],
+    relationName: "relationship_arc_start"
   }),
   endEntities: one(entity, {
     fields: [relationshipArc.endEntityId],
-    references: [entity.id]
+    references: [entity.id],
+    relationName: "relationship_arc_end"
   })
 }))

@@ -10,6 +10,5 @@ export const entity = pgTable("entity", {
 
 export const entityRelations = relations(entity, ({ many }) => ({
   involements: many(involvement),
-  startRelationshipArcs: many(relationshipArc),
-  endRelationshipArcs: many(relationshipArc),
+  relationshipArcs: many(relationshipArc),
 }));
