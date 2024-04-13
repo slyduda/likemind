@@ -17,8 +17,10 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.30.6",
+    "drizzle-valibot": "^0.2.0",
     "nuxt": "^3.11.1",
     "pg": "^8.11.4",
+    "valibot": "^0.30.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
     "zod": "^3.22.4"
