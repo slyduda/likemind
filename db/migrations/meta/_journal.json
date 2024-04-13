@@ -8,6 +8,20 @@
       "when": 1713030436505,
       "tag": "0000_sly_grey_coyote",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1713045589021,
+      "tag": "0001_big_robbie_robertson",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1713046164624,
+      "tag": "0002_slim_felicia_hardy",
+      "breakpoints": true
     }
   ]
 }

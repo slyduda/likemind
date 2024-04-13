@@ -6,7 +6,7 @@ import { relations } from "drizzle-orm";
 export const activityTag = pgTable(
   "activity_tag",
   {
-    id: uuid("id").defaultRandom(),
+    id: uuid("id").defaultRandom().unique(),
     activityId: uuid("activity_id")
       .notNull()
       .references(() => activity.id),
@@ -17,7 +17,6 @@ export const activityTag = pgTable(
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.activityId, table.tagId] }),
       pkWithCustomName: primaryKey({
         name: "key_id",
         columns: [table.activityId, table.tagId],
