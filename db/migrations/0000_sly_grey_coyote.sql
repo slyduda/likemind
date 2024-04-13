@@ -1,50 +1,50 @@
 CREATE TABLE IF NOT EXISTS "activity" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"description" text NOT NULL,
-	"started_at" date NOT NULL,
-	"ended_at" date,
-	"created_at" date DEFAULT now() NOT NULL
+	"started_at" timestamp NOT NULL,
+	"ended_at" timestamp,
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "activity_evidence" (
 	"id" uuid DEFAULT gen_random_uuid(),
 	"activity_id" uuid NOT NULL,
 	"evidence_id" uuid NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "activity_tag" (
 	"id" uuid DEFAULT gen_random_uuid(),
 	"activity_id" uuid NOT NULL,
 	"entity_id" uuid NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "activity_tag_activity_id_entity_id_pk" PRIMARY KEY("activity_id","entity_id")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "community" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "entity" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "evidence" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"source" text NOT NULL,
 	"description" text NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "membership" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"user_id" uuid NOT NULL,
 	"community_id" uuid NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "membership_user_id_community_id_unique" UNIQUE("user_id","community_id")
 );
 --> statement-breakpoint
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS "involvement" (
 	"description" text NOT NULL,
 	"activity_id" uuid NOT NULL,
 	"entity_id" uuid NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "involvement_review" (
@@ -63,13 +63,13 @@ CREATE TABLE IF NOT EXISTS "involvement_review" (
 	"impact" smallint NOT NULL,
 	"involvement_id" uuid NOT NULL,
 	"user_id" uuid NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "involvement_review_involvement_id_user_id_unique" UNIQUE("involvement_id","user_id")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "relationship" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "relationship_arc" (
@@ -78,14 +78,14 @@ CREATE TABLE IF NOT EXISTS "relationship_arc" (
 	"start_entity_id" uuid NOT NULL,
 	"end_entity_id" uuid NOT NULL,
 	"type" text NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "relationship_evidence" (
 	"id" uuid DEFAULT gen_random_uuid(),
 	"relationship_id" uuid NOT NULL,
 	"evidence_id" uuid NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "relationship_review" (
@@ -93,21 +93,21 @@ CREATE TABLE IF NOT EXISTS "relationship_review" (
 	"significance" smallint NOT NULL,
 	"relationship_id" uuid NOT NULL,
 	"user_id" uuid NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "relationship_review_relationship_id_user_id_unique" UNIQUE("relationship_id","user_id")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "tag" (
 	"id" uuid DEFAULT gen_random_uuid(),
 	"name" text PRIMARY KEY NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "tag_id_unique" UNIQUE("id")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "user" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"handle" text NOT NULL,
-	"created_at" date DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 DO $$ BEGIN

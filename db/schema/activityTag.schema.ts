@@ -1,4 +1,4 @@
-import { date, pgTable, primaryKey, uuid } from "drizzle-orm/pg-core";
+import { timestamp, pgTable, primaryKey, uuid } from "drizzle-orm/pg-core";
 import { activity } from "./activity.schema";
 import { tag } from "./tag.schema";
 import { relations } from "drizzle-orm";
@@ -13,7 +13,7 @@ export const activityTag = pgTable(
     tagId: uuid("entity_id")
       .notNull()
       .references(() => tag.id),
-    createdAt: date("created_at").notNull().defaultNow(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
   },
   (table) => {
     return {

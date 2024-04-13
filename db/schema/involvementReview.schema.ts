@@ -1,4 +1,4 @@
-import { date, pgTable, smallint, unique, uuid } from "drizzle-orm/pg-core";
+import { timestamp, pgTable, smallint, unique, uuid } from "drizzle-orm/pg-core";
 import { involvement } from "./involvement.schema";
 import { user } from "./user.schema";
 import { relations } from "drizzle-orm";
@@ -15,7 +15,7 @@ export const involvementReview = pgTable(
     userId: uuid("user_id")
       .notNull()
       .references(() => user.id),
-    createdAt: date("created_at").notNull().defaultNow(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
   },
   (table) => {
     return {

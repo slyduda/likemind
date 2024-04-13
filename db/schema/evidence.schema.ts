@@ -1,14 +1,15 @@
 import { relations } from "drizzle-orm";
-import { date, pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { timestamp, pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { activityEvidence, relationshipEvidence } from ".";
 
 export const evidence = pgTable("evidence", {
   id: uuid("id").primaryKey().defaultRandom(),
   source: text("source").notNull(),
   description: text("description").notNull(),
-  createdAt: date("created_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
 export const evidenceRelations = relations(evidence, ({ many }) => ({
-  activityEvidences: many(evidence),
-  relationshipEvidences: many(evidence),
+  activityEvidences: many(activityEvidence),
+  relationshipEvidences: many(relationshipEvidence),
 }));

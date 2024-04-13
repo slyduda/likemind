@@ -1,4 +1,4 @@
-import { date, pgTable, unique, uuid } from "drizzle-orm/pg-core";
+import { timestamp, pgTable, unique, uuid } from "drizzle-orm/pg-core";
 import { user } from "./user.schema";
 import { community } from "./community.schema";
 import { relations } from "drizzle-orm";
@@ -13,7 +13,7 @@ export const membership = pgTable(
     communityId: uuid("community_id")
       .notNull()
       .references(() => community.id),
-    createdAt: date("created_at").notNull().defaultNow(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
   },
   (table) => {
     return {

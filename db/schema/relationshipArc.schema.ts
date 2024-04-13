@@ -1,4 +1,4 @@
-import { date, pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { timestamp, pgTable, text, uuid } from "drizzle-orm/pg-core";
 import { relationship } from "./relationship.schema";
 import { entity } from "./entity.schema";
 import { relations } from "drizzle-orm";
@@ -15,7 +15,7 @@ export const relationshipArc = pgTable("relationship_arc", {
     .notNull()
     .references(() => entity.id),
   type: text("type").notNull(),
-  createdAt: date("created_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
 export const relationshipArcRelations = relations(relationshipArc, ({ one }) => ({
@@ -26,11 +26,11 @@ export const relationshipArcRelations = relations(relationshipArc, ({ one }) => 
   startEntities: one(entity, {
     fields: [relationshipArc.startEntityId],
     references: [entity.id],
-    relationName: "relationship_arc_start"
+    relationName: "relationship_arc_starts"
   }),
   endEntities: one(entity, {
     fields: [relationshipArc.endEntityId],
     references: [entity.id],
-    relationName: "relationship_arc_end"
+    relationName: "relationship_arc_ends"
   })
 }))
