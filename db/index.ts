@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/node-postgres";
-import { Client } from "pg";
+import pg from "pg";
 
-export const client = new Client({
+export const client = new pg.Client({
   host: process.env.POSTGRES_HOST,
   port: Number(process.env.POSTGRES_PORT),
   user: process.env.POSTGRES_USER,
@@ -9,6 +9,5 @@ export const client = new Client({
   database: process.env.POSTGRES_DB,
 });
 
-await client.connect();
-
+client.connect(); // TODO: Figure out if this NNEDS to be awaited
 export const db = drizzle(client);
