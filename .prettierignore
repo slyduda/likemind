@@ -1,0 +1,2 @@
+# Ignore all drizzle snapshots
+db/migrations/meta
