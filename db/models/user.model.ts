@@ -5,6 +5,7 @@ import { involvementReview, membership, relationshipReview } from ".";
 export const user = pgTable("user", {
   id: uuid("id").primaryKey().defaultRandom(),
   handle: text("handle").notNull(),
+  email: text("email").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   password: text("password").notNull(),
   isRegistered: boolean("is_registered").notNull().default(false),
