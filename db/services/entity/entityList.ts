@@ -1,5 +1,5 @@
-import { db } from "~/db";
-import { entity } from "~/db/schema";
+import { db } from "@/db";
+import { entity } from "@/db/models";
 
 export const entityList = async ({
   limit = 100,

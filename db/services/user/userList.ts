@@ -1,5 +1,5 @@
-import { db } from "~/db";
-import { user } from "~/db/schema";
+import { db } from "@/db";
+import { user } from "@/db/models";
 
 export const userList = async ({
   limit = 100,

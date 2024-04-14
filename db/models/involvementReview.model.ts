@@ -1,6 +1,11 @@
-import { timestamp, pgTable, smallint, unique, uuid } from "drizzle-orm/pg-core";
-import { involvement } from "./involvement.schema";
-import { user } from "./user.schema";
+import {
+  timestamp,
+  pgTable,
+  smallint,
+  unique,
+  uuid,
+} from "drizzle-orm/pg-core";
+import { user, involvement } from ".";
 import { relations } from "drizzle-orm";
 
 export const involvementReview = pgTable(

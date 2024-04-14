@@ -1,6 +1,5 @@
 import { timestamp, pgTable, uuid } from "drizzle-orm/pg-core";
-import { relationship } from "./relationship.schema";
-import { evidence } from "./evidence.schema";
+import { relationship, evidence } from ".";
 import { relations } from "drizzle-orm";
 
 export const relationshipEvidence = pgTable("relationship_evidence", {

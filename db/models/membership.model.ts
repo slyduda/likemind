@@ -1,6 +1,5 @@
 import { timestamp, pgTable, unique, uuid } from "drizzle-orm/pg-core";
-import { user } from "./user.schema";
-import { community } from "./community.schema";
+import { user, community } from ".";
 import { relations } from "drizzle-orm";
 
 export const membership = pgTable(

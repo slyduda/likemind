@@ -1,6 +1,5 @@
 import { timestamp, pgTable, primaryKey, uuid } from "drizzle-orm/pg-core";
-import { activity } from "./activity.schema";
-import { tag } from "./tag.schema";
+import { activity, tag } from ".";
 import { relations } from "drizzle-orm";
 
 export const activityTag = pgTable(

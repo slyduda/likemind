@@ -1,6 +1,11 @@
-import { timestamp, pgTable, smallint, unique, uuid } from "drizzle-orm/pg-core";
-import { activity } from "./activity.schema";
-import { user } from "./user.schema";
+import {
+  timestamp,
+  pgTable,
+  smallint,
+  unique,
+  uuid,
+} from "drizzle-orm/pg-core";
+import { activity, user } from ".";
 import { relations } from "drizzle-orm";
 
 export const activityReview = pgTable(
@@ -23,16 +28,13 @@ export const activityReview = pgTable(
   }
 );
 
-export const activityReviewRelations = relations(
-  activityReview,
-  ({ one }) => ({
-    activity: one(activity, {
-      fields: [activityReview.activityId],
-      references: [activity.id],
-    }),
-    user: one(user, {
-      fields: [activityReview.userId],
-      references: [user.id],
-    }),
-  })
-);
+export const activityReviewRelations = relations(activityReview, ({ one }) => ({
+  activity: one(activity, {
+    fields: [activityReview.activityId],
+    references: [activity.id],
+  }),
+  user: one(user, {
+    fields: [activityReview.userId],
+    references: [user.id],
+  }),
+}));

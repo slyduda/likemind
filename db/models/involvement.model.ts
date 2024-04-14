@@ -1,6 +1,5 @@
 import { timestamp, pgTable, text, uuid } from "drizzle-orm/pg-core";
-import { activity } from "./activity.schema";
-import { entity } from ".";
+import { entity, activity } from ".";
 import { relations } from "drizzle-orm";
 
 export const involvement = pgTable("involvement", {
