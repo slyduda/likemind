@@ -25,3 +25,6 @@ logs
 
 # postgres config
 db/data
+
+# Editor
+.vscode
