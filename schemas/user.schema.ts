@@ -33,4 +33,4 @@ export const userReadSchema = object({
   email: userEmailSchema,
   handle: userHandleSchema,
 });
-export type UserReadSchema = Input<typeof userReadSchema>;
+export type UserReadSchema = Output<typeof userReadSchema>;
