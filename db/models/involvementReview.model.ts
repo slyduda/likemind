@@ -26,7 +26,7 @@ export const involvementReview = pgTable(
     return {
       unq: unique().on(table.involvementId, table.userId),
     };
-  }
+  },
 );
 
 export const involvementReviewRelations = relations(
@@ -40,5 +40,5 @@ export const involvementReviewRelations = relations(
       fields: [involvementReview.userId],
       references: [user.id],
     }),
-  })
+  }),
 );

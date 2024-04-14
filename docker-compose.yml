@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   postgres:
     image: postgres
@@ -13,8 +13,8 @@ services:
       - "5432:5432"
 
   # nuxt:
-    # build: .
-    # depends_on:
-      # - postgres
-    # ports:
-      # - "3000:3000"
+  # build: .
+  # depends_on:
+  # - postgres
+  # ports:
+  # - "3000:3000"

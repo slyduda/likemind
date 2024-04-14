@@ -21,7 +21,7 @@ export const activityTag = pgTable(
         columns: [table.activityId, table.tagId],
       }),
     };
-  }
+  },
 );
 
 export const activityTagRelations = relations(activityTag, ({ one }) => ({

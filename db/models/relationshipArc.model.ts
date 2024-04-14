@@ -34,5 +34,5 @@ export const relationshipArcRelations = relations(
       references: [entity.id],
       relationName: "relationship_arc_ends",
     }),
-  })
+  }),
 );

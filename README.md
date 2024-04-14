@@ -10,6 +10,7 @@ LikeMind is an open source app that aims to keep track of various companies and 
 ## Setup
 
 Setup your `.env` file with the necessary config:
+
 ```bash
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
@@ -19,11 +20,13 @@ POSTGRES_DB=likemind
 ```
 
 Install the dependencies:
+
 ```bash
 yarn install
 ```
 
 Create the docker image:
+
 ```bash
 docker compose up
 ```

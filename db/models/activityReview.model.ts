@@ -25,7 +25,7 @@ export const activityReview = pgTable(
     return {
       unq: unique().on(table.activityId, table.userId),
     };
-  }
+  },
 );
 
 export const activityReviewRelations = relations(activityReview, ({ one }) => ({

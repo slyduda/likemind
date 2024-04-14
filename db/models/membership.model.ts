@@ -18,7 +18,7 @@ export const membership = pgTable(
     return {
       unq: unique().on(table.userId, table.communityId),
     };
-  }
+  },
 );
 
 export const membershipRelations = relations(membership, ({ one }) => ({

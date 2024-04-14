@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
     "migrate:generate": "drizzle-kit generate:pg",
     "migrate:push": "drizzle-kit push:pg",
     "studio": "drizzle-kit studio --port 5000 --verbose",
@@ -36,8 +37,11 @@
     "@vue/test-utils": "^2.4.5",
     "drizzle-kit": "^0.20.14",
     "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
     "happy-dom": "^14.7.1",
     "playwright-core": "^1.43.1",
+    "prettier": "^3.2.5",
     "typescript": "^5.4.5",
     "vitest": "^1.5.0"
   }

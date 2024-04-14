@@ -6,7 +6,7 @@ export const envSchema = object({
   POSTGRES_USER: string(),
   POSTGRES_PASSWORD: string(),
   POSTGRES_DB: string(),
-  BCRYPT_SALT: string()
+  BCRYPT_SALT: string(),
 });
 
 parse(envSchema, process.env);

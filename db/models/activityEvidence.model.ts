@@ -24,5 +24,5 @@ export const activityEvidenceRelations = relations(
       fields: [activityEvidence.activityId],
       references: [activity.id],
     }),
-  })
+  }),
 );

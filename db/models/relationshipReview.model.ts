@@ -25,7 +25,7 @@ export const relationshipReview = pgTable(
     return {
       unq: unique().on(table.relationshipId, table.userId),
     };
-  }
+  },
 );
 
 export const relationshipReviewRelations = relations(
@@ -39,5 +39,5 @@ export const relationshipReviewRelations = relations(
       fields: [relationshipReview.relationshipId],
       references: [relationship.id],
     }),
-  })
+  }),
 );

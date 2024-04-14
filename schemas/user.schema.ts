@@ -22,7 +22,7 @@ export const userCreateSchema = transform(
     handle: userHandleSchema,
     password: userPasswordTransformer,
   }),
-  (input) => input
+  (input) => input,
 );
 export type UserCreateInputSchema = Input<typeof userCreateSchema>;
 export type UserCreateOutputSchema = Output<typeof userCreateSchema>;
