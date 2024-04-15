@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="font-bold h-full">
     {{ data }}
   </div>
 </template>
