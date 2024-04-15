@@ -2,6 +2,7 @@ import {
   UserCreateInputSchema,
   UserReadSchema,
   userCreateSchema,
+  userReadSchema,
 } from "@/schemas/user.schema";
 import { parse } from "valibot";
 import { userInsert } from "@/db/services";
@@ -19,5 +20,6 @@ export default defineEventHandler<
   const newUser = await userInsert(user);
   if (!newUser) throw Error("Error creating the user");
 
-  return newUser;
+  const userRead = parse(userReadSchema, newUser)
+  return userRead;
 });
