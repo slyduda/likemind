@@ -1,5 +1,7 @@
 # LikeMind
 
+![Node.js CI](https://github.com/slyduda/likemind/actions/workflows/main.yml/badge.svg)
+
 LikeMind is an open source app that aims to keep track of various companies and brands in an effort to associate relevant activities that they engage in.
 
 ## Requirements
@@ -17,6 +19,7 @@ POSTGRES_PORT=5432
 POSTGRES_USER=user
 POSTGRES_PASSWORD=password
 POSTGRES_DB=likemind
+BCRYPT_SALT=random
 ```
 
 Install the dependencies:
