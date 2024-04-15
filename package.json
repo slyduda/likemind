@@ -10,7 +10,8 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier . --write",
+    "format": "prettier . --check",
+    "format:fix": "prettier . --write",
     "migrate:generate": "drizzle-kit generate:pg",
     "migrate:push": "drizzle-kit push:pg",
     "studio": "drizzle-kit studio --port 5000 --verbose",
@@ -50,7 +51,7 @@
     "typescript": "^5.4.5",
     "vitest": "^1.5.0"
   },
-  "prepare": "npx husky-init && npx husky set .husky/pre-commit 'yarn test' && npx husky add .husky/pre-commit 'yarn lint-staged' && yarn",
+  "prepare": "npx husky-init && npx husky set .husky/pre-commit 'yarn lint-staged' && npx husky set .husky/pre-push 'yarn test' && yarn",
   "lint-staged": {
     "./*.{js,ts,vue}": [
       "yarn lint:fix",
