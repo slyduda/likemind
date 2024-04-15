@@ -11,5 +11,5 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: ["prettier-plugin-tailwindcss"],
+  plugins: [],
 };
