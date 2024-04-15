@@ -44,10 +44,18 @@
     "eslint-plugin-unused-imports": "^3.1.0",
     "happy-dom": "^14.7.1",
     "husky": "^8.0.0",
+    "lint-staged": "^15.2.2",
     "playwright-core": "^1.43.1",
     "prettier": "^3.2.5",
     "typescript": "^5.4.5",
     "vitest": "^1.5.0"
   },
-  "prepare": "husky install"
+  "prepare": "npx husky-init && npx husky set .husky/pre-commit 'lint-staged' && yarn",
+  "lint-staged": {
+    "./*.{js,ts,vue}": [
+      "yarn lint:fix",
+      "yarn format:fix",
+      "git add"
+    ]
+  }
 }
