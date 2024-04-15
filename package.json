@@ -50,12 +50,11 @@
     "typescript": "^5.4.5",
     "vitest": "^1.5.0"
   },
-  "prepare": "npx husky-init && npx husky set .husky/pre-commit 'lint-staged' && yarn",
+  "prepare": "npx husky-init && npx husky set .husky/pre-commit 'yarn test' && npx husky add .husky/pre-commit 'yarn lint-staged' && yarn",
   "lint-staged": {
     "./*.{js,ts,vue}": [
       "yarn lint:fix",
-      "yarn format:fix",
-      "git add"
+      "yarn format:fix"
     ]
   }
 }
