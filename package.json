@@ -14,7 +14,8 @@
     "migrate:generate": "drizzle-kit generate:pg",
     "migrate:push": "drizzle-kit push:pg",
     "studio": "drizzle-kit studio --port 5000 --verbose",
-    
+    "test": "vitest run",
+    "test:watch": "vitest",
     "coverage": "vitest run --coverage",
     "prepare": "husky install"
   },
@@ -47,11 +48,6 @@
     "prettier": "^3.2.5",
     "typescript": "^5.4.5",
     "vitest": "^1.5.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "echo ”[Husky] pre-commit”"
-    }
   },
   "prepare": "husky install"
 }
