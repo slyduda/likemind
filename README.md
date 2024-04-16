@@ -19,6 +19,7 @@ POSTGRES_PORT=5432
 POSTGRES_USER=user
 POSTGRES_PASSWORD=password
 POSTGRES_DB=likemind
+JWT_SECRET=secret
 ```
 
 Install the dependencies:

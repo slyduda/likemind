@@ -3,5 +3,5 @@ import { user, type UserInsert } from "@/db/models";
 
 export const userInsert = async (userInsert: UserInsert) => {
   const users = await db.insert(user).values(userInsert).returning();
-  return users ? users[0] : null;
+  return users.length ? users[0] : null;
 };

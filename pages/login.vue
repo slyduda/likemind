@@ -65,7 +65,7 @@ const makeRequests = async () => {
 };
 
 const postLogin = async () => {
-  await $fetch("/login", {
+  await $fetch("/api/login", {
     method: "POST",
     body,
   })
