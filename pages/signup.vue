@@ -1,23 +1,55 @@
 <template>
-  <div class="w-full h-full flex items-center justify-center">
+  <div class="flex h-full w-full items-center justify-center">
     <AppContent>
-      <div class="mb-4 w-full flex justify-center flex-col items-center">
-        <h1 class="text-2xl font-semibold archivo">
-          Signup
-        </h1>
+      <div class="mb-4 flex w-full flex-col items-center justify-center">
+        <h1 class="archivo text-2xl font-semibold">Signup</h1>
       </div>
-      <BaseInput v-model="body.email" class="mb-4" name="email" label="Email" type="email" required
-        placeholder="example@email.com" border :rounded="'xl'" />
-      <BaseInput v-model="body.handle" class="mb-4" name="handle" label="Handle" required placeholder="handle" border
-        :rounded="'xl'" />
-      <BaseInput v-model="body.password" class="mb-4" name="password" label="Password" type="password" required
-        placeholder="password" border :rounded="'xl'" />
-      <BaseButton :pending="pending" :disabled="disabled" class="mt-2 bg-blue-500 text-indigo-50 w-full"
-        @click="makeRequests">
+      <BaseInput
+        v-model="body.email"
+        class="mb-4"
+        name="email"
+        label="Email"
+        type="email"
+        required
+        placeholder="example@email.com"
+        border
+        :rounded="'xl'"
+      />
+      <BaseInput
+        v-model="body.handle"
+        class="mb-4"
+        name="handle"
+        label="Handle"
+        required
+        placeholder="handle"
+        border
+        :rounded="'xl'"
+      />
+      <BaseInput
+        v-model="body.password"
+        class="mb-4"
+        name="password"
+        label="Password"
+        type="password"
+        required
+        placeholder="password"
+        border
+        :rounded="'xl'"
+      />
+      <BaseButton
+        :pending="pending"
+        :disabled="disabled"
+        class="mt-2 w-full bg-blue-500 text-indigo-50"
+        @click="makeRequests"
+      >
         Signup
       </BaseButton>
-      <div class="flex justify-center items-center">
-        <NuxtLink to="/login" class="text-blue-500  font-bold mt-4 underline archivo">Login</NuxtLink>
+      <div class="flex items-center justify-center">
+        <NuxtLink
+          to="/login"
+          class="archivo mt-4 font-bold text-blue-500 underline"
+          >Login</NuxtLink
+        >
       </div>
     </AppContent>
   </div>
@@ -28,29 +60,31 @@ const body = reactive({
   email: "",
   handle: "",
   password: "",
-})
+});
 const headers = reactive({
-  authorization: ""
-})
+  authorization: "",
+});
 
-const pending = ref(false)
-const disabled = computed(() => !body.email || !body.password || !body.handle)
+const pending = ref(false);
+const disabled = computed(() => !body.email || !body.password || !body.handle);
 
 const makeRequests = async () => {
-  pending.value = true
-  await postUsersSignup()
-  pending.value = false
-}
+  pending.value = true;
+  await postUsersSignup();
+  pending.value = false;
+};
 
 const postUsersSignup = async () => {
   await $fetch("/api/users", {
     method: "POST",
     headers,
     body,
-  }).then(() => {
-    alert("success!")
-  }).catch(() => {
-    alert("failure!")
   })
-}
+    .then(() => {
+      alert("success!");
+    })
+    .catch(() => {
+      alert("failure!");
+    });
+};
 </script>
