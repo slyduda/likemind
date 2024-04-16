@@ -1,13 +1,10 @@
 <template>
   <div class="w-full h-full flex items-center justify-center">
-    <BaseModal>
+    <AppContent>
       <div class="mb-4 w-full flex justify-center flex-col items-center">
         <h1 class="text-2xl font-semibold archivo">
           Signup
         </h1>
-        <div>Already have an account?<NuxtLink to="/pilots/login" class="text-indigo-500 font-bold ml-1 underline">Login
-          </NuxtLink>
-        </div>
       </div>
       <BaseInput v-model="body.email" class="mb-4" name="email" label="Email" type="email" required
         placeholder="example@email.com" border :rounded="'xl'" />
@@ -19,8 +16,10 @@
         @click="makeRequests">
         Signup
       </BaseButton>
-      <NuxtLink to="/pilots/signup" class="text-blue-500 font-bold mt-4 underline archivo">Login</NuxtLink>
-    </BaseModal>
+      <div class="flex justify-center items-center">
+        <NuxtLink to="/login" class="text-blue-500 font-bold mt-4 underline archivo">Login</NuxtLink>
+      </div>
+    </AppContent>
   </div>
 </template>
 
