@@ -17,7 +17,7 @@
         Signup
       </BaseButton>
       <div class="flex justify-center items-center">
-        <NuxtLink to="/login" class="text-blue-500 font-bold mt-4 underline archivo">Login</NuxtLink>
+        <NuxtLink to="/login" class="text-blue-500  font-bold mt-4 underline archivo">Login</NuxtLink>
       </div>
     </AppContent>
   </div>
