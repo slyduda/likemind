@@ -17,3 +17,6 @@ export const entityRelations = relations(entity, ({ many }) => ({
     relationName: "relationship_arc_ends",
   }),
 }));
+
+export type EntityInsert = typeof entity.$inferInsert;
+export type EntitySelect = typeof entity.$inferSelect;

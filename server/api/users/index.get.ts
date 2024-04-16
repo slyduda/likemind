@@ -7,11 +7,11 @@ export default defineEventHandler(async (event) => {
   const id = event.context.user;
   if (!id) throw Error("You are not authenticated");
 
+  // Fetch the user from the database
   const user = await userById({ id });
-
   if (!user) throw Error("Invalid JWT");
 
+  // Parse and return
   const parsedUser = parse(userReadSchema, user);
-
   return parsedUser;
 });

@@ -1,0 +1,29 @@
+import { parse } from "valibot";
+import { entityInsert } from "~/db/services/entity/entityInsert";
+import {
+  EntityCreateInputSchema,
+  EntityReadSchema,
+  entityCreateSchema,
+  entityReadSchema,
+} from "~/schemas/entity.schema";
+
+export default defineEventHandler<
+  { body: EntityCreateInputSchema },
+  Promise<EntityReadSchema>
+>(async (event) => {
+  // Get the context from our middleware
+  const id = event.context.user;
+  if (!id) throw Error("You are not authenticated");
+
+  // Get the body and validate
+  const body = await readBody(event);
+  const entity = parse(entityCreateSchema, body);
+
+  // Do the insert on the db
+  const newEntity = await entityInsert(entity);
+  if (!newEntity) throw Error("Invalid JWT");
+
+  // Parse and return
+  const paredEntity = parse(entityReadSchema, newEntity);
+  return paredEntity;
+});

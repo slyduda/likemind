@@ -20,6 +20,7 @@ export default defineEventHandler<
   const newUser = await userInsert(user);
   if (!newUser) throw Error("Error creating the user");
 
+  // Parse and return
   const userRead = parse(userReadSchema, newUser);
   return userRead;
 });
