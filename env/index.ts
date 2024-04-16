@@ -15,3 +15,5 @@ declare global {
     interface ProcessEnv extends Input<typeof envSchema> {}
   }
 }
+
+export default {};
