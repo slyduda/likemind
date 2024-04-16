@@ -1,3 +1,3 @@
 <template>
-  <div></div>
+  <div class="flex font-bold">Hi</div>
 </template>

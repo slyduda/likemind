@@ -61,9 +61,9 @@
   },
   "prepare": "npx husky-init && npx husky set .husky/pre-commit 'yarn lint-staged' && npx husky add .husky/commit-msg 'npx commitlint --edit $1' && npx husky set .husky/pre-push 'yarn test' && yarn",
   "lint-staged": {
-    "./*.{js,ts,vue}": [
-      "yarn lint:fix",
-      "yarn format:fix"
+    "*.{js,ts,vue}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   }
 }
