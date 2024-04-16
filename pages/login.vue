@@ -2,7 +2,7 @@
   <div class="flex h-full w-full items-center justify-center">
     <AppContent>
       <div class="mb-4 flex w-full flex-col items-center justify-center">
-        <h1 class="archivo text-2xl font-semibold">Signup</h1>
+        <h1 class="archivo text-2xl font-semibold">Login</h1>
       </div>
       <BaseInput
         v-model="body.email"
@@ -12,16 +12,6 @@
         type="email"
         required
         placeholder="example@email.com"
-        border
-        :rounded="'xl'"
-      />
-      <BaseInput
-        v-model="body.handle"
-        class="mb-4"
-        name="handle"
-        label="Handle"
-        required
-        placeholder="handle"
         border
         :rounded="'xl'"
       />
@@ -36,7 +26,6 @@
         border
         :rounded="'xl'"
       />
-
       <div class="flex flex-col items-center justify-center">
         <BaseButton
           :pending="pending"
@@ -44,14 +33,13 @@
           class="mt-2 w-full bg-blue-500 text-indigo-50"
           @click="makeRequests"
         >
-          Signup
+          Login
         </BaseButton>
         <NuxtLink
-          to="/login"
+          to="/signup"
           class="archivo mt-4 font-bold text-blue-500 underline"
+          >Signup</NuxtLink
         >
-          Login
-        </NuxtLink>
       </div>
     </AppContent>
   </div>
@@ -60,21 +48,24 @@
 <script setup lang="ts">
 const body = reactive({
   email: "",
-  handle: "",
   password: "",
 });
 
 const pending = ref(false);
-const disabled = computed(() => !body.email || !body.password || !body.handle);
+const disabled = computed(() => !body.email || !body.password);
 
 const makeRequests = async () => {
+  if (disabled.value) return;
   pending.value = true;
-  await postUsersSignup();
+
+  // Call the login and grab the token
+  await postLogin();
+
   pending.value = false;
 };
 
-const postUsersSignup = async () => {
-  await $fetch("/api/users", {
+const postLogin = async () => {
+  await $fetch("/login", {
     method: "POST",
     body,
   })
