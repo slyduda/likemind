@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
-  modules: ["@nuxt/test-utils/module"],
+  modules: ["@nuxt/test-utils/module", "@vueuse/nuxt"],
   postcss: {
     plugins: {
       tailwindcss: {},
