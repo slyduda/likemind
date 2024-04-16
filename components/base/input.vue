@@ -29,6 +29,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   valid: null,
   required: false,
+  type: undefined,
   name: "",
   label: "",
   grow: false,
