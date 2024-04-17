@@ -18,9 +18,9 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - name: Set Node.js Environment Variable
-        run: echo "NODE_ENV=production" >> $GITHUB_ENV
-      
+      # - name: Set Node.js Environment Variable
+      #   run: echo "NODE_ENV=production" >> $GITHUB_ENV
+
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v2.0
         with:
@@ -31,7 +31,29 @@ jobs:
           envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
           fail_on_empty: True
           file_name: .env.production
-        
+
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          envkey_POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
+          envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          fail_on_empty: True
+          file_name: .env.test
+
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          envkey_POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
+          envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          fail_on_empty: True
+          file_name: .env
+
       - name: Print contents of .env file
         run: cat .env.production
 
