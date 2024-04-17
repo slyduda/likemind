@@ -9,7 +9,7 @@ export const envSchema = object({
   JWT_SECRET: string(),
 });
 
-export const parsedProcess = parse(envSchema, process.env);
+export const processEnv = parse(envSchema, process.env);
 
 declare global {
   namespace NodeJS {
