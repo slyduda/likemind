@@ -16,9 +16,9 @@ Setup your `.env` file with the necessary config:
 ```bash
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
-POSTGRES_USER=user
+POSTGRES_USER=default
 POSTGRES_PASSWORD=password
-POSTGRES_DB=likemind
+POSTGRES_DATABASE=likemind_db
 JWT_SECRET=secret
 ```
 

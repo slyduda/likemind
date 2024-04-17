@@ -4,10 +4,10 @@ import { processEnv } from "~/env";
 
 export const client = new pg.Client({
   host: processEnv.POSTGRES_HOST,
-  port: Number(processEnv.POSTGRES_PORT),
+  port: processEnv.POSTGRES_PORT,
   user: processEnv.POSTGRES_USER,
   password: processEnv.POSTGRES_PASSWORD,
-  database: processEnv.POSTGRES_DB,
+  database: processEnv.POSTGRES_DATABASE,
 });
 
 client.connect(); // TODO: Figure out if this NNEDS to be awaited
