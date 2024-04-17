@@ -8,6 +8,7 @@ export const client = new pg.Client({
   user: processEnv.POSTGRES_USER,
   password: processEnv.POSTGRES_PASSWORD,
   database: processEnv.POSTGRES_DATABASE,
+  ssl: process.env.NODE_ENV == "development" ? false : true,
 });
 
 client.connect(); // TODO: Figure out if this NNEDS to be awaited
