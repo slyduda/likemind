@@ -1,10 +1,10 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Build CI
+name: Pull Request CI
 
 on:
-  push:
+  pull_request:
     branches: ["main"]
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Set Node.js Environment Variable
         run: echo "NODE_ENV=test" >> $GITHUB_ENV
-      
+
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v2.0
         with:
@@ -40,4 +40,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
       - run: yarn
+      - run: yarn lint
+      - run: yarn format
       - run: yarn test
