@@ -9,6 +9,7 @@ import {
 import "dotenv/config";
 
 export const envSchema = object({
+  POSTGRES_URL: string(),
   POSTGRES_HOST: string(),
   POSTGRES_PORT: transform(optional(string(), "5432"), (input) =>
     Number(input),

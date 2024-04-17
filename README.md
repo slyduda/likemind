@@ -14,6 +14,7 @@ LikeMind is an open source app that aims to keep track of various companies and 
 Setup your `.env` file with the necessary config:
 
 ```bash
+POSTGRES_URL=postgres://default:password@localhost:5432/likemind_db
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_USER=default
