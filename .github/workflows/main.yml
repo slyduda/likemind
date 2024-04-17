@@ -10,8 +10,13 @@ on:
     branches: ["main"]
 
 jobs:
-  create-envfile:
+  build:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - name: Make envfile
@@ -25,15 +30,6 @@ jobs:
           envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
           file_name: .env.test
 
-  build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [20.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-    steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
