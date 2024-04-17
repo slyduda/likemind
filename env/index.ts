@@ -6,9 +6,10 @@ export const envSchema = object({
   POSTGRES_USER: string(),
   POSTGRES_PASSWORD: string(),
   POSTGRES_DB: string(),
+  JWT_SECRET: string(),
 });
 
-parse(envSchema, process.env);
+export const parsedProcess = parse(envSchema, process.env);
 
 declare global {
   namespace NodeJS {
