@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { processEnv } from "./env";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
