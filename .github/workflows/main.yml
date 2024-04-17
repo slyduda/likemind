@@ -29,7 +29,7 @@ jobs:
           envkey_POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
           envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
           fail_on_empty: True
-          file_name: .env.production
+          file_name: .env
 
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
