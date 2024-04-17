@@ -29,7 +29,7 @@ jobs:
           envkey_POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
           envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
           fail_on_empty: True
-          file_name: .env.test
+          file_name: .env.production
 
       - name: Check .env.test file
         run: cat .env.test
