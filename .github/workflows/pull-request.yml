@@ -25,7 +25,6 @@ jobs:
         uses: SpicyPizza/create-envfile@v2.0
         with:
           envkey_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          envkey_POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
           envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
           envkey_POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
