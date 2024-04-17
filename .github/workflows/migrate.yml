@@ -32,6 +32,9 @@ jobs:
           envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
           fail_on_empty: True
           file_name: .env.production
+        
+      - name: Print contents of .env file
+        run: cat .env.production
 
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
