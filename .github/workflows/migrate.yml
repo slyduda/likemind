@@ -36,7 +36,7 @@ jobs:
         run: cat .env.production
 
       - name: Print the permissions
-        run: ls -l .env.production
+        run: sudo chown -R $(id -u):$(id -g) .env.production
 
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
