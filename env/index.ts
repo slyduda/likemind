@@ -6,6 +6,7 @@ import {
   transform,
   safeParse,
 } from "valibot";
+import "dotenv/config";
 
 export const envSchema = object({
   POSTGRES_HOST: string(),
