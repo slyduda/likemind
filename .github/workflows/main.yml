@@ -31,9 +31,6 @@ jobs:
           fail_on_empty: True
           file_name: .env.production
 
-      - name: Check .env.test file
-        run: cat .env.test
-
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
