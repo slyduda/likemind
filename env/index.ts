@@ -8,6 +8,7 @@ import {
 } from "valibot";
 import "dotenv/config";
 
+console.log(process.env);
 console.log("DOES PROCESS EXIST?");
 console.log(Boolean(process.env.JWT_SECRET));
 export const envSchema = object({
