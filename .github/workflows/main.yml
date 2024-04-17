@@ -28,7 +28,11 @@ jobs:
           envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
           envkey_POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
           envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          fail_on_empty: True
           file_name: .env.test
+
+      - name: Check .env.test file
+        run: cat .env.test
 
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
