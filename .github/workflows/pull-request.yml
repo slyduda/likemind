@@ -1,4 +1,4 @@
-name: Migrate CI
+name: Pull Request Checks
 
 on:
   pull_request:
@@ -7,12 +7,12 @@ on:
 jobs:
   lint:
     name: Lint Debug Variant
-    uses: ./.github/workflows/lint/action.yml
+    uses: ./.github/workflows/lint_action.yml
 
   format:
     name: Format Debug Variant
-    uses: ./.github/workflows/format/action.yml
+    uses: ./.github/workflows/format_action.yml
 
   test:
     name: Test Debug Variant
-    uses: ./.github/workflows/test/action.yml
+    uses: ./.github/workflows/test_action.yml

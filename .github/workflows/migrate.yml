@@ -7,4 +7,4 @@ on:
 jobs:
   migrate:
     name: Migrate Debug Variant
-    uses: ./.github/workflows/migrate/action.yml
+    uses: ./.github/workflows/migrate_action.yml

@@ -7,4 +7,4 @@ on:
 jobs:
   test:
     name: Test Debug Variant
-    uses: ./.github/workflows/test/action.yml
+    uses: ./.github/workflows/test_action.yml
