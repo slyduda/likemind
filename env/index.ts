@@ -19,7 +19,6 @@ export const envSchema = object({
   JWT_SECRET: string(),
 });
 
-console.log(process.env);
 export const safeProcessEnv = safeParse(envSchema, process.env);
 
 if (!safeProcessEnv.success) {
