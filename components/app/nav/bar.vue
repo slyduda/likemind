@@ -15,7 +15,27 @@
           class="mb-2"
         >
           <template #icon>
-            <AppNavIcon> 🧑‍💻 </AppNavIcon>
+            <AppNavIcon> 🧠 </AppNavIcon>
+          </template>
+        </AppNavButton>
+        <AppNavButton
+          to="/entities"
+          label="Entities"
+          :condensed="collapsed"
+          class="mb-2"
+        >
+          <template #icon>
+            <AppNavIcon> 🧍 </AppNavIcon>
+          </template>
+        </AppNavButton>
+        <AppNavButton
+          to="/activities"
+          label="Activities"
+          :condensed="collapsed"
+          class="mb-2"
+        >
+          <template #icon>
+            <AppNavIcon> 🤸 </AppNavIcon>
           </template>
         </AppNavButton>
       </div>
