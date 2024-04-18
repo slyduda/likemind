@@ -5,5 +5,9 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware: "auth",
+});
+
 const { data } = await useFetch("/api/activities");
 </script>

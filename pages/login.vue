@@ -46,6 +46,10 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware: "access",
+});
+
 const body = reactive({
   email: "",
   password: "",
