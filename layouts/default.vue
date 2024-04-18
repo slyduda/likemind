@@ -7,7 +7,7 @@
     ></div>
 
     <AppNavBar
-      v-model:collapsed="collapsedSidebar"
+      v-model:collapsed="mainStore.collapsedSidebar"
       v-model:hidden="hiddenSidebar"
       class="h-full flex-shrink-0"
     />
@@ -28,19 +28,60 @@
     <div
       class="absolute h-full w-full sm:hidden"
       :class="[
-        { 'pointer-events-none bg-black/0': collapsedSidebar },
+        { 'pointer-events-none bg-black/0': mainStore.collapsedSidebar },
         {
-          'pointer-events-auto bg-black/10 backdrop-blur-md': !collapsedSidebar,
+          'pointer-events-auto bg-black/10 backdrop-blur-md':
+            !mainStore.collapsedSidebar,
         },
       ]"
-      @click="collapsedSidebar = !collapsedSidebar"
+      @click="mainStore.collapsedSidebar = !mainStore.collapsedSidebar"
     ></div>
+
+    <div
+      class="pointer-events-none absolute right-0 top-0 z-50 flex h-full w-full flex-col items-end"
+    >
+      <ul class="mt-4 flex flex-col items-end md:w-1/2">
+        <li
+          v-for="message in unacknowledgedMessages"
+          :key="message.id"
+          class="pointer-events-auto"
+        >
+          <AppAlert :message="message"></AppAlert>
+        </li>
+      </ul>
+    </div>
 
     <NuxtLoadingIndicator :height="8" color="#3b82f6" />
   </div>
 </template>
 
 <script setup lang="ts">
-const collapsedSidebar = ref(false);
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
+const mainStore = useMainStore();
+
+const breakpoints = useBreakpoints(breakpointsTailwind);
+const smallerThanSm = breakpoints.smaller("sm"); // only smaller than lg
 const hiddenSidebar = ref(false);
+
+onBeforeMount(() => {
+  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+  // || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  if (mainStore.darkMode) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+});
+
+onMounted(() => {
+  if (!smallerThanSm.value) mainStore.collapsedSidebar = false;
+});
+
+const unacknowledgedMessages = computed<Message[]>(() => {
+  return mainStore.messages.filter((message) => {
+    // Object.hasOwn is not reactive
+    // eslint-disable-next-line no-prototype-builtins
+    return !mainStore.acknowledgements.hasOwnProperty(message.id);
+  });
+});
 </script>

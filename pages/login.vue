@@ -55,6 +55,9 @@ const body = reactive({
   password: "",
 });
 
+const { onResponse, onRequestError } = useLogging();
+const router = useRouter();
+
 const pending = ref(false);
 const disabled = computed(() => !body.email || !body.password);
 
@@ -72,8 +75,12 @@ const postLogin = async () => {
   await $fetch("/api/login", {
     method: "POST",
     body,
+    onResponse,
+    onRequestError,
   })
-    .then(() => {})
+    .then(() => {
+      router.push("/");
+    })
     .catch(() => {});
 };
 </script>

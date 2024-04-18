@@ -21,11 +21,19 @@ export default defineEventHandler<{ body: LoginSchema }, Promise<void>>(
 
     // Check to see if the user exists
     const user = await userByEmail({ email: login.email });
-    if (!user) throw Error("Email or password incorrect");
+    if (!user)
+      throw createError({
+        statusCode: 401,
+        statusMessage: "Email or password are incorrect",
+      });
 
     // Check to see if the passwords match
     const isMatch = compareSync(login.password, user.password);
-    if (!isMatch) throw Error("Email or password incorrect");
+    if (!isMatch)
+      throw createError({
+        statusCode: 401,
+        statusMessage: "Email or password are incorrect",
+      });
 
     // Create a JWT token
     const accessToken = jwt.sign({}, runtimeConfig.jwtSecret, {
