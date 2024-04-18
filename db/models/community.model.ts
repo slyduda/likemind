@@ -12,5 +12,5 @@ export const communityRelations = relations(community, ({ many }) => ({
   memberships: many(membership),
 }));
 
-export type ActivityInsert = typeof activity.$inferInsert;
-export type ActivitySelect = typeof activity.$inferSelect;
+export type CommunityInsert = typeof community.$inferInsert;
+export type CommunitySelect = typeof community.$inferSelect;
