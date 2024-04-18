@@ -21,7 +21,7 @@ export default defineEventHandler<
 
   // Do the insert on the db
   const newEntity = await entityInsert(entity);
-  if (!newEntity) throw Error("Invalid JWT");
+  if (!newEntity) throw Error("Error creating Entity");
 
   // Parse and return
   const paredEntity = parse(entityReadSchema, newEntity);
