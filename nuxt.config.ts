@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     jwtSecret: processEnv.JWT_SECRET,
   },
   css: ["~/assets/css/main.css"],
-  modules: ["@nuxt/test-utils/module", "@vueuse/nuxt"],
+  modules: ["@pinia/nuxt", "@nuxt/test-utils/module", "@vueuse/nuxt"],
   postcss: {
     plugins: {
       tailwindcss: {},

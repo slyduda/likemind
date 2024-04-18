@@ -11,3 +11,6 @@ export const community = pgTable("community", {
 export const communityRelations = relations(community, ({ many }) => ({
   memberships: many(membership),
 }));
+
+export type CommunityInsert = typeof community.$inferInsert;
+export type CommunitySelect = typeof community.$inferSelect;
