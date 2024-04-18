@@ -68,6 +68,9 @@ const body = reactive({
   password: "",
 });
 
+const { onResponse, onRequestError } = useLogging();
+const router = useRouter();
+
 const pending = ref(false);
 const disabled = computed(() => !body.email || !body.password || !body.handle);
 
@@ -81,8 +84,12 @@ const postUsersSignup = async () => {
   await $fetch("/api/users", {
     method: "POST",
     body,
+    onRequestError,
+    onResponse,
   })
-    .then(() => {})
+    .then(() => {
+      router.push("/login");
+    })
     .catch(() => {});
 };
 </script>

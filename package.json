@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
+    "@types/uuid": "^9.0.8",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.30.6",
@@ -30,6 +31,7 @@
     "nuxt": "^3.11.1",
     "pg": "^8.11.4",
     "pinia": "^2.1.7",
+    "uuid": "^9.0.1",
     "valibot": "^0.30.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"

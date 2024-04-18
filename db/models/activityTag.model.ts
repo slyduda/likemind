@@ -1,4 +1,10 @@
-import { timestamp, pgTable, primaryKey, uuid } from "drizzle-orm/pg-core";
+import {
+  timestamp,
+  pgTable,
+  primaryKey,
+  uuid,
+  text,
+} from "drizzle-orm/pg-core";
 import { activity, tag } from ".";
 import { relations } from "drizzle-orm";
 
@@ -9,16 +15,16 @@ export const activityTag = pgTable(
     activityId: uuid("activity_id")
       .notNull()
       .references(() => activity.id),
-    tagId: uuid("entity_id")
+    tagName: text("tag_name")
       .notNull()
-      .references(() => tag.id),
+      .references(() => tag.name),
     createdAt: timestamp("created_at").notNull().defaultNow(),
   },
   (table) => {
     return {
       pkWithCustomName: primaryKey({
         name: "key_id",
-        columns: [table.activityId, table.tagId],
+        columns: [table.activityId, table.tagName],
       }),
     };
   },
@@ -26,8 +32,8 @@ export const activityTag = pgTable(
 
 export const activityTagRelations = relations(activityTag, ({ one }) => ({
   tag: one(tag, {
-    fields: [activityTag.tagId],
-    references: [tag.id],
+    fields: [activityTag.tagName],
+    references: [tag.name],
   }),
   activity: one(activity, {
     fields: [activityTag.activityId],

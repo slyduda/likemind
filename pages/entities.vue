@@ -8,5 +8,11 @@
 definePageMeta({
   middleware: "auth",
 });
-const { data } = await useFetch("/api/entities");
+
+const { onResponseError, onRequestError } = useLogging();
+
+const { data } = await useFetch("/api/entities", {
+  onResponseError,
+  onRequestError,
+});
 </script>
