@@ -15,3 +15,6 @@ export const activityRelations = relations(activity, ({ many }) => ({
   involvements: many(involvement),
   activityEvidences: many(activityEvidence),
 }));
+
+export type ActivityInsert = typeof activity.$inferInsert;
+export type ActivitySelect = typeof activity.$inferSelect;
