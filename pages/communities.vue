@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-const { data } = await useFetch("/api/activities");
+const { data } = await useFetch("/api/communities");
 </script>

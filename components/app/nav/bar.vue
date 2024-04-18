@@ -38,6 +38,16 @@
             <AppNavIcon> 🤸 </AppNavIcon>
           </template>
         </AppNavButton>
+        <AppNavButton
+          to="/communities"
+          label="Communities"
+          :condensed="collapsed"
+          class="mb-2"
+        >
+          <template #icon>
+            <AppNavIcon> 👨‍👨‍👧‍👦 </AppNavIcon>
+          </template>
+        </AppNavButton>
       </div>
 
       <div class="flex flex-col">
