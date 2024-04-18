@@ -9,7 +9,7 @@ export const entity = pgTable("entity", {
 });
 
 export const entityRelations = relations(entity, ({ many }) => ({
-  involements: many(involvement),
+  involvements: many(involvement),
   relationshipArcStarts: many(relationshipArc, {
     relationName: "relationship_arc_starts",
   }),
