@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-    exact-active-class="bg-zinc-200 sm:bg-zinc-200 dark:bg-zinc-900 sm:dark:bg-zinc-800 rounded-lg"
+    exact-active-class="bg-zinc-200 sm:bg-zinc-200 dark:bg-stone-900 sm:dark:bg-stone-800 rounded-lg"
     :to="props.to"
   >
     <div

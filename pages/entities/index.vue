@@ -1,5 +1,5 @@
 <template>
-  <div class="container h-full w-full font-bold">
+  <div class="container h-full w-full">
     <BaseTableView v-if="data" :data="data"></BaseTableView>
   </div>
 </template>

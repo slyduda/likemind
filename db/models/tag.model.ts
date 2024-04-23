@@ -11,3 +11,6 @@ export const tag = pgTable("tag", {
 export const tagRelations = relations(tag, ({ many }) => ({
   activityTags: many(activityTag),
 }));
+
+export type TagInsert = typeof tag.$inferInsert;
+export type TagSelect = typeof tag.$inferSelect;

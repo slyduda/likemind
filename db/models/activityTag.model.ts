@@ -40,3 +40,6 @@ export const activityTagRelations = relations(activityTag, ({ one }) => ({
     references: [activity.id],
   }),
 }));
+
+export type ActivityTagInsert = typeof activityTag.$inferInsert;
+export type ActivityTagSelect = typeof activityTag.$inferSelect;

@@ -6,7 +6,7 @@
       class="text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400"
     >
       <tr
-        class="sticky top-0 bg-zinc-50 text-xs uppercase text-zinc-700 dark:bg-zinc-700 dark:text-zinc-400"
+        class="sticky top-0 bg-zinc-50 text-xs uppercase text-zinc-700 dark:bg-stone-700 dark:text-stone-400"
       >
         <th v-for="key in keys" :key="key" scope="col" class="px-6 py-3">
           {{ key }}
@@ -15,7 +15,7 @@
       <tr
         v-for="obj in data"
         :key="obj.id ? obj.id : obj"
-        class="border-b odd:bg-white even:bg-zinc-50 dark:border-zinc-700 odd:dark:bg-zinc-900 even:dark:bg-zinc-800"
+        class="border-b odd:bg-white even:bg-zinc-50 dark:border-stone-700 odd:dark:bg-stone-900 even:dark:bg-stone-800"
       >
         <td
           v-for="key in keys"
