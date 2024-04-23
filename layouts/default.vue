@@ -1,8 +1,8 @@
 <template>
-  <div class="flex h-full w-full flex-grow text-zinc-900 dark:text-zinc-100">
+  <div class="flex h-full w-full flex-grow text-zinc-900 dark:text-stone-50">
     <div
       id="fake_nav"
-      class="flex-shrink-0 bg-zinc-100 sm:hidden dark:bg-zinc-900"
+      class="flex-shrink-0 bg-zinc-100 sm:hidden dark:bg-stone-950"
       :class="[{ 'w-16': !hiddenSidebar }, { 'w-0': hiddenSidebar }]"
     ></div>
 
@@ -12,13 +12,13 @@
       class="h-full flex-shrink-0"
     />
 
-    <div class="w-1 flex-1 bg-zinc-200 dark:bg-zinc-950">
+    <div class="w-1 flex-1 bg-zinc-200 dark:bg-stone-950">
       <div
         class="h-full w-full p-2"
         :class="[{ 'pl-2': hiddenSidebar }, { 'pl-0': !hiddenSidebar }]"
       >
         <div
-          class="h-full overflow-auto rounded-xl bg-zinc-100 p-4 dark:bg-zinc-900"
+          class="h-full overflow-auto rounded-xl bg-zinc-100 p-4 dark:bg-stone-900"
         >
           <slot />
         </div>
@@ -66,7 +66,7 @@ const hiddenSidebar = ref(false);
 onBeforeMount(() => {
   // On page load or when changing themes, best to add inline in `head` to avoid FOUC
   // || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  if (mainStore.darkMode) {
+  if (!mainStore.darkMode) {
     document.documentElement.classList.add("dark");
   } else {
     document.documentElement.classList.remove("dark");

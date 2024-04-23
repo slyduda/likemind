@@ -41,3 +41,6 @@ export const relationshipReviewRelations = relations(
     }),
   }),
 );
+
+export type RelationshipReviewInsert = typeof relationshipReview.$inferInsert;
+export type RelationshipReviewSelect = typeof relationshipReview.$inferSelect;

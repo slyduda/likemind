@@ -85,7 +85,7 @@ const validColor = computed(() =>
     ? "text-green-500 border-green-500"
     : props.valid === Validations.INVALID || props.valid === false
       ? "text-red-500 border-red-500"
-      : "border-zinc-300 dark:border-zinc-700",
+      : "border-zinc-300 dark:border-stone-700",
 );
 
 const model = defineModel({ type: String });
@@ -104,7 +104,7 @@ const blur = () => emit("blur", true);
 
     <!-- Input Wrapper -->
     <div
-      class="relative w-full border-solid bg-white focus:ring-4 dark:bg-zinc-950"
+      class="relative w-full border-solid bg-white focus:ring-4 dark:bg-stone-950"
       :class="[
         { 'h-12': !height },
         classes,
@@ -130,7 +130,7 @@ const blur = () => emit("blur", true);
         :aria-labelledby="name + 'Label'"
         :aria-describedby="name + 'Description'"
         :aria-invalid="valid === Validations.INVALID || true"
-        class="h-full w-full appearance-none bg-transparent px-3 py-2 text-zinc-950 outline-none placeholder:text-zinc-700 dark:text-zinc-50"
+        class="h-full w-full appearance-none bg-transparent px-3 py-2 text-zinc-950 outline-none placeholder:text-zinc-700 dark:text-stone-50"
         :class="[rounded]"
         :placeholder="placeholder"
         @focus="focus"

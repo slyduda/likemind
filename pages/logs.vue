@@ -1,5 +1,5 @@
 <template>
-  <div class="flex font-bold">Hi</div>
+  <div class="flex">Hi</div>
 </template>
 
 <script setup lang="ts">

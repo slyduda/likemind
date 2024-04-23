@@ -36,3 +36,6 @@ export const relationshipArcRelations = relations(
     }),
   }),
 );
+
+export type RelationshipArcInsert = typeof relationshipArc.$inferInsert;
+export type RelationshipArcSelect = typeof relationshipArc.$inferSelect;

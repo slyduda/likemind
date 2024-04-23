@@ -3,5 +3,5 @@ import { community, type CommunityInsert } from "@/db/models";
 
 export const communityInsert = async (insert: CommunityInsert) => {
   const communities = await db.insert(community).values(insert).returning();
-  return communities.length ? communities[0] : null;
+  return communities[0];
 };

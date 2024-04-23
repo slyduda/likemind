@@ -12,3 +12,6 @@ export const relationshipRelations = relations(relationship, ({ many }) => ({
   relationshipArcs: many(relationshipArc),
   relationshipReviews: many(relationshipReview),
 }));
+
+export type RelationshipInsert = typeof relationship.$inferInsert;
+export type RelationshipSelect = typeof relationship.$inferSelect;

@@ -1,5 +1,6 @@
 export * from "./activity.model";
 export * from "./activityEvidence.model";
+export * from "./activityReview.model";
 export * from "./activityTag.model";
 export * from "./community.model";
 export * from "./membership.model";

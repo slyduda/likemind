@@ -25,3 +25,6 @@ export const involvementRelations = relations(involvement, ({ one }) => ({
     references: [entity.id],
   }),
 }));
+
+export type InvolvementInsert = typeof involvement.$inferInsert;
+export type InvolvementSelect = typeof involvement.$inferSelect;
