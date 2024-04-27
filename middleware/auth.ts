@@ -7,13 +7,9 @@ export default defineNuxtRouteMiddleware(async () => {
   }
 
   const userStore = useUserStore();
-  const { onRequestError, onResponseError } = useLogging();
 
   try {
-    const response = await $fetch("/api/users", {
-      onRequestError,
-      onResponseError,
-    });
+    const response = await $fetch("/api/users");
     userStore.account = response;
   } catch (error) {
     userStore.account = null;

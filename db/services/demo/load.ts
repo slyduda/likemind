@@ -32,10 +32,10 @@ export const loadDemo = async (
     relationshipCount?: number;
     userCount?: number;
   } = {
-    entityCount: 20,
+    entityCount: 80,
     activityCount: 40,
     tagCount: 30,
-    relationshipCount: 80,
+    relationshipCount: 100,
     userCount: 3,
   },
 ) => {

@@ -1,10 +1,10 @@
 <template>
   <div
-    class="bg-stone200 absolute top-0 z-10 sm:relative sm:p-2 dark:bg-stone-950"
-    :class="[{ 'left-0': !hidden }, { '-left-16': hidden }]"
+    class="absolute top-0 z-10 bg-zinc-200 sm:relative sm:p-2 dark:bg-stone-950"
+    :class="[{ 'left-0': !hidden }, { '-left-16 sm:hidden': hidden }]"
   >
     <div
-      class="relative z-20 flex h-full flex-col justify-between bg-zinc-50 px-3 py-3 sm:rounded-xl sm:rounded-br-none sm:bg-zinc-100 dark:bg-stone-950 sm:dark:bg-stone-900"
+      class="relative z-20 flex h-full flex-col justify-between bg-zinc-200 px-3 py-3 sm:rounded-xl sm:rounded-br-none sm:bg-zinc-100 dark:bg-stone-950 sm:dark:bg-stone-900"
       :class="[{ 'w-44': !collapsed }, { 'w-16': collapsed }]"
     >
       <div class="flex flex-col">
@@ -70,7 +70,7 @@
 
       <button
         ref="buttonRef"
-        class="bg-zinc-2stone-gradient-to-r sm:from-zinc-10stonefrom-20% sm:to-zinc-300sdark:bg-stone-950 stonetext-white sstonek:to-zinc-800 absolute -right-12 bottom-0 box-border flex h-14 w-12 items-center justify-center rounded-br-full rounded-tr-full font-bold text-black sm:dark:from-zinc-900"
+        class="absolute -right-12 bottom-0 box-border flex h-14 w-12 items-center justify-center rounded-br-full rounded-tr-full bg-zinc-200 bg-gradient-to-r font-bold text-black sm:from-zinc-100 sm:to-zinc-200 dark:bg-stone-950 dark:to-zinc-800 sm:dark:from-zinc-900"
         stone
         @click="toggleSidebar"
       >
@@ -109,7 +109,7 @@ const hidden = defineModel("hidden", {
 
 const buttonRef = ref<HTMLElement | null>(null);
 const onLongPressCallback = () => {
-  hidden.value = true;
+  if (collapsed.value) hidden.value = true;
 };
 
 onLongPress(buttonRef, onLongPressCallback, {

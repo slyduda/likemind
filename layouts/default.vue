@@ -66,7 +66,7 @@ const hiddenSidebar = ref(false);
 onBeforeMount(() => {
   // On page load or when changing themes, best to add inline in `head` to avoid FOUC
   // || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  if (!mainStore.darkMode) {
+  if (mainStore.darkMode) {
     document.documentElement.classList.add("dark");
   } else {
     document.documentElement.classList.remove("dark");
