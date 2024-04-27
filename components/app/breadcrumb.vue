@@ -1,5 +1,5 @@
 <template>
-  <ul class="font-mono text-sm font-bold text-zinc-500">
+  <ul class="font-mono text-xs font-bold text-zinc-500 sm:text-sm">
     <li v-for="(piece, index) in pieces" :key="index" class="inline-block">
       <div class="mx-1 inline-block">/</div>
       <NuxtLink

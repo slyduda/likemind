@@ -1,15 +1,13 @@
 <template>
-  <div
-    class="sticky top-0 mb-4 flex justify-between border-b border-zinc-500 bg-stone-900"
-  >
+  <div class="sticky top-0 mb-4 flex justify-between border-b border-zinc-500">
     <div class="pb-2">
       <div class="flex">
-        <div
+        <button
           class="flex h-8 w-8 items-center justify-center"
-          @click="router.back()"
+          @click="goBackOneSubpath"
         >
           ◀
-        </div>
+        </button>
         <h1 class="archivo text-2xl">{{ title }}</h1>
       </div>
       <AppBreadcrumb v-if="!hidePath" :path="route.fullPath"></AppBreadcrumb>
@@ -48,4 +46,27 @@ const props = defineProps<{
   hidePath?: boolean;
   namedFile?: boolean;
 }>();
+
+const goBackOneSubpath = () => {
+  // Get the current path
+  const currentPath = route.path;
+
+  // Check if the current path contains subpaths
+  if (currentPath.includes("/")) {
+    // Split the path into segments
+    const segments = currentPath.split("/");
+    console.log(segments);
+
+    if (segments.length === 2) return router.push("/");
+
+    // Remove the last segment (current subpath)
+    segments.pop();
+
+    // Join the segments back together
+    const newPath = segments.join("/");
+
+    // Navigate to the new path
+    router.push(newPath);
+  }
+};
 </script>

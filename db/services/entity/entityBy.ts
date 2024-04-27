@@ -24,7 +24,13 @@ export interface EntityComplexRead extends EntitySelect {
 
 const relatedEntity = alias(entity, "related_entity");
 
-export const entityComplexById = async ({ id }: { id: string }) => {
+export const entityComplexById = async ({
+  id,
+  depth = 1,
+}: {
+  id: string;
+  depth: number;
+}) => {
   const entities = await db
     .select({
       entity,
@@ -65,6 +71,9 @@ export const entityComplexById = async ({ id }: { id: string }) => {
     .groupBy(entity.id, relationshipArc.id, relationship.id, relatedEntity.id)
     .orderBy(desc(count(relationshipReview)))
     .limit(100);
+
+  if (!entities.length) return {};
+
   const selectedEntity = entities[0].entity;
   const relatedEntities: RelatedEntityRead[] = entities.map((row) => {
     return {
@@ -77,7 +86,55 @@ export const entityComplexById = async ({ id }: { id: string }) => {
     ...selectedEntity,
     relatedEntities,
   };
-  return complexEntity;
+
+  // Create a cache of loaded entities
+  const groupedEntitiesComplex = new Map<string, EntityComplexRead>();
+  groupedEntitiesComplex.set(complexEntity.id, complexEntity);
+  const loadedEntityIds = [complexEntity.id];
+
+  const nextEntityIds = complexEntity.relatedEntities.map(
+    (relatedEntity) => relatedEntity.id,
+  );
+  let recurseCount = depth - 1;
+
+  while (recurseCount) {
+    // Get the entities that we haven't loaded yet
+    const ids = nextEntityIds.filter(
+      (entityId) => !loadedEntityIds.includes(entityId),
+    );
+
+    // Get the next result of entities
+    const mappedEntities = await entityComplexByIds({
+      ids,
+    });
+
+    // Reset the new Array of next ids
+    nextEntityIds.length = 0;
+
+    // Add these to the grouped entities
+    for (const [key, value] of Object.entries(mappedEntities)) {
+      groupedEntitiesComplex.set(key, value);
+      loadedEntityIds.push(key);
+      nextEntityIds.push(
+        ...value.relatedEntities.map((relatedEntity) => relatedEntity.id),
+      );
+    }
+
+    // Deduplicate both loaded ids and next entity ids
+    const loadedEntityIdsSet = new Set(loadedEntityIds);
+    const nextEntityIdsSet = new Set(nextEntityIds);
+
+    loadedEntityIds.length = 0;
+    nextEntityIds.length = 0;
+
+    loadedEntityIds.push(...Array.from(loadedEntityIdsSet));
+    nextEntityIds.push(...Array.from(nextEntityIdsSet));
+
+    // Decrement the recurse count
+    recurseCount--;
+  }
+
+  return Object.fromEntries(groupedEntitiesComplex.entries());
 };
 
 export const entityComplexByIds = async ({ ids }: { ids: string[] }) => {
