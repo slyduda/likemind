@@ -1,6 +1,7 @@
 import type { Config } from "drizzle-kit";
 import { processEnv } from "./env";
 
+console.log(process.env);
 export default {
   schema: "./db/models", // Renamed to models to separate valibot schemas
   out: "./db/migrations",
