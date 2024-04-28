@@ -70,11 +70,13 @@ export const loadDemo = async (
   const relationshipReviews: RelationshipReviewSelect[] = [];
   const users: UserSelect[] = [];
 
+  console.log("Creating Entities");
   for (let i = 0; i < entityCount; i++) {
     const entity = await entityFactory.create();
     entities.push(entity);
   }
 
+  console.log("Creating Users");
   for (let i = 0; i < userCount; i++) {
     const user =
       i !== 0
@@ -87,10 +89,13 @@ export const loadDemo = async (
     users.push(user);
   }
 
+  console.log("Creating Relationships");
   for (let i = 0; i < relationshipCount; i++) {
+    console.log("Creating Relationship");
     const relationship = await relationshipFactory.create();
     relationships.push(relationship);
 
+    console.log("Creating Relationship Arcs");
     const [entityAIndex, entityBIndex] = randomNonCollidingIndices(
       entities.length,
       2,
@@ -109,6 +114,7 @@ export const loadDemo = async (
     });
     relationshipArcs.push(relationshipArc1, relationshipArc2);
 
+    console.log("Creating Relationship Reviews");
     // Create the Relationship Reviews
     const [userIndex] = randomNonCollidingIndices(users.length, 1);
     const user = users[userIndex];
@@ -119,13 +125,16 @@ export const loadDemo = async (
     relationshipReviews.push(relationshipReview);
   }
 
+  console.log("Creating Tags");
   for (let i = 0; i < tagCount; i++) {
     const tag = await tagFactory.create();
     tags.push(tag);
   }
 
+  console.log("Creating Activities");
   for (let i = 0; i < activityCount; i++) {
     // Create an activity
+    console.log("Creating Activity");
     const activity = await activityFactory.create();
     activities.push(activity);
 
