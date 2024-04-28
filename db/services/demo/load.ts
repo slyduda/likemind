@@ -76,7 +76,14 @@ export const loadDemo = async (
   }
 
   for (let i = 0; i < userCount; i++) {
-    const user = await userFactory.create();
+    const user =
+      i !== 0
+        ? await userFactory.create()
+        : await userFactory.create({
+            handle: "slyduda",
+            email: "me@slyduda.com",
+            password: "possword",
+          });
     users.push(user);
   }
 

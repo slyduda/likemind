@@ -15,6 +15,7 @@ import {
   involvement,
   activity,
   entity,
+  user,
 } from "~/db/models";
 
 export const clearTables = async () => {
@@ -39,7 +40,7 @@ export const clearTables = async () => {
   await db.delete(community);
 
   // Delete all users
-  // await db.delete(user);
+  await db.delete(user);
 
   // Delete all tags
   await db.delete(activityTag);
