@@ -23,6 +23,7 @@ const clear = () => {
 const load = () => {
   $fetch("/api/data/demo", {
     method: "POST",
+    timeout: 30000,
   });
 };
 </script>
