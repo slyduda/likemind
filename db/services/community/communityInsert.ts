@@ -5,3 +5,8 @@ export const communityInsert = async (insert: CommunityInsert) => {
   const communities = await db.insert(community).values(insert).returning();
   return communities[0];
 };
+
+export const communityInsertMany = async (insert: CommunityInsert[]) => {
+  const communities = await db.insert(community).values(insert).returning();
+  return communities;
+};

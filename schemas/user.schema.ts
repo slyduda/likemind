@@ -1,4 +1,11 @@
-import { object, string, transform, type Input, type Output } from "valibot";
+import {
+  object,
+  string,
+  type Input,
+  type Output,
+  transformAsync,
+  objectAsync,
+} from "valibot";
 import { hashPassword } from "@/utils";
 import { createInsertSchema, createSelectSchema } from "drizzle-valibot";
 import { user } from "@/db/models";
@@ -13,11 +20,11 @@ export const userEmailSchema = string();
 export const userHandleSchema = string();
 export const userPasswordSchema = string();
 
-export const userPasswordTransformer = transform(string(), hashPassword);
+export const userPasswordTransformer = transformAsync(string(), hashPassword);
 
 // Create
-export const userCreateSchema = transform(
-  object({
+export const userCreateSchema = transformAsync(
+  objectAsync({
     email: userEmailSchema,
     handle: userHandleSchema,
     password: userPasswordTransformer,

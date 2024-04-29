@@ -2,6 +2,7 @@ import { faker } from "@faker-js/faker";
 import { involvementInsert } from "../services";
 import { useEntityFactory } from "./entity.factory";
 import { useActivityFactory } from "./activity.factory";
+import type { InvolvementInsert, InvolvementSelect } from "../models";
 
 type OptionalInvolvementInsert = {
   id?: string;
@@ -12,24 +13,38 @@ type OptionalInvolvementInsert = {
   createdAt?: Date;
 };
 
+export interface InvolvementFactoryCreate
+  extends Modify<
+    InvolvementSelect,
+    {
+      createdAt?: Date;
+    }
+  > {}
+
 export const useInvolvementFactory = () => {
   const activityFactory = useActivityFactory();
   const entityFactory = useEntityFactory();
 
-  const create = async (insert?: OptionalInvolvementInsert) => {
-    return involvementInsert({
+  const create = (
+    insert?: OptionalInvolvementInsert,
+  ): InvolvementFactoryCreate => {
+    return {
       id: faker.string.uuid(),
       description: faker.lorem.paragraph({ min: 1, max: 3 }),
       source: "",
       ...insert,
       activityId: insert?.activityId
         ? insert.activityId
-        : (await activityFactory.create()).id,
-      entityId: insert?.entityId
-        ? insert.entityId
-        : (await entityFactory.create()).id,
-    });
+        : activityFactory.create().id,
+      entityId: insert?.entityId ? insert.entityId : entityFactory.create().id,
+    };
   };
 
-  return { create };
+  const insert = async (
+    insert: InvolvementInsert,
+  ): Promise<InvolvementSelect> => {
+    return await involvementInsert(insert);
+  };
+
+  return { create, insert };
 };

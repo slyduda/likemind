@@ -8,11 +8,19 @@ export default defineNuxtConfig({
     jwtSecret: processEnv.JWT_SECRET,
   },
   css: ["~/assets/css/main.css"],
-  modules: ["@pinia/nuxt", "@nuxt/test-utils/module", "@vueuse/nuxt"],
+  modules: [
+    "@vee-validate/nuxt",
+    "@pinia/nuxt",
+    "@nuxt/test-utils/module",
+    "@vueuse/nuxt",
+  ],
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
+  },
+  veeValidate: {
+    typedSchemaPackage: "valibot",
   },
 });

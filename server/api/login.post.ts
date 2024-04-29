@@ -37,7 +37,7 @@ export default defineEventHandler<{ body: LoginSchema }, Promise<void>>(
 
     // Create a JWT token
     const accessToken = jwt.sign({}, runtimeConfig.jwtSecret, {
-      expiresIn: 60 * 15,
+      expiresIn: 60 * 60,
       subject: user.id,
     });
     setCookie(event, "access_token", accessToken, { httpOnly: true });
