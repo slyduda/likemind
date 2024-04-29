@@ -57,7 +57,5 @@ const id = Array.isArray(route.params.id)
   ? route.params.id.join()
   : route.params.id;
 
-const { data } = await useFetch(`/api/entities/${id}`, {
-  method: "get",
-});
+const { data } = await useFetch(`/api/entities/${id}`);
 </script>

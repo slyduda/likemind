@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { activityTagInsert } from "../services";
 import { useActivityFactory, useTagFactory } from ".";
+import type { ActivityTagInsert, ActivityTagSelect } from "../models";
 
 type OptionalActivityTagInsert = {
   id?: string;
@@ -9,22 +10,36 @@ type OptionalActivityTagInsert = {
   createdAt?: Date;
 };
 
+export interface ActivityTagFactoryCreate
+  extends Modify<
+    ActivityTagSelect,
+    {
+      createdAt?: Date;
+    }
+  > {}
+
 export const useActivityTagFactory = () => {
   const activityFactory = useActivityFactory();
   const tagFactory = useTagFactory();
 
-  const create = async (insert?: OptionalActivityTagInsert) => {
-    return activityTagInsert({
+  const create = (
+    insert?: OptionalActivityTagInsert,
+  ): ActivityTagFactoryCreate => {
+    return {
       id: faker.string.uuid(),
       ...insert,
       activityId: insert?.activityId
         ? insert.activityId
-        : (await activityFactory.create()).id,
-      tagName: insert?.tagName
-        ? insert.tagName
-        : (await tagFactory.create()).name,
-    });
+        : activityFactory.create().id,
+      tagName: insert?.tagName ? insert.tagName : tagFactory.create().name,
+    };
   };
 
-  return { create };
+  const insert = async (
+    insert: ActivityTagInsert,
+  ): Promise<ActivityTagSelect> => {
+    return await activityTagInsert(insert);
+  };
+
+  return { create, insert };
 };

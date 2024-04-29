@@ -10,3 +10,13 @@ export const relationshipReviewInsert = async (
     .returning();
   return relationshipReviews[0];
 };
+
+export const relationshipReviewInsertMany = async (
+  insert: RelationshipReviewInsert[],
+) => {
+  const relationshipReviews = await db
+    .insert(relationshipReview)
+    .values(insert)
+    .returning();
+  return relationshipReviews;
+};

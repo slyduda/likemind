@@ -8,3 +8,11 @@ export const relationshipInsert = async (insert: RelationshipInsert) => {
     .returning();
   return relationships[0];
 };
+
+export const relationshipInsertMany = async (insert: RelationshipInsert[]) => {
+  const relationships = await db
+    .insert(relationship)
+    .values(insert)
+    .returning();
+  return relationships;
+};

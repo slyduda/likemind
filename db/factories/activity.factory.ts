@@ -1,6 +1,8 @@
 import { faker } from "@faker-js/faker";
 import { activityInsert } from "../services";
 import { probability } from "@/utils";
+import type { ActivityInsert, ActivitySelect } from "../models";
+import type { Modify } from "~/utils/types";
 
 type OptionalActivityInsert = {
   id?: string;
@@ -10,8 +12,16 @@ type OptionalActivityInsert = {
   createdAt?: Date;
 };
 
+export interface ActivityFactoryCreate
+  extends Modify<
+    ActivitySelect,
+    {
+      createdAt?: Date;
+    }
+  > {}
+
 export const useActivityFactory = () => {
-  const create = async (insert?: OptionalActivityInsert) => {
+  const create = (insert?: OptionalActivityInsert): ActivityFactoryCreate => {
     const startedAt = faker.date.past({
       years: faker.number.int({ min: 1, max: 10 }),
     });
@@ -20,14 +30,18 @@ export const useActivityFactory = () => {
       ? null
       : faker.date.between({ from: startedAt, to: new Date() });
 
-    return activityInsert({
+    return {
       id: faker.string.uuid(),
       description: faker.lorem.paragraph({ max: 5, min: 2 }),
       startedAt,
       endedAt: isEvent ? startedAt : endedAt,
       ...insert,
-    });
+    };
   };
 
-  return { create };
+  const insert = async (insert: ActivityInsert): Promise<ActivitySelect> => {
+    return await activityInsert(insert);
+  };
+
+  return { create, insert };
 };

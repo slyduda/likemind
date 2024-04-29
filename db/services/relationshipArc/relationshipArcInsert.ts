@@ -8,3 +8,13 @@ export const relationshipArcInsert = async (insert: RelationshipArcInsert) => {
     .returning();
   return relationshipArcs[0];
 };
+
+export const relationshipArcInsertMany = async (
+  insert: RelationshipArcInsert[],
+) => {
+  const relationshipArcs = await db
+    .insert(relationshipArc)
+    .values(insert)
+    .returning();
+  return relationshipArcs;
+};

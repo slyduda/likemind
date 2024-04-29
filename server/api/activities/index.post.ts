@@ -24,6 +24,6 @@ export default defineEventHandler<
   if (!newActivity) throw Error("Error creating Activity");
 
   // Parse and return
-  const paredActivity = parse(activityReadSchema, newActivity);
-  return paredActivity;
+  const parsedActivity = parse(activityReadSchema, newActivity);
+  return parsedActivity;
 });
