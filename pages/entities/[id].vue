@@ -1,41 +1,49 @@
 <template>
-  <div v-if="data" class="h-full w-full">
-    <div class="flex h-full flex-col">
-      <AppHeader :title="data.name" hide-path> </AppHeader>
-      <div class="flex">
+  <div v-if="data" class="flex h-full w-full flex-col">
+    <div class="sticky top-0">
+      <AppHeader class="relative" :title="data.name"></AppHeader>
+      <div
+        class="-mt-4 mb-4 flex w-full overflow-x-auto border-b border-zinc-500 bg-zinc-100 py-2"
+      >
         <NuxtLink
-          exact-active-class="underline"
+          exact-active-class="active-tab"
           :to="`/entities/${id}`"
-          class="mr-2 rounded-lg px-2 py-1 hover:bg-zinc-200 dark:hover:bg-stone-800"
+          class="mr-2 rounded-lg px-2 py-1 hover:bg-zinc-300 dark:hover:bg-stone-800"
         >
           About
         </NuxtLink>
         <NuxtLink
-          exact-active-class="underline"
+          exact-active-class="active-tab"
           :to="`/entities/${id}/activities`"
-          class="mx-2 rounded-lg px-2 py-1 hover:bg-zinc-200 dark:hover:bg-stone-800"
+          class="mx-2 rounded-lg px-2 py-1 hover:bg-zinc-300 dark:hover:bg-stone-800"
         >
           Activities
         </NuxtLink>
         <NuxtLink
-          exact-active-class="underline"
+          exact-active-class="active-tab"
           :to="`/entities/${id}/relationships`"
-          class="mx-2 rounded-lg px-2 py-1 hover:bg-zinc-200 dark:bg-stone-800 dark:hover:bg-stone-800"
+          class="mx-2 rounded-lg px-2 py-1 hover:bg-zinc-300 dark:bg-stone-800 dark:hover:bg-stone-800"
         >
           Relationships
         </NuxtLink>
         <NuxtLink
-          exact-active-class="underline"
+          exact-active-class="active-tab"
           :to="`/entities/${id}/tags`"
-          class="mx-2 rounded-lg px-2 py-1 hover:bg-zinc-200 dark:hover:bg-stone-800"
+          class="mx-2 rounded-lg px-2 py-1 hover:bg-zinc-300 dark:hover:bg-stone-800"
         >
           Tags
         </NuxtLink>
       </div>
-      <div id="entity-content" class="flex-1">
-        <NuxtPage></NuxtPage>
-      </div>
     </div>
+    <div id="entity-content" class="flex-1">
+      <NuxtPage></NuxtPage>
+    </div>
+  </div>
+  <div v-else>
+    <div class="sticky top-0">
+      <AppHeader class="relative" :title="`Entity ${id}`"></AppHeader>
+    </div>
+    <div id="entity-content" class="flex-1">Entity does not exist</div>
   </div>
 </template>
 
@@ -59,3 +67,9 @@ const id = Array.isArray(route.params.id)
 
 const { data } = await useFetch(`/api/entities/${id}`);
 </script>
+
+<style>
+.active-tab {
+  @apply bg-zinc-200 dark:bg-stone-800;
+}
+</style>

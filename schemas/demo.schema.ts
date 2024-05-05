@@ -2,7 +2,7 @@ import { maxValue, minValue, number, object, optional } from "valibot";
 
 export const DemoLoadServiceConstants = {
   entityCount: { min: 20, max: 200, default: 80 },
-  activityCount: { min: 20, max: 200, default: 40 },
+  activityCount: { min: 20, max: 400, default: 200 },
   tagCount: { min: 20, max: 100, default: 30 },
   relationshipCount: { min: 20, max: 200, default: 100 },
   userCount: { min: 1, max: 20, default: 3 },
