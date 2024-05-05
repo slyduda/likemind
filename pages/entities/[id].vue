@@ -1,7 +1,7 @@
 <template>
-  <div v-if="data" class="container h-full w-full">
+  <div v-if="data" class="h-full w-full">
     <div class="flex h-full flex-col">
-      <AppHeader :title="data.name"> </AppHeader>
+      <AppHeader :title="data.name" hide-path> </AppHeader>
       <div class="flex">
         <NuxtLink
           exact-active-class="underline"

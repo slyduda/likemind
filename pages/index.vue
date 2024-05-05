@@ -1,7 +1,7 @@
 <template>
-  <div class="container h-full w-full">
-    Welcome to LikeMind. This page will contain more information about the app
-    at a later time!
+  <div>
+    <AppHeader title="Likemind" hide-path></AppHeader>
+    <ContentDoc class="prose m-auto w-full"></ContentDoc>
   </div>
 </template>
 

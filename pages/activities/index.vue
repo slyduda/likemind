@@ -1,6 +1,11 @@
 <template>
-  <div class="container h-full w-full">
-    <BaseTableView v-if="data" :data="data"></BaseTableView>
+  <div class="flex h-full flex-col">
+    <AppHeader title="Activities"></AppHeader>
+    <ul v-if="data">
+      <li v-for="activity in data" :key="activity.id" class="mb-4">
+        <AppActivity v-bind="activity"></AppActivity>
+      </li>
+    </ul>
   </div>
 </template>
 

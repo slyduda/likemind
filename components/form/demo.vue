@@ -1,6 +1,6 @@
 <template>
-  <form @submit.prevent="onSubmit">
-    <h1 class="mb-4 text-xl font-bold">Load Demo</h1>
+  <form class="prose m-auto mb-12" @submit.prevent="onSubmit">
+    <h2 class="border-b pb-4">Load Demo</h2>
     <BaseInput
       v-model="entityCount"
       v-bind="entityCountAttrs"

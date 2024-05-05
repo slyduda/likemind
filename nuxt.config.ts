@@ -13,6 +13,8 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@nuxt/test-utils/module",
     "@vueuse/nuxt",
+    "@nuxt/content",
+    "@nuxtjs/google-fonts",
   ],
   postcss: {
     plugins: {
@@ -22,5 +24,11 @@ export default defineNuxtConfig({
   },
   veeValidate: {
     typedSchemaPackage: "valibot",
+  },
+  googleFonts: {
+    display: "swap",
+    families: {
+      Outfit: true,
+    },
   },
 });

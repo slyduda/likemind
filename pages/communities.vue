@@ -1,5 +1,6 @@
 <template>
-  <div class="container h-full w-full font-bold">
+  <div>
+    <AppHeader title="Communities" hide-path></AppHeader>
     <BaseTableView v-if="data" :data="data"></BaseTableView>
   </div>
 </template>
