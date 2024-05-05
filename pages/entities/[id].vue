@@ -66,6 +66,10 @@ const id = Array.isArray(route.params.id)
   : route.params.id;
 
 const { data } = await useFetch(`/api/entities/${id}`);
+
+useHead({
+  title: data.value ? `${data.value.name} | likemind` : "Entities | likemind",
+});
 </script>
 
 <style>

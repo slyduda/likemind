@@ -11,9 +11,13 @@
         >
           <SvgCaretDown class="h-6 rotate-90"></SvgCaretDown>
         </button>
-        <h1 class="archivo whitespace-nowrap text-4xl font-extrabold">
+        <h1
+          v-if="title"
+          class="archivo whitespace-nowrap text-4xl font-extrabold"
+        >
           {{ title }}
         </h1>
+        <slot v-else name="title"></slot>
       </div>
       <AppBreadcrumb v-if="!hidePath" :path="route.fullPath"></AppBreadcrumb>
     </div>
@@ -47,7 +51,7 @@ const bbUrl = computed(
 );
 
 const props = defineProps<{
-  title: string;
+  title?: string;
   hidePath?: boolean;
   namedFile?: boolean;
 }>();

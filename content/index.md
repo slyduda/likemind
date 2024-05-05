@@ -1,4 +1,4 @@
-Welcome to Likemind! An app that aims to map organizational relationships together while taking into account actions and activities that each participate in, in an effort to increase accountability.
+Welcome to likemind! An app that aims to map organizational relationships together while taking into account actions and activities that each participate in, in an effort to increase accountability.
 
 ## Entities
 
@@ -16,6 +16,6 @@ See more: [/relationships](/relationships)
 
 **Activities** are actions that **entities** take throughout their lifetimes. These are ranked by users and filtered by the communities that you interact with so that you are served relevant content.
 
-**Activities** are the core data model that supports the app and the ability to get relative quantitative information about each entity. They are reviewed by users in terms of *importance*, *impact*, and *sentiment*.
+**Activities** are the core data model that supports the app and the ability to get relative quantitative information about each entity. They are reviewed by users in terms of _importance_, _impact_, and _sentiment_.
 
 See more: [/activities](/activities)

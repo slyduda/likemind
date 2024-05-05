@@ -1,8 +1,8 @@
-# LikeMind
+# likemind
 
 ![Node.js CI](https://github.com/slyduda/likemind/actions/workflows/main.yml/badge.svg)
 
-LikeMind is an open source app that aims to keep track of various companies and brands in an effort to associate relevant activities that they engage in.
+likemind is an open source app that aims to keep track of various companies and brands in an effort to associate relevant activities that they engage in.
 
 ## Requirements
 
