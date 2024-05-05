@@ -16,12 +16,7 @@
       ]"
     >
       <div class="flex flex-col">
-        <AppNavButton
-          to="/"
-          label="Likemind"
-          :condensed="collapsed"
-          class="mb-2"
-        >
+        <AppNavButton to="/" label="Home" :condensed="collapsed" class="mb-2">
           <template #icon>
             <AppNavIcon
               ><SvgHomeSmile class="h-6 w-6"></SvgHomeSmile

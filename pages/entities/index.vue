@@ -10,6 +10,10 @@
 </template>
 
 <script setup lang="ts">
+useHead({
+  title: "Entities | likemind",
+});
+
 definePageMeta({
   middleware: "auth",
 });

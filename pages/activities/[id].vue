@@ -59,6 +59,12 @@ const id = Array.isArray(route.params.id)
   : route.params.id;
 
 const { data } = await useFetch(`/api/activities/${id}`);
+
+useHead({
+  title: data.value
+    ? `Activity ${data.value.id} | likemind`
+    : "Activities | likemind",
+});
 </script>
 
 <style>
