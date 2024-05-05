@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full flex-col">
+  <div>
     <AppHeader title="Activities"></AppHeader>
     <ul v-if="data">
       <li v-for="activity in data" :key="activity.id" class="mb-4">

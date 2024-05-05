@@ -60,7 +60,6 @@ const body = reactive({
 
 const { onResponse, onRequestError } = useLogging();
 const route = useRoute();
-console.log(route);
 const router = useRouter();
 
 const pending = ref(false);

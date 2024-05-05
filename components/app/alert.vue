@@ -1,6 +1,6 @@
 <template>
   <div
-    class="archivo mb-4 ml-4 mr-4 inline-block rounded-xl py-2 pl-3 pr-2 text-white"
+    class="archivo relative mb-4 ml-4 mr-4 inline-block rounded-xl py-2 pl-3 pr-2 text-white"
     :class="[
       { 'bg-rose-500': message.type === 'ERROR' || message.type === 'FAILURE' },
       { 'bg-emerald-500': message.type === 'SUCCESS' },
@@ -37,15 +37,25 @@
         ✕
       </button>
     </div>
+    <div
+      class="timer absolute bottom-0 left-0 h-1 bg-white/50"
+      :style="{
+        animationDuration: `${autoAcknowledgeSeconds}s`,
+      }"
+    ></div>
   </div>
 </template>
 
 <script setup lang="ts">
-const mainStore = useMainStore();
+import { useTimeout } from "@vueuse/core";
 
 const props = defineProps<{
   message: Message;
 }>();
+
+const mainStore = useMainStore();
+const autoAcknowledgeSeconds = ref(5);
+const timer = ref(false);
 
 const acknowledge = () => {
   mainStore.acknowledgements[props.message.id] = acknowledgementCreator(
@@ -53,4 +63,30 @@ const acknowledge = () => {
     "MANUAL",
   );
 };
+
+onMounted(() => {
+  timer.value = true;
+  useTimeout(autoAcknowledgeSeconds.value * 1000 + 500, {
+    callback: () => {
+      acknowledge();
+    },
+  });
+});
 </script>
+
+<style>
+.timer {
+  animation-name: shrink;
+  animation-timing-function: linear;
+}
+
+@keyframes shrink {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
+}
+</style>

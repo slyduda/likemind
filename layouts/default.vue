@@ -62,7 +62,7 @@ const mainStore = useMainStore();
 
 const breakpoints = useBreakpoints(breakpointsTailwind);
 const smallerThanSm = breakpoints.smaller("sm"); // only smaller than lg
-const hiddenSidebar = ref(true);
+const hiddenSidebar = ref(false);
 
 onBeforeMount(() => {
   // On page load or when changing themes, best to add inline in `head` to avoid FOUC
