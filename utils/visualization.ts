@@ -4,9 +4,11 @@ import {
   forceManyBody,
   forceSimulation,
   select,
+  treemap,
   type Simulation,
   type SimulationLinkDatum,
   type SimulationNodeDatum,
+  hierarchy,
 } from "d3";
 import type { EntityComplexRead } from "~/db/services/entity/entityBy";
 
@@ -17,6 +19,14 @@ export interface EntityD3Link extends SimulationLinkDatum<EntityD3Node> {
 export type EntityD3Data = {
   nodes: EntityD3Node[];
   links: EntityD3Link[];
+};
+export type TagD3Data = {
+  name: string;
+  children: TagD3ChildData[];
+};
+export type TagD3ChildData = {
+  name: string;
+  count: number;
 };
 export interface EntityD3Node extends SimulationNodeDatum {
   id: string;
@@ -42,6 +52,17 @@ type MassMap = {
 };
 type MassCacheMap = {
   [index: string]: string[];
+};
+type CountMap = {
+  [index: string]: number;
+};
+type Tag = {
+  id: string;
+  name: string;
+};
+type TagItem = {
+  tag: Tag;
+  count: number;
 };
 
 export const entityComplexFlattener = (map: EntityMap): EntityFlatMap => {
@@ -282,4 +303,64 @@ export const entityComplexForceSimulation = (
   });
 
   return simulation;
+};
+
+export const tagCountMapBuilder = (data: TagItem[]) => {
+  return data.reduce((acc: CountMap, curr: any) => {
+    const { tag, count } = curr;
+    // TODO: Test here
+    acc[tag.id] = count;
+    return acc;
+  }, {});
+};
+
+export const tagDataBuilder = (t: TagItem[], count: CountMap): TagD3Data => {
+  const tags = t.map((tag) => tag.tag);
+  const children = tags.map((tag) => {
+    return { name: tag.name, count: count[tag.id] };
+  });
+  return {
+    name: "Root",
+    children,
+  };
+};
+
+export const tagTreemap = (element: SVGElement, data: TagD3Data) => {
+  const selection = select(element);
+
+  if (element) selection.selectAll("*").remove();
+
+  const width = element.clientWidth ?? 600;
+  const height = element.clientHeight ?? 600;
+
+  selection.attr("width", width).attr("height", height);
+
+  const tree = treemap().size([width, height]).padding(1).round(true);
+
+  const root = hierarchy(data).sum((d) => d.count);
+
+  tree(root);
+
+  selection
+    .selectAll("rect")
+    .data(root.leaves())
+    .enter()
+    .append("rect")
+    .attr("x", (d: any) => d.x0)
+    .attr("y", (d: any) => d.y0)
+    .attr("width", (d: any) => d.x1 - d.x0)
+    .attr("height", (d: any) => d.y1 - d.y0)
+    .style("fill", "steelblue");
+
+  // Append the text labels
+  selection
+    .selectAll("text")
+    .data(root.leaves())
+    .enter()
+    .append("text")
+    .attr("x", (d: any) => d.x0 + 5)
+    .attr("y", (d: any) => d.y0 + 20)
+    .text((d) => d.data.name)
+    .attr("font-size", "14px")
+    .attr("fill", "white");
 };

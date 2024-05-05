@@ -59,6 +59,8 @@ const body = reactive({
 });
 
 const { onResponse, onRequestError } = useLogging();
+const route = useRoute();
+console.log(route);
 const router = useRouter();
 
 const pending = ref(false);
@@ -82,6 +84,7 @@ const postLogin = async () => {
     onRequestError,
   })
     .then(() => {
+      if (route.query?.redirect) router.push(route.query.redirect);
       router.push("/");
     })
     .catch(() => {});

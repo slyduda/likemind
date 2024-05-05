@@ -1,10 +1,12 @@
 import { useUserStore } from "~/stores/user";
 
-export default defineNuxtRouteMiddleware(async () => {
+export default defineNuxtRouteMiddleware(async (to) => {
   // Skip middleware on server since it doesn't have access to state
   if (import.meta.server) {
     return;
   }
+
+  console.log(to);
 
   const userStore = useUserStore();
 
@@ -13,6 +15,6 @@ export default defineNuxtRouteMiddleware(async () => {
     userStore.account = response;
   } catch (error) {
     userStore.account = null;
-    return navigateTo("/login");
+    return navigateTo(`/login?redirect=${to.path}`);
   }
 });

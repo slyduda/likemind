@@ -1,24 +1,9 @@
 <template>
   <div>
-    <FormDemo></FormDemo
-    ><BaseButton class="mt-2 bg-red-500 text-red-50" @click="clear">
-      Clear Data
-    </BaseButton>
+    <AppHeader title="Settings" hide-path></AppHeader>
+    <FormDemo></FormDemo>
+    <FormClearDemo></FormClearDemo>
   </div>
 </template>
 
-<script setup lang="ts">
-const { onResponse, onResponseError } = useLogging();
-
-definePageMeta({
-  middleware: "auth",
-});
-
-const clear = () => {
-  $fetch("/api/data", {
-    method: "DELETE",
-    onResponseError,
-    onResponse,
-  });
-};
-</script>
+<script setup lang="ts"></script>

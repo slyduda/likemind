@@ -1,14 +1,17 @@
 <template>
-  <div class="sticky top-0 mb-4 flex justify-between border-b border-zinc-500">
+  <div
+    class="sticky top-0 mb-4 flex justify-between border-b border-zinc-500 bg-zinc-100 pt-4"
+  >
     <div class="pb-2">
-      <div class="flex">
+      <div class="flex items-center">
         <button
-          class="flex h-8 w-8 items-center justify-center"
+          v-if="route.path !== '/'"
+          class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-300 text-zinc-500"
           @click="goBackOneSubpath"
         >
           ◀
         </button>
-        <h1 class="archivo text-2xl">{{ title }}</h1>
+        <h1 class="archivo text-4xl font-extrabold">{{ title }}</h1>
       </div>
       <AppBreadcrumb v-if="!hidePath" :path="route.fullPath"></AppBreadcrumb>
     </div>
@@ -55,7 +58,6 @@ const goBackOneSubpath = () => {
   if (currentPath.includes("/")) {
     // Split the path into segments
     const segments = currentPath.split("/");
-    console.log(segments);
 
     if (segments.length === 2) return router.push("/");
 

@@ -18,9 +18,10 @@
         :class="[{ 'pl-2': hiddenSidebar }, { 'pl-0': !hiddenSidebar }]"
       >
         <div
-          class="h-full overflow-auto rounded-xl bg-zinc-100 p-4 dark:bg-stone-900"
+          class="h-full overflow-auto rounded-xl bg-zinc-100 px-4 dark:bg-stone-900"
         >
           <slot />
+          <div class="mb-20"></div>
         </div>
       </div>
     </div>
@@ -61,7 +62,7 @@ const mainStore = useMainStore();
 
 const breakpoints = useBreakpoints(breakpointsTailwind);
 const smallerThanSm = breakpoints.smaller("sm"); // only smaller than lg
-const hiddenSidebar = ref(false);
+const hiddenSidebar = ref(true);
 
 onBeforeMount(() => {
   // On page load or when changing themes, best to add inline in `head` to avoid FOUC

@@ -15,7 +15,9 @@
           class="mb-2"
         >
           <template #icon>
-            <AppNavIcon> 🧠 </AppNavIcon>
+            <AppNavIcon
+              ><SvgHomeSmile class="h-6 w-6"></SvgHomeSmile
+            ></AppNavIcon>
           </template>
         </AppNavButton>
         <AppNavButton
@@ -25,7 +27,9 @@
           class="mb-2"
         >
           <template #icon>
-            <AppNavIcon> 🧍 </AppNavIcon>
+            <AppNavIcon
+              ><SvgBuildings class="h-6 w-6"></SvgBuildings
+            ></AppNavIcon>
           </template>
         </AppNavButton>
         <AppNavButton
@@ -35,7 +39,9 @@
           class="mb-2"
         >
           <template #icon>
-            <AppNavIcon> 🤸 </AppNavIcon>
+            <AppNavIcon>
+              <SvgCalendar class="h-6 w-6"></SvgCalendar>
+            </AppNavIcon>
           </template>
         </AppNavButton>
         <AppNavButton
@@ -45,25 +51,30 @@
           class="mb-2"
         >
           <template #icon>
-            <AppNavIcon> 👨‍👨‍👧‍👦 </AppNavIcon>
+            <AppNavIcon>
+              <SvgPeopleNearby class="h-6 w-6"></SvgPeopleNearby>
+            </AppNavIcon>
           </template>
         </AppNavButton>
       </div>
 
       <div class="flex flex-col">
         <AppNavButton
-          to="/logs"
-          label="Logs"
+          to="https://ko-fi.com/slyduda"
+          target="_blank"
+          label="Buy Me a Ko-Fi"
           :condensed="collapsed"
           class="mb-2"
         >
           <template #icon>
-            <AppNavIcon>🪵</AppNavIcon>
+            <AppNavIcon><SvgCupPaper class="h-6 w-6"></SvgCupPaper></AppNavIcon>
           </template>
         </AppNavButton>
         <AppNavButton to="/settings" label="Settings" :condensed="collapsed">
           <template #icon>
-            <AppNavIcon>⚙️</AppNavIcon>
+            <AppNavIcon>
+              <SvgSettings class="h-6 w-6"></SvgSettings>
+            </AppNavIcon>
           </template>
         </AppNavButton>
       </div>
