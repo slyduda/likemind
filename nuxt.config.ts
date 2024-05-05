@@ -28,7 +28,7 @@ export default defineNuxtConfig({
   googleFonts: {
     display: "swap",
     families: {
-      Outfit: true,
+      Outfit: "100..900",
     },
   },
 });

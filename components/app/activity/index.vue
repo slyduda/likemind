@@ -14,8 +14,8 @@
 defineProps<{
   id: string;
   description: string;
-  startedAt: Date;
-  endedAt: Date | null;
-  createdAt: Date;
+  startedAt: string;
+  endedAt: string | null;
+  createdAt: string;
 }>();
 </script>

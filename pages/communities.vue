@@ -1,7 +1,7 @@
 <template>
   <div>
-    <AppHeader title="Communities" hide-path></AppHeader>
-    <BaseTableView v-if="data" :data="data"></BaseTableView>
+    <AppHeader title="Communities"></AppHeader>
+    <ContentDoc class="prose m-auto w-full"></ContentDoc>
   </div>
 </template>
 

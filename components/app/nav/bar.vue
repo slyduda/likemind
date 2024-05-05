@@ -1,11 +1,19 @@
 <template>
   <div
-    class="absolute top-0 z-10 bg-zinc-200 sm:relative sm:p-2 dark:bg-stone-950"
-    :class="[{ 'left-0': !hidden }, { '-left-16 sm:hidden': hidden }]"
+    class="absolute top-0 z-10 bg-zinc-200 sm:relative dark:bg-stone-950"
+    :class="[
+      { 'left-0 sm:p-2': !hidden },
+      { '-left-16 sm:-left-20 sm:w-0': hidden },
+    ]"
   >
     <div
-      class="relative z-20 flex h-full flex-col justify-between bg-zinc-200 px-3 py-3 sm:rounded-xl sm:rounded-br-none sm:bg-zinc-100 dark:bg-stone-950 sm:dark:bg-stone-900"
-      :class="[{ 'w-44': !collapsed }, { 'w-16': collapsed }]"
+      class="relative z-20 flex h-full flex-col justify-between bg-zinc-200 py-3 sm:rounded-xl sm:rounded-br-none sm:bg-zinc-100 dark:bg-stone-950 sm:dark:bg-stone-900"
+      :class="[
+        { 'px-3': !hidden },
+        { 'w-44': !collapsed && !hidden },
+        { 'w-16': collapsed && !hidden },
+        { 'w-0 px-0': hidden },
+      ]"
     >
       <div class="flex flex-col">
         <AppNavButton
@@ -81,7 +89,11 @@
 
       <button
         ref="buttonRef"
-        class="absolute -right-12 bottom-0 box-border flex h-14 w-12 items-center justify-center rounded-br-full rounded-tr-full bg-zinc-200 bg-gradient-to-r font-bold text-black sm:from-zinc-100 sm:to-zinc-200 dark:bg-stone-950 dark:to-zinc-800 sm:dark:from-zinc-900"
+        class="absolute bottom-0 box-border flex h-14 w-12 items-center justify-center rounded-br-full rounded-tr-full bg-zinc-200 bg-gradient-to-r font-bold text-black sm:from-zinc-100 sm:to-zinc-200 dark:bg-stone-950 dark:to-zinc-800 sm:dark:from-zinc-900"
+        :class="[
+          { '-right-28 sm:-right-32': hidden },
+          { '-right-12': !hidden },
+        ]"
         stone
         @click="toggleSidebar"
       >
