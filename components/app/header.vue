@@ -7,7 +7,7 @@
         <button
           v-if="route.path !== '/'"
           class="mr-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-zinc-200 text-zinc-500 hover:bg-zinc-300"
-          @click="goBackOneSubpath"
+          @click="router.back"
         >
           <SvgCaretDown class="h-6 rotate-90"></SvgCaretDown>
         </button>
