@@ -18,7 +18,7 @@
       <div class="flex flex-col">
         <AppNavButton
           to="/"
-          label="LikeMind"
+          label="Likemind"
           :condensed="collapsed"
           class="mb-2"
         >
@@ -89,7 +89,7 @@
 
       <button
         ref="buttonRef"
-        class="absolute bottom-0 box-border flex h-14 w-12 items-center justify-center rounded-br-full rounded-tr-full bg-zinc-200 bg-gradient-to-r font-bold text-black sm:from-zinc-100 sm:to-zinc-200 dark:bg-stone-950 dark:to-zinc-800 sm:dark:from-zinc-900"
+        class="noselect absolute bottom-0 box-border flex h-14 w-12 items-center justify-center rounded-br-full rounded-tr-full bg-zinc-200 bg-gradient-to-r font-bold text-black sm:from-zinc-100 sm:to-zinc-200 dark:bg-stone-950 dark:to-zinc-800 sm:dark:from-zinc-900"
         :class="[
           { '-right-28 sm:-right-32': hidden },
           { '-right-12': !hidden },
@@ -100,12 +100,12 @@
         <ClientOnly>
           <SvgCaretDown
             :dark-mode="false"
-            class="h-5 w-5"
+            class="h-6 w-6"
             :class="[{ '-rotate-90': collapsed }, { 'rotate-90': !collapsed }]"
           />
           <template #fallback>
             <SvgCaretDown
-              class="h-5 w-5"
+              class="h-6 w-6"
               :class="[
                 { '-rotate-90': collapsed },
                 { 'rotate-90': !collapsed },
@@ -130,14 +130,17 @@ const hidden = defineModel("hidden", {
   required: true,
 });
 
+const holdMute = useState("holdMute", () => false);
+
 const buttonRef = ref<HTMLElement | null>(null);
 const onLongPressCallback = () => {
   if (collapsed.value) hidden.value = true;
+  holdMute.value = true;
 };
 
 onLongPress(buttonRef, onLongPressCallback, {
   modifiers: { prevent: true },
-  delay: 300,
+  delay: 800,
 });
 
 const toggleSidebar = () => {
@@ -149,3 +152,15 @@ const toggleSidebar = () => {
   }
 };
 </script>
+
+<style>
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+</style>

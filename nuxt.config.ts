@@ -31,4 +31,18 @@ export default defineNuxtConfig({
       Outfit: "100..900",
     },
   },
+  app: {
+    head: {
+      meta: [
+        {
+          name: "theme-color",
+          content: "#e4e4e7",
+        },
+        {
+          name: "viewport",
+          content: "width=device-width, initial-scale=1.0, viewport-fit=cover",
+        },
+      ],
+    },
+  },
 });

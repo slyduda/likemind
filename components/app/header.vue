@@ -1,17 +1,19 @@
 <template>
   <div
-    class="sticky top-0 mb-4 flex justify-between border-b border-zinc-500 bg-zinc-100 pt-4"
+    class="sticky top-0 mb-4 flex w-full justify-between border-b border-zinc-500 bg-zinc-100 pt-4"
   >
-    <div class="pb-2">
-      <div class="flex items-center">
+    <div class="w-full">
+      <div class="flex w-full items-center overflow-hidden pb-2">
         <button
           v-if="route.path !== '/'"
-          class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-300 text-zinc-500"
+          class="mr-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-zinc-200 text-zinc-500 hover:bg-zinc-300"
           @click="goBackOneSubpath"
         >
-          ◀
+          <SvgCaretDown class="h-6 rotate-90"></SvgCaretDown>
         </button>
-        <h1 class="archivo text-4xl font-extrabold">{{ title }}</h1>
+        <h1 class="archivo whitespace-nowrap text-4xl font-extrabold">
+          {{ title }}
+        </h1>
       </div>
       <AppBreadcrumb v-if="!hidePath" :path="route.fullPath"></AppBreadcrumb>
     </div>

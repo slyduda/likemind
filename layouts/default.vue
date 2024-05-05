@@ -21,7 +21,6 @@
           class="h-full overflow-auto rounded-xl bg-zinc-100 px-4 dark:bg-stone-900"
         >
           <slot />
-          <div class="mb-20"></div>
         </div>
       </div>
     </div>
@@ -30,12 +29,14 @@
       class="absolute h-full w-full sm:hidden"
       :class="[
         { 'pointer-events-none bg-black/0': mainStore.collapsedSidebar },
+        { 'pointer-events-auto': holdMute },
         {
           'pointer-events-auto bg-black/10 backdrop-blur-md':
             !mainStore.collapsedSidebar,
         },
       ]"
-      @click="mainStore.collapsedSidebar = !mainStore.collapsedSidebar"
+      @touchend="lift"
+      @click="collapse"
     ></div>
 
     <div
@@ -63,6 +64,17 @@ const mainStore = useMainStore();
 const breakpoints = useBreakpoints(breakpointsTailwind);
 const smallerThanSm = breakpoints.smaller("sm"); // only smaller than lg
 const hiddenSidebar = ref(false);
+const holdMute = useState("holdMute", () => false); // used to make everything on the screen disabled until timer or touchup
+
+watch(holdMute, (val) => {
+  if (val) {
+    useTimeout(500, {
+      callback: () => {
+        holdMute.value = false;
+      },
+    });
+  }
+});
 
 onBeforeMount(() => {
   // On page load or when changing themes, best to add inline in `head` to avoid FOUC
@@ -85,4 +97,12 @@ const unacknowledgedMessages = computed<Message[]>(() => {
     return !mainStore.acknowledgements.hasOwnProperty(message.id);
   });
 });
+
+const lift = () => {
+  if (holdMute.value) holdMute.value = false;
+};
+
+const collapse = () => {
+  if (!holdMute.value) mainStore.collapsedSidebar = !mainStore.collapsedSidebar;
+};
 </script>

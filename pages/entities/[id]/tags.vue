@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full">
+  <div class="h-full pb-4">
     <svg ref="visualization" class="z-50 h-full w-full"></svg>
   </div>
 </template>

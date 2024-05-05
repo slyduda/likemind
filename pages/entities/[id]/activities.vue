@@ -1,8 +1,11 @@
 <template>
   <div>
-    <ul>
-      <li v-for="(d, index) in data" :key="index">{{ d.activity }}</li>
+    <ul v-if="data">
+      <li v-for="(d, index) in data" :key="index" class="mb-4">
+        <AppActivity v-bind="d"></AppActivity>
+      </li>
     </ul>
+    <div class="mb-20"></div>
   </div>
 </template>
 

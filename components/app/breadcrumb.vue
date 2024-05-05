@@ -1,10 +1,12 @@
 <template>
-  <ul class="font-mono text-xs font-bold text-zinc-500 sm:text-sm">
+  <ul
+    class="w-full overflow-x-auto overflow-y-hidden whitespace-nowrap pb-2 font-mono text-xs font-bold text-zinc-500 sm:text-sm"
+  >
     <li v-for="(piece, index) in pieces" :key="index" class="inline-block">
       <div class="mx-1 inline-block">/</div>
       <NuxtLink
         :to="breadcrumbs[index]"
-        class="rounded px-1.5 py-0.5 hover:bg-zinc-200 dark:hover:bg-zinc-800"
+        class="rounded px-1.5 py-0.5 hover:bg-zinc-300 dark:hover:bg-zinc-800"
       >
         {{ piece }}
       </NuxtLink>
