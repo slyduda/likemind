@@ -22,14 +22,14 @@ import {
 export const clearTables = async (options?: { fake?: boolean }) => {
   const { fake = true } = options ?? {};
   if (fake) {
-    await trueClearTables();
+    await fakeClearTables();
   } else {
     await normalClearTables();
   }
   return;
 };
 
-const trueClearTables = async () => {
+const fakeClearTables = async () => {
   await db
     .delete(relationshipReview)
     .where(eq(relationshipReview.isFake, true));
