@@ -104,7 +104,7 @@ const blur = () => emit("blur", true);
 
     <!-- Input Wrapper -->
     <div
-      class="relative w-full border-solid bg-white focus:ring-4 dark:bg-stone-950"
+      class="w-full border-solid bg-white focus:ring-4 dark:bg-stone-950"
       :class="[
         { 'h-12': !height },
         classes,
