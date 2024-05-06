@@ -11,9 +11,9 @@ export default defineEventHandler<
   { body: EntityCreateInputSchema },
   Promise<EntityReadSchema>
 >(async (event) => {
-  // Get the context from our middleware
-  const id = event.context.user;
-  if (!id) throw Error("You are not authenticated");
+  // Get the user id from the context from our middleware
+  const userId = event.context.user;
+  if (!userId) throw Error("You are not authenticated");
 
   // Get the body and validate
   const body = await readBody(event);
