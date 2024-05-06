@@ -5,6 +5,7 @@ import type { RelationshipInsert, RelationshipSelect } from "../models";
 type OptionalRelationshipInsert = {
   id?: string;
   createdAt?: Date;
+  isFake?: boolean;
 };
 
 export interface RelationshipFactoryCreate
@@ -21,6 +22,7 @@ export const useRelationshipFactory = () => {
   ): RelationshipFactoryCreate => {
     return {
       id: faker.string.uuid(),
+      isFake: true,
       ...insert,
     };
   };

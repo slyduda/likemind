@@ -10,6 +10,9 @@ type OptionalUserInsert = {
   handle?: string;
   password?: string;
   isRegistered?: boolean;
+  isAdmin?: boolean;
+  isLocked?: boolean;
+  isFake?: boolean;
   createdAt?: Date;
 };
 
@@ -18,6 +21,9 @@ export interface UserFactoryCreate
     UserSelect,
     {
       createdAt?: Date;
+      isAdmin?: boolean;
+      isLocked?: boolean;
+      isRegistered?: boolean;
     }
   > {}
 
@@ -29,7 +35,7 @@ export const useUserFactory = () => {
       id: faker.string.uuid(),
       handle: faker.internet.displayName(),
       email: faker.internet.email(),
-      isRegistered: false,
+      isFake: true,
       ...insert,
       password: await parseAsync(
         userPasswordTransformer,

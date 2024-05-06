@@ -11,6 +11,7 @@ type OptionalRelationshipArcInsert = {
   startEntityId?: string;
   endEntityId?: string;
   createdAt?: Date;
+  isFake?: boolean;
 };
 
 export interface RelationshipArcFactoryCreate
@@ -31,6 +32,7 @@ export const useRelationshipArcFactory = () => {
     return {
       id: faker.string.uuid(),
       type: faker.person.jobType(),
+      isFake: true,
       ...insert,
       relationshipId: insert?.relationshipId
         ? insert.relationshipId

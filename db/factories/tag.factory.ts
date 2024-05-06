@@ -6,6 +6,7 @@ type OptionalTagInsert = {
   id?: string;
   name?: string;
   createdAt?: Date;
+  isFake?: boolean;
 };
 
 export interface TagFactoryCreate
@@ -21,6 +22,7 @@ export const useTagFactory = () => {
     return {
       id: faker.string.uuid(),
       name: faker.lorem.word(),
+      isFake: true,
       ...insert,
     };
   };

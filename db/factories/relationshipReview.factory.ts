@@ -13,6 +13,7 @@ type OptionalRelationshipReviewInsert = {
   relationshipId?: string;
   userId?: string;
   createdAt?: Date;
+  isFake?: boolean;
 };
 
 export interface RelationshipReviewFactoryCreate
@@ -33,6 +34,7 @@ export const useRelationshipReviewFactory = () => {
     return {
       id: faker.string.uuid(),
       significance: faker.number.int({ min: 0, max: 100 }),
+      isFake: true,
       ...insert,
       relationshipId: insert?.relationshipId
         ? insert.relationshipId

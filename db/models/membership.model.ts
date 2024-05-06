@@ -1,4 +1,4 @@
-import { timestamp, pgTable, unique, uuid } from "drizzle-orm/pg-core";
+import { timestamp, pgTable, unique, uuid, boolean } from "drizzle-orm/pg-core";
 import { user, community } from ".";
 import { relations } from "drizzle-orm";
 
@@ -13,6 +13,7 @@ export const membership = pgTable(
       .notNull()
       .references(() => community.id),
     createdAt: timestamp("created_at").notNull().defaultNow(),
+    isFake: boolean("is_fake").notNull().default(false),
   },
   (table) => {
     return {

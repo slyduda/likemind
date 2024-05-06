@@ -4,6 +4,7 @@ import {
   primaryKey,
   uuid,
   text,
+  boolean,
 } from "drizzle-orm/pg-core";
 import { activity, tag } from ".";
 import { relations } from "drizzle-orm";
@@ -19,6 +20,7 @@ export const activityTag = pgTable(
       .notNull()
       .references(() => tag.name),
     createdAt: timestamp("created_at").notNull().defaultNow(),
+    isFake: boolean("is_fake").notNull().default(false),
   },
   (table) => {
     return {

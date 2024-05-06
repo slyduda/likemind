@@ -10,6 +10,7 @@ type OptionalActivityInsert = {
   startedAt?: Date;
   endedAt?: Date | null;
   createdAt?: Date;
+  isFake?: boolean;
 };
 
 export interface ActivityFactoryCreate
@@ -35,6 +36,7 @@ export const useActivityFactory = () => {
       description: faker.lorem.paragraph({ max: 5, min: 2 }),
       startedAt,
       endedAt: isEvent ? startedAt : endedAt,
+      isFake: true,
       ...insert,
     };
   };

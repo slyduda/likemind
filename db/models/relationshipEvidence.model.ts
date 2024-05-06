@@ -1,4 +1,4 @@
-import { timestamp, pgTable, uuid } from "drizzle-orm/pg-core";
+import { timestamp, pgTable, uuid, boolean } from "drizzle-orm/pg-core";
 import { relationship, evidence } from ".";
 import { relations } from "drizzle-orm";
 
@@ -11,6 +11,7 @@ export const relationshipEvidence = pgTable("relationship_evidence", {
     .notNull()
     .references(() => evidence.id),
   createdAt: timestamp("created_at").notNull().defaultNow(),
+  isFake: boolean("is_fake").notNull().default(false),
 });
 
 export const relationshipEvidencesRelations = relations(

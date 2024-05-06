@@ -4,6 +4,7 @@ import {
   smallint,
   unique,
   uuid,
+  boolean,
 } from "drizzle-orm/pg-core";
 import { relationship, user } from ".";
 import { relations } from "drizzle-orm";
@@ -20,6 +21,7 @@ export const relationshipReview = pgTable(
       .notNull()
       .references(() => user.id),
     createdAt: timestamp("created_at").notNull().defaultNow(),
+    isFake: boolean("is_fake").notNull().default(false),
   },
   (table) => {
     return {
