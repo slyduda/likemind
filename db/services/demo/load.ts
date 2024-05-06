@@ -90,14 +90,7 @@ export const loadDemo = async (options?: {
   await entityInsertMany(entities);
 
   for (let i = 0; i < userCount; i++) {
-    const user =
-      i !== 0
-        ? await userFactory.create()
-        : await userFactory.create({
-            handle: "slyduda",
-            email: "me@slyduda.com",
-            password: "possword",
-          });
+    const user = await userFactory.create();
     users.push(user);
   }
   await userInsertMany(users);
