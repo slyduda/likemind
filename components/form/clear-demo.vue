@@ -13,10 +13,6 @@
 <script setup lang="ts">
 const { onResponse, onResponseError } = useLogging();
 
-definePageMeta({
-  middleware: "auth",
-});
-
 const pending = ref(false);
 const body = reactive({
   fake: true,
