@@ -8,6 +8,7 @@ type OptionalActivityTagInsert = {
   tagName?: string;
   activityId?: string;
   createdAt?: Date;
+  isFake?: boolean;
 };
 
 export interface ActivityTagFactoryCreate
@@ -27,6 +28,7 @@ export const useActivityTagFactory = () => {
   ): ActivityTagFactoryCreate => {
     return {
       id: faker.string.uuid(),
+      isFake: true,
       ...insert,
       activityId: insert?.activityId
         ? insert.activityId

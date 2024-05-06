@@ -9,6 +9,9 @@ export const user = pgTable("user", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   password: text("password").notNull(),
   isRegistered: boolean("is_registered").notNull().default(false),
+  isAdmin: boolean("is_admin").notNull().default(false),
+  isLocked: boolean("is_locked").notNull().default(false),
+  isFake: boolean("is_fake").notNull().default(false),
 });
 
 export const userRelations = relations(user, ({ many }) => ({

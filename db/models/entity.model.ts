@@ -1,11 +1,12 @@
 import { relations } from "drizzle-orm";
-import { timestamp, pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { timestamp, pgTable, text, uuid, boolean } from "drizzle-orm/pg-core";
 import { involvement, relationshipArc } from ".";
 
 export const entity = pgTable("entity", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
+  isFake: boolean("is_fake").notNull().default(false),
 });
 
 export const entityRelations = relations(entity, ({ many }) => ({

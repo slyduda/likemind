@@ -1,4 +1,4 @@
-import { timestamp, pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { timestamp, pgTable, text, uuid, boolean } from "drizzle-orm/pg-core";
 import { entity, activity } from ".";
 import { relations } from "drizzle-orm";
 
@@ -13,6 +13,7 @@ export const involvement = pgTable("involvement", {
     .notNull()
     .references(() => entity.id),
   createdAt: timestamp("created_at").notNull().defaultNow(),
+  isFake: boolean("is_fake").notNull().default(false),
 });
 
 export const involvementRelations = relations(involvement, ({ one }) => ({

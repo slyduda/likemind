@@ -6,6 +6,7 @@ type OptionalEntityInsert = {
   id?: string;
   name?: string;
   createdAt?: Date;
+  isFake?: boolean;
 };
 
 export interface EntityFactoryCreate
@@ -21,6 +22,7 @@ export const useEntityFactory = () => {
     return {
       id: faker.string.uuid(),
       name: faker.company.name(),
+      isFake: true,
       ...insert,
     };
   };

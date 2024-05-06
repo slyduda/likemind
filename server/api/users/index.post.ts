@@ -4,7 +4,7 @@ import {
   userCreateSchema,
   userReadSchema,
 } from "@/schemas/user.schema";
-import { parse } from "valibot";
+import { parse, parseAsync } from "valibot";
 import { userInsert } from "@/db/services";
 
 export default defineEventHandler<
@@ -14,7 +14,7 @@ export default defineEventHandler<
   const body = await readBody(event);
 
   // Parse and transform the body
-  const user = parse(userCreateSchema, body);
+  const user = await parseAsync(userCreateSchema, body);
 
   // Add the user to the DB
   const newUser = await userInsert(user);

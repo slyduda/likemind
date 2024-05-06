@@ -11,6 +11,7 @@ type OptionalInvolvementInsert = {
   entityId?: string;
   activityId?: string;
   createdAt?: Date;
+  isFake?: boolean;
 };
 
 export interface InvolvementFactoryCreate
@@ -32,6 +33,7 @@ export const useInvolvementFactory = () => {
       id: faker.string.uuid(),
       description: faker.lorem.paragraph({ min: 1, max: 3 }),
       source: "",
+      isFake: true,
       ...insert,
       activityId: insert?.activityId
         ? insert.activityId

@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
   // Fetch the user from the database
   const user = await userById({ id });
-  if (!user) throw Error("Invalid JWT");
+  if (!user) throw Error("User does not exist");
 
   // Parse and return
   const parsedUser = parse(userReadSchema, user);

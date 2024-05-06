@@ -19,7 +19,7 @@ export default defineEventHandler((event) => {
       const sub = parse(string(), decoded.sub);
       event.context.user = sub;
     } catch (err) {
-      // err
+      deleteCookie(event, "access_token");
     }
   }
 });

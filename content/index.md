@@ -1,4 +1,4 @@
-Welcome to likemind! An app that aims to map organizational relationships together while taking into account actions and activities that each participate in, in an effort to increase accountability.
+Welcome to **likemind**! An app that aims to map organizational relationships together while taking into account actions and activities that each participate in, in an effort to increase accountability.
 
 ## Entities
 
