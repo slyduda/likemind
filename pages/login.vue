@@ -83,7 +83,13 @@ const postLogin = async () => {
     onRequestError,
   })
     .then(() => {
-      if (route.query?.redirect) router.push(route.query.redirect);
+      if (route.query?.redirect) {
+        if (typeof route.query.redirect === "string") {
+          router.push(route.query.redirect);
+        } else {
+          router.push(route.query.redirect.join());
+        }
+      }
       router.push("/");
     })
     .catch(() => {});
