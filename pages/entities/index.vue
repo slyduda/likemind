@@ -1,11 +1,8 @@
 <template>
   <div>
     <AppHeader title="Entities"></AppHeader>
-    <ul v-if="data">
-      <li v-for="entity in data" :key="entity.id" class="mb-4">
-        <AppEntity v-bind="entity"></AppEntity>
-      </li>
-    </ul>
+    <ContentDoc class="prose m-auto w-full"></ContentDoc>
+    <div class="mb-20"></div>
   </div>
 </template>
 
@@ -15,13 +12,6 @@ useHead({
 });
 
 definePageMeta({
-  middleware: "auth",
-});
-
-const { onResponseError, onRequestError } = useLogging();
-
-const { data } = await useFetch("/api/entities", {
-  onResponseError,
-  onRequestError,
+  middleware: "soft-auth",
 });
 </script>
