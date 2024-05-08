@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppHeader title="Activities"></AppHeader>
+    <AppHeader title="Involvements"></AppHeader>
     <ContentDoc class="prose m-auto w-full"></ContentDoc>
     <div class="mb-20"></div>
   </div>
@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 useHead({
-  title: "Activities | likemind",
+  title: "Involvements | likemind",
 });
 
 definePageMeta({
