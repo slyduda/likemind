@@ -4,7 +4,6 @@ import { relations } from "drizzle-orm";
 
 export const involvement = pgTable("involvement", {
   id: uuid("id").primaryKey().defaultRandom(),
-  source: text("source").notNull(),
   description: text("description").notNull(),
   activityId: uuid("activity_id")
     .notNull()

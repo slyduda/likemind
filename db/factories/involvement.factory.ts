@@ -7,7 +7,6 @@ import type { InvolvementInsert, InvolvementSelect } from "../models";
 type OptionalInvolvementInsert = {
   id?: string;
   description?: string;
-  source?: string;
   entityId?: string;
   activityId?: string;
   createdAt?: Date;
@@ -32,7 +31,6 @@ export const useInvolvementFactory = () => {
     return {
       id: faker.string.uuid(),
       description: faker.lorem.paragraph({ min: 1, max: 3 }),
-      source: "",
       isFake: true,
       ...insert,
       activityId: insert?.activityId
