@@ -8,6 +8,7 @@ export * from "./entity.model";
 export * from "./evidence.model";
 export * from "./involvement.model";
 export * from "./involvementReview.model";
+export * from "./involvementEvidence.model";
 export * from "./relationship.model";
 export * from "./relationshipArc.model";
 export * from "./relationshipEvidence.model";

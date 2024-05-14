@@ -1,6 +1,6 @@
 import { relations } from "drizzle-orm";
 import { timestamp, pgTable, text, uuid, boolean } from "drizzle-orm/pg-core";
-import { activityEvidence, relationshipEvidence } from ".";
+import { activityEvidence, involvementEvidence, relationshipEvidence } from ".";
 
 export const evidence = pgTable("evidence", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -13,4 +13,5 @@ export const evidence = pgTable("evidence", {
 export const evidenceRelations = relations(evidence, ({ many }) => ({
   activityEvidences: many(activityEvidence),
   relationshipEvidences: many(relationshipEvidence),
+  involvementEvidences: many(involvementEvidence),
 }));
