@@ -40,3 +40,6 @@ export const activityReviewRelations = relations(activityReview, ({ one }) => ({
     references: [user.id],
   }),
 }));
+
+export type ActivityReviewInsert = typeof activityReview.$inferInsert;
+export type ActivityReviewSelect = typeof activityReview.$inferSelect;

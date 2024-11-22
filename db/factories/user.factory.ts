@@ -1,8 +1,9 @@
 import { faker } from "@faker-js/faker";
-import { userInsert } from "../services";
+import { userInsert } from "@/services";
 import { parseAsync } from "valibot";
 import { userPasswordTransformer } from "~/schemas/user.schema";
-import type { UserInsert, UserSelect } from "../models";
+import type { UserInsert, UserSelect } from "@/db/models";
+import type { Modify } from "@/@types";
 
 type OptionalUserInsert = {
   id?: string;

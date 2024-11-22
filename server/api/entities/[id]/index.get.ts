@@ -1,4 +1,4 @@
-import { entityById } from "@/db/services";
+import { entityById } from "~/services";
 
 import { object, parse } from "valibot";
 import { entityIdSchema } from "~/schemas/entity.schema";

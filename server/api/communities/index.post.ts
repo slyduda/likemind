@@ -1,5 +1,5 @@
 import { parse } from "valibot";
-import { communityInsert } from "~/db/services/community/communityInsert";
+import { communityInsert } from "~/services/community/communityInsert";
 import {
   CommunityCreateInputSchema,
   CommunityReadSchema,

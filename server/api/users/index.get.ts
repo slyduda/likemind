@@ -1,5 +1,5 @@
 import { parse } from "valibot";
-import { userById } from "~/db/services";
+import { userById } from "~/services";
 import { userReadSchema } from "~/schemas/user.schema";
 
 export default defineEventHandler(async (event) => {

@@ -1,5 +1,5 @@
 import { boolean, object, optional, parse } from "valibot";
-import { clearTables, userById } from "~/db/services";
+import { clearTables, userById } from "~/services";
 
 const clearSchema = object({
   fake: optional(boolean(), true),

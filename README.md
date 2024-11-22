@@ -19,7 +19,7 @@ POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_USER=default
 POSTGRES_PASSWORD=password
-POSTGRES_DATABASE=likemind_db
+POSTGRES_DB=likemind_db
 JWT_SECRET=secret
 ```
 

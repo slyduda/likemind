@@ -1,5 +1,5 @@
 import { parse } from "valibot";
-import { activityInsert } from "~/db/services/activity/activityInsert";
+import { activityInsert } from "~/services/activity/activityInsert";
 import {
   ActivityCreateInputSchema,
   ActivityReadSchema,

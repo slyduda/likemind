@@ -7,7 +7,7 @@ import {
   toMaxValue,
   toMinValue,
 } from "valibot";
-import { entityComplexById } from "~/db/services/entity/entityBy";
+import { entityComplexById } from "~/services/entity/entityBy";
 import { entityIdSchema } from "~/schemas/entity.schema";
 
 const getEntityByIdBodySchema = object({

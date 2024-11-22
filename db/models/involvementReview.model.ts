@@ -44,3 +44,6 @@ export const involvementReviewRelations = relations(
     }),
   }),
 );
+
+export type InvolvementReviewInsert = typeof involvementReview.$inferInsert;
+export type InvolvementReviewSelect = typeof involvementReview.$inferSelect;

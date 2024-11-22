@@ -1,4 +1,5 @@
 import {
+  useActivityReviewFactory,
   useActivityFactory,
   useActivityTagFactory,
   useEntityFactory,
@@ -6,42 +7,57 @@ import {
   useRelationshipReviewFactory,
   useTagFactory,
   useUserFactory,
-  type EntityFactoryCreate,
-  type ActivityFactoryCreate,
-  type InvolvementFactoryCreate,
-  type TagFactoryCreate,
-  type ActivityTagFactoryCreate,
-  type RelationshipReviewFactoryCreate,
-  type UserFactoryCreate,
-} from "@/db/factories";
-import { clearTables } from ".";
-import { faker } from "@faker-js/faker";
-
-import { randomNonCollidingIndices, randomWeightedValue } from "@/utils";
-import {
+  useEvidenceFactory,
   useRelationshipFactory,
-  type RelationshipFactoryCreate,
-} from "~/db/factories/relationship.factory";
-import {
   useRelationshipArcFactory,
-  type RelationshipArcFactoryCreate,
-} from "~/db/factories/relationshipArc.factory";
-import { DemoLoadServiceConstants } from "~/schemas/demo.schema";
+  useInvolvementReviewFactory,
+  useRelationshipEvidenceFactory,
+  useInvolvementEvidenceFactory,
+  useActivityEvidenceFactory,
+} from "@/db/factories";
+import type {
+  EntityFactoryCreate,
+  ActivityFactoryCreate,
+  InvolvementFactoryCreate,
+  TagFactoryCreate,
+  ActivityTagFactoryCreate,
+  RelationshipReviewFactoryCreate,
+  UserFactoryCreate,
+  EvidenceFactoryCreate,
+  RelationshipFactoryCreate,
+  InvolvementReviewFactoryCreate,
+  RelationshipArcFactoryCreate,
+  ActivityReviewFactoryCreate,
+  ActivityEvidenceFactoryCreate,
+  InvolvementEvidenceFactoryCreate,
+  RelationshipEvidenceFactoryCreate,
+} from "@/db/factories";
 import {
+  clearTables,
   activityInsertMany,
+  activityReviewInsertMany,
   activityTagInsertMany,
   entityInsertMany,
+  evidenceInsertMany,
   involvementInsertMany,
+  involvementReviewInsertMany,
   relationshipArcInsertMany,
   relationshipInsertMany,
   relationshipReviewInsertMany,
   tagInsertMany,
   userInsertMany,
-} from "..";
+  relationshipEvidenceInsertMany,
+  activityEvidenceInsertMany,
+  involvementEvidenceInsertMany,
+} from "@/services";
+import { faker } from "@faker-js/faker";
+import { randomNonCollidingIndices, randomWeightedValue } from "@/utils";
+import { DemoLoadServiceConstants } from "@/schemas/demo.schema";
 
 export const loadDemo = async (options?: {
   entityCount?: number;
   activityCount?: number;
+  evidenceCount?: number;
   tagCount?: number;
   relationshipCount?: number;
   userCount?: number;
@@ -49,38 +65,54 @@ export const loadDemo = async (options?: {
   const {
     entityCount = DemoLoadServiceConstants.entityCount.default,
     activityCount = DemoLoadServiceConstants.activityCount.default,
+    evidenceCount = DemoLoadServiceConstants.evidenceCount.default,
     tagCount = DemoLoadServiceConstants.tagCount.default,
     relationshipCount = DemoLoadServiceConstants.relationshipCount.default,
     userCount = DemoLoadServiceConstants.userCount.default,
-  } = options ?? {
-    entityCount: DemoLoadServiceConstants.entityCount.default,
-    activityCount: DemoLoadServiceConstants.activityCount.default,
-    tagCount: DemoLoadServiceConstants.tagCount.default,
-    relationshipCount: DemoLoadServiceConstants.relationshipCount.default,
-    userCount: DemoLoadServiceConstants.userCount.default,
-  };
+  } = options ?? {};
 
   faker.seed(5432);
   await clearTables();
 
+  const activityFactory = useActivityFactory();
+  const activityEvidenceFactory = useActivityEvidenceFactory();
+  const activityReviewFactory = useActivityReviewFactory();
+  const activityTagFactory = useActivityTagFactory();
+
   const entityFactory = useEntityFactory();
+  const evidenceFactory = useEvidenceFactory();
+
   const relationshipFactory = useRelationshipFactory();
   const relationshipArcFactory = useRelationshipArcFactory();
-  const activityFactory = useActivityFactory();
-  const involvementFactory = useInvolvementFactory();
-  const tagFactory = useTagFactory();
-  const activityTagFactory = useActivityTagFactory();
-  const userFactory = useUserFactory();
+  const relationshipEvidenceFactory = useRelationshipEvidenceFactory();
   const relationshipReviewFactory = useRelationshipReviewFactory();
 
+  const involvementFactory = useInvolvementFactory();
+  const involvementEvidenceFactory = useInvolvementEvidenceFactory();
+  const involvementReviewFactory = useInvolvementReviewFactory();
+
+  const tagFactory = useTagFactory();
+  const userFactory = useUserFactory();
+
   const entities: EntityFactoryCreate[] = [];
+  const evidences: EvidenceFactoryCreate[] = [];
+
   const activities: ActivityFactoryCreate[] = [];
-  const involvements: InvolvementFactoryCreate[] = [];
-  const tags: TagFactoryCreate[] = [];
   const activityTags: ActivityTagFactoryCreate[] = [];
+  const activityEvidences: ActivityEvidenceFactoryCreate[] = [];
+  const activityReviews: ActivityReviewFactoryCreate[] = [];
+
+  const involvements: InvolvementFactoryCreate[] = [];
+  const involvementEvidences: InvolvementEvidenceFactoryCreate[] = [];
+  const involvementReviews: InvolvementReviewFactoryCreate[] = [];
+
+  const tags: TagFactoryCreate[] = [];
+
   const relationships: RelationshipFactoryCreate[] = [];
+  const relationshipEvidences: RelationshipEvidenceFactoryCreate[] = [];
   const relationshipArcs: RelationshipArcFactoryCreate[] = [];
   const relationshipReviews: RelationshipReviewFactoryCreate[] = [];
+
   const users: UserFactoryCreate[] = [];
 
   for (let i = 0; i < entityCount; i++) {
@@ -95,9 +127,24 @@ export const loadDemo = async (options?: {
   }
   await userInsertMany(users);
 
+  for (let i = 0; i < evidenceCount; i++) {
+    const user = await evidenceFactory.create();
+    evidences.push(user);
+  }
+  await evidenceInsertMany(evidences);
+
   for (let i = 0; i < relationshipCount; i++) {
     const relationship = await relationshipFactory.create();
     relationships.push(relationship);
+
+    const [evidenceIndex] = randomNonCollidingIndices(evidences.length, 1);
+    const evidence = evidences[evidenceIndex];
+
+    const relationshipEvidence = await relationshipEvidenceFactory.create({
+      relationshipId: relationship.id,
+      evidenceId: evidence.id,
+    });
+    relationshipEvidences.push(relationshipEvidence);
 
     const [entityAIndex, entityBIndex] = randomNonCollidingIndices(
       entities.length,
@@ -128,6 +175,7 @@ export const loadDemo = async (options?: {
   }
   await relationshipInsertMany(relationships);
   await relationshipArcInsertMany(relationshipArcs);
+  await relationshipEvidenceInsertMany(relationshipEvidences);
   await relationshipReviewInsertMany(relationshipReviews);
 
   for (let i = 0; i < tagCount; i++) {
@@ -140,6 +188,16 @@ export const loadDemo = async (options?: {
     // Create an activity
     const activity = await activityFactory.create();
     activities.push(activity);
+
+    // Add the activity evidences
+    const [evidenceIndex] = randomNonCollidingIndices(evidences.length, 1);
+    const evidence = evidences[evidenceIndex];
+
+    const activityEvidence = await activityEvidenceFactory.create({
+      activityId: activity.id,
+      evidenceId: evidence.id,
+    });
+    activityEvidences.push(activityEvidence);
 
     // Associate the activity with one or more tags
     const assignedTagCount = randomWeightedValue(1, tags.length, [1, 1, 5, 2]);
@@ -161,6 +219,16 @@ export const loadDemo = async (options?: {
       });
       activityTags.push(activityTag);
     }
+
+    // Create the Relationship Reviews
+    const [userIndex] = randomNonCollidingIndices(users.length, 1);
+    const user = users[userIndex];
+
+    const activityReview = await activityReviewFactory.create({
+      userId: user.id,
+      activityId: activity.id,
+    });
+    activityReviews.push(activityReview);
 
     // Associate the activity with one or more entities
     const involvedEntityCount = randomWeightedValue(
@@ -185,9 +253,31 @@ export const loadDemo = async (options?: {
         entityId: entity.id,
       });
       involvements.push(involvement);
+
+      // Add involvement evidences
+      const [evidenceIndex] = randomNonCollidingIndices(evidences.length, 1);
+      const evidence = evidences[evidenceIndex];
+
+      const involvementEvidence = await involvementEvidenceFactory.create({
+        involvementId: involvement.id,
+        evidenceId: evidence.id,
+      });
+      involvementEvidences.push(involvementEvidence);
+
+      // Add involvement reviews
+      const involvementReview = await involvementReviewFactory.create({
+        userId: user.id,
+        involvementId: involvement.id,
+      });
+      involvementReviews.push(involvementReview);
     }
   }
   await activityInsertMany(activities);
   await activityTagInsertMany(activityTags);
+  await activityEvidenceInsertMany(activityEvidences);
+  await activityReviewInsertMany(activityReviews);
+
   await involvementInsertMany(involvements);
+  await involvementEvidenceInsertMany(involvementEvidences);
+  await involvementReviewInsertMany(involvementReviews);
 };

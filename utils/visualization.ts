@@ -10,7 +10,7 @@ import {
   type SimulationNodeDatum,
   hierarchy,
 } from "d3";
-import type { EntityComplexRead } from "~/db/services/entity/entityBy";
+import type { EntityComplexRead } from "~/services/entity/entityBy";
 
 export interface EntityD3Link extends SimulationLinkDatum<EntityD3Node> {
   source: number;

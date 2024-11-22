@@ -1,7 +1,8 @@
 import { faker } from "@faker-js/faker";
-import { activityTagInsert } from "../services";
+import { activityTagInsert } from "@/services";
 import { useActivityFactory, useTagFactory } from ".";
-import type { ActivityTagInsert, ActivityTagSelect } from "../models";
+import type { ActivityTagInsert, ActivityTagSelect } from "@/db/models";
+import type { Modify } from "@/@types";
 
 type OptionalActivityTagInsert = {
   id?: string;

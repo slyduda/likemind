@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
-import { relationshipInsert } from "../services";
-import type { RelationshipInsert, RelationshipSelect } from "../models";
+import { relationshipInsert } from "@/services";
+import type { RelationshipInsert, RelationshipSelect } from "@/db/models";
+import type { Modify } from "@/@types";
 
 type OptionalRelationshipInsert = {
   id?: string;

@@ -1,5 +1,5 @@
 import { array, object, parse } from "valibot";
-import { entityComplexByIds } from "~/db/services/entity/entityBy";
+import { entityComplexByIds } from "~/services/entity/entityBy";
 import { entityIdSchema } from "~/schemas/entity.schema";
 
 const getEntitiesEntitiesBodySchema = object({

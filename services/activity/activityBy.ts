@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import { db } from "~/db";
-import { entity, involvement, activity } from "~/db/models";
+import { db } from "@/db";
+import { entity, involvement, activity } from "@/db/models";
 
 export const activityById = async ({ id }: { id: string }) => {
   const activities = await db

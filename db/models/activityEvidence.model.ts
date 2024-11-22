@@ -27,3 +27,6 @@ export const activityEvidenceRelations = relations(
     }),
   }),
 );
+
+export type ActivityEvidenceInsert = typeof activityEvidence.$inferInsert;
+export type ActivityEvidenceSelect = typeof activityEvidence.$inferSelect;

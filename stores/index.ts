@@ -1,16 +1,5 @@
 import { defineStore, skipHydrate } from "pinia";
-
-type AcknowledgementMap = {
-  [id: string]: Acknowledgement;
-};
-
-export type AcknowledgementType = "AUTO" | "MANUAL";
-
-export interface Acknowledgement {
-  id: string;
-  type: AcknowledgementType;
-  created_at: string;
-}
+import type { AcknowledgementMap } from "@/@types";
 
 export const useMainStore = defineStore("main", () => {
   const darkMode = ref(useLocalStorage("main.darkMode", false));

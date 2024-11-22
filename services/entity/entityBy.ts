@@ -1,5 +1,5 @@
 import { and, count, desc, eq, inArray, or, sql } from "drizzle-orm";
-import { db } from "~/db";
+import { db } from "@/db";
 import {
   entity,
   relationship,

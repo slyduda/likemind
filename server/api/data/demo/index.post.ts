@@ -1,5 +1,5 @@
 import { optional, parse } from "valibot";
-import { loadDemo, userById } from "~/db/services";
+import { loadDemo, userById } from "@/services";
 import { DemoLoadServiceConstants, demoSchema } from "~/schemas/demo.schema";
 
 const postDataDemoBodySchema = optional(demoSchema, {

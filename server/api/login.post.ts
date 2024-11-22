@@ -1,5 +1,5 @@
 import { Output, object, parse } from "valibot";
-import { userByEmail } from "~/db/services";
+import { userByEmail } from "~/services";
 import { userEmailSchema, userPasswordSchema } from "~/schemas/user.schema";
 import jwt from "jsonwebtoken";
 import { compareSync } from "bcrypt";

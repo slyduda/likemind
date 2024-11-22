@@ -1,8 +1,9 @@
 import { faker } from "@faker-js/faker";
-import { involvementInsert } from "../services";
+import { involvementInsert } from "@/services";
 import { useEntityFactory } from "./entity.factory";
 import { useActivityFactory } from "./activity.factory";
-import type { InvolvementInsert, InvolvementSelect } from "../models";
+import type { InvolvementInsert, InvolvementSelect } from "@/db/models";
+import type { Modify } from "@/@types";
 
 type OptionalInvolvementInsert = {
   id?: string;

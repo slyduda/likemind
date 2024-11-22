@@ -15,3 +15,6 @@ export const evidenceRelations = relations(evidence, ({ many }) => ({
   relationshipEvidences: many(relationshipEvidence),
   involvementEvidences: many(involvementEvidence),
 }));
+
+export type EvidenceInsert = typeof evidence.$inferInsert;
+export type EvidenceSelect = typeof evidence.$inferSelect;

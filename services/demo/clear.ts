@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import { db } from "~/db";
+import { db } from "@/db";
 import {
   involvementReview,
   relationshipReview,
@@ -17,7 +17,8 @@ import {
   activity,
   entity,
   user,
-} from "~/db/models";
+  involvementEvidence,
+} from "@/db/models";
 
 export const clearTables = async (options?: { fake?: boolean }) => {
   const { fake = true } = options ?? {};
@@ -41,7 +42,9 @@ const fakeClearTables = async () => {
     .delete(relationshipEvidence)
     .where(eq(relationshipEvidence.isFake, true));
   await db.delete(activityEvidence).where(eq(activityEvidence.isFake, true));
-  // await db.delete(involvementEvidence)
+  await db
+    .delete(involvementEvidence)
+    .where(eq(involvementEvidence.isFake, true));
   await db.delete(evidence).where(eq(evidence.isFake, true));
 
   // Delete all subscriptions and memberships
@@ -83,7 +86,7 @@ const normalClearTables = async () => {
   // Delete all evidences
   await db.delete(relationshipEvidence);
   await db.delete(activityEvidence);
-  // await db.delete(involvementEvidence)
+  await db.delete(involvementEvidence);
   await db.delete(evidence);
 
   // Delete all subscriptions and memberships

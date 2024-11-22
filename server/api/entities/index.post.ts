@@ -1,5 +1,5 @@
 import { parse } from "valibot";
-import { entityInsert } from "~/db/services/entity/entityInsert";
+import { entityInsert } from "~/services/entity/entityInsert";
 import {
   EntityCreateInputSchema,
   EntityReadSchema,

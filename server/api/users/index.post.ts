@@ -5,7 +5,7 @@ import {
   userReadSchema,
 } from "@/schemas/user.schema";
 import { parse, parseAsync } from "valibot";
-import { userInsert } from "@/db/services";
+import { userInsert } from "~/services";
 
 export default defineEventHandler<
   { body: UserCreateInputSchema },

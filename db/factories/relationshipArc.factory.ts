@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker";
-import { relationshipArcInsert } from "../services";
-import { useRelationshipFactory } from "./relationship.factory";
-import { useEntityFactory } from ".";
-import type { RelationshipArcInsert, RelationshipArcSelect } from "../models";
+import { relationshipArcInsert } from "@/services";
+import { useEntityFactory, useRelationshipFactory } from ".";
+import type { RelationshipArcInsert, RelationshipArcSelect } from "@/db/models";
+import type { Modify } from "@/@types";
 
 type OptionalRelationshipArcInsert = {
   id?: string;

@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
-import { tagInsert } from "../services";
-import type { TagInsert, TagSelect } from "../models";
+import { tagInsert } from "@/services";
+import type { TagInsert, TagSelect } from "@/db/models";
+import type { Modify } from "@/@types";
 
 type OptionalTagInsert = {
   id?: string;
@@ -21,7 +22,8 @@ export const useTagFactory = () => {
   const create = (insert?: OptionalTagInsert): TagFactoryCreate => {
     return {
       id: faker.string.uuid(),
-      name: faker.lorem.word(),
+      name:
+        faker.lorem.word() + faker.lorem.word({ length: { min: 1, max: 3 } }),
       isFake: true,
       ...insert,
     };

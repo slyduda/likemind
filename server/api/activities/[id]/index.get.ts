@@ -1,4 +1,4 @@
-import { activityById } from "@/db/services";
+import { activityById } from "~/services";
 
 import { object, parse } from "valibot";
 import { activityIdSchema } from "~/schemas/activity.schema";

@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker";
-import { activityInsert } from "../services";
+import { activityInsert } from "@/services";
 import { probability } from "@/utils";
-import type { ActivityInsert, ActivitySelect } from "../models";
-import type { Modify } from "~/utils/types";
+import type { ActivityInsert, ActivitySelect } from "@/db/models";
+import type { Modify } from "@/@types";
 
 type OptionalActivityInsert = {
   id?: string;

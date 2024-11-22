@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
-import type { EntityInsert, EntitySelect } from "../models";
-import { entityInsert, entityInsertMany } from "../services";
+import type { EntityInsert, EntitySelect } from "@/db/models";
+import { entityInsert, entityInsertMany } from "@/services";
+import type { Modify } from "@/@types";
 
 type OptionalEntityInsert = {
   id?: string;

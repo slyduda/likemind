@@ -16,7 +16,7 @@ export const envSchema = object({
   ),
   POSTGRES_USER: string(),
   POSTGRES_PASSWORD: string(),
-  POSTGRES_DATABASE: string(),
+  POSTGRES_DB: string(),
   JWT_SECRET: string(),
 });
 
