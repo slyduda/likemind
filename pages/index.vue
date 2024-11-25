@@ -4,8 +4,8 @@
       <template #title>
         <h1 class="archivo whitespace-nowrap text-4xl font-extrabold">
           likemind
-        </h1></template
-      >
+        </h1>
+      </template>
       <button
         v-if="account"
         class="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-300 font-mono text-lg font-extrabold text-zinc-500"
@@ -51,7 +51,7 @@ const logout = async () => {
     onResponseError,
     onResponse: () => {
       // onResponse(request);
-      router.go(0);
+      router.push("/login");
     },
   });
 };

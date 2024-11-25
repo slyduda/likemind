@@ -4,10 +4,13 @@ import { processEnv } from "./env";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+
   runtimeConfig: {
     jwtSecret: processEnv.JWT_SECRET,
   },
+
   css: ["~/assets/css/main.css"],
+
   modules: [
     "@vee-validate/nuxt",
     "@pinia/nuxt",
@@ -16,21 +19,25 @@ export default defineNuxtConfig({
     "@nuxt/content",
     "@nuxtjs/google-fonts",
   ],
+
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
+
   veeValidate: {
     typedSchemaPackage: "valibot",
   },
+
   googleFonts: {
     display: "swap",
     families: {
       Outfit: "100..900",
     },
   },
+
   app: {
     head: {
       meta: [
@@ -45,4 +52,6 @@ export default defineNuxtConfig({
       ],
     },
   },
+
+  compatibilityDate: "2024-11-21",
 });

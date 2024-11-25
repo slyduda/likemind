@@ -151,7 +151,7 @@ const validColorComputed = computed(() =>
       : "border-zinc-300 dark:border-stone-700",
 );
 
-const model = defineModel({ type: String });
+const model = defineModel({ type: Number });
 
 const emit = defineEmits(["focus", "blur"]);
 const focus = () => emit("focus", true);

@@ -12,7 +12,7 @@ const props = withDefaults(
   },
 );
 
-const size = computed(() => {
+const sizeComputed = computed(() => {
   switch (props.size) {
     case "xs":
       return "px-2 h-8";
@@ -33,7 +33,7 @@ const isDisabledOrPending = computed(
 <template>
   <button
     :disabled="isDisabledOrPending"
-    :class="[size]"
+    :class="[sizeComputed]"
     class="archivo relative flex items-center justify-center rounded-xl transition-colors disabled:bg-zinc-300 disabled:text-zinc-500 dark:disabled:bg-zinc-800"
   >
     <div :class="[{ invisible: pending }]">

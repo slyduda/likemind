@@ -1,10 +1,11 @@
 import {
   object,
   string,
-  type Input,
-  type Output,
   transformAsync,
   objectAsync,
+  type InferInput,
+  type InferOutput,
+  pipeAsync,
 } from "valibot";
 import { hashPassword } from "@/utils";
 import { createInsertSchema, createSelectSchema } from "drizzle-valibot";
@@ -20,19 +21,19 @@ export const userEmailSchema = string();
 export const userHandleSchema = string();
 export const userPasswordSchema = string();
 
-export const userPasswordTransformer = transformAsync(string(), hashPassword);
+export const userPasswordTransformer = pipeAsync(
+  string(),
+  transformAsync((input) => hashPassword(input)),
+);
 
 // Create
-export const userCreateSchema = transformAsync(
-  objectAsync({
-    email: userEmailSchema,
-    handle: userHandleSchema,
-    password: userPasswordTransformer,
-  }),
-  (input) => input,
-);
-export type UserCreateInputSchema = Input<typeof userCreateSchema>;
-export type UserCreateOutputSchema = Output<typeof userCreateSchema>;
+export const userCreateSchema = objectAsync({
+  email: userEmailSchema,
+  handle: userHandleSchema,
+  password: userPasswordTransformer,
+});
+export type UserCreateInputSchema = InferInput<typeof userCreateSchema>;
+export type UserCreateOutputSchema = InferOutput<typeof userCreateSchema>;
 
 // Read
 export const userReadSchema = object({
@@ -40,4 +41,4 @@ export const userReadSchema = object({
   email: userEmailSchema,
   handle: userHandleSchema,
 });
-export type UserReadSchema = Output<typeof userReadSchema>;
+export type UserReadSchema = InferOutput<typeof userReadSchema>;

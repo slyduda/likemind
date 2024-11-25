@@ -18,25 +18,25 @@
       <div class="flex flex-col">
         <AppNavButton to="/" label="Home" :condensed="collapsed" class="mb-2">
           <template #icon>
-            <AppNavIcon
-              ><SvgHomeSmile class="h-6 w-6"></SvgHomeSmile
-            ></AppNavIcon>
+            <AppNavIcon>
+              <SvgHomeSmile class="h-6 w-6"></SvgHomeSmile>
+            </AppNavIcon>
           </template>
         </AppNavButton>
         <AppNavButton
-          to="/entities"
+          :to="account ? `/entities/search` : `/entities`"
           label="Entities"
           :condensed="collapsed"
           class="mb-2"
         >
           <template #icon>
-            <AppNavIcon
-              ><SvgBuildings class="h-6 w-6"></SvgBuildings
-            ></AppNavIcon>
+            <AppNavIcon>
+              <SvgBuildings class="h-6 w-6"></SvgBuildings>
+            </AppNavIcon>
           </template>
         </AppNavButton>
         <AppNavButton
-          to="/activities"
+          :to="account ? `/activities/search` : `/activities`"
           label="Activities"
           :condensed="collapsed"
           class="mb-2"
@@ -70,7 +70,9 @@
           class="mb-2"
         >
           <template #icon>
-            <AppNavIcon><SvgCupPaper class="h-6 w-6"></SvgCupPaper></AppNavIcon>
+            <AppNavIcon>
+              <SvgCupPaper class="h-6 w-6"></SvgCupPaper>
+            </AppNavIcon>
           </template>
         </AppNavButton>
         <AppNavButton to="/settings" label="Settings" :condensed="collapsed">
@@ -114,6 +116,8 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from "~/stores/user";
+
 const collapsed = defineModel("collapsed", {
   type: Boolean,
   default: false,
@@ -124,6 +128,8 @@ const hidden = defineModel("hidden", {
   default: false,
   required: true,
 });
+
+const { account } = useUserStore();
 
 const holdMute = useState("holdMute", () => false);
 
@@ -150,12 +156,18 @@ const toggleSidebar = () => {
 
 <style>
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 </style>

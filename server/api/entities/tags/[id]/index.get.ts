@@ -2,13 +2,13 @@ import { object, parse } from "valibot";
 import { tagByEntity } from "~/services";
 import { entityIdSchema } from "~/schemas/entity.schema";
 
-const getEntityByIdBodySchema = object({
+const bodySchema = object({
   id: entityIdSchema,
 });
 
 export default defineEventHandler(async (event) => {
   const params = await getValidatedRouterParams(event, () =>
-    parse(getEntityByIdBodySchema, event.context.params),
+    parse(bodySchema, event.context.params),
   );
 
   // Get the single entity and its related entities

@@ -19,13 +19,6 @@
         >
           Involvements
         </NuxtLink>
-        <NuxtLink
-          exact-active-class="active-tab"
-          :to="`/activities/${id}/tags`"
-          class="mx-2 rounded-lg px-2 py-1 hover:bg-zinc-300 dark:hover:bg-stone-800"
-        >
-          Tags
-        </NuxtLink>
       </div>
     </div>
     <div id="activity-content" class="flex-1">

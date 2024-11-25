@@ -1,7 +1,7 @@
 <template>
   <form class="prose m-auto mb-12" @submit.prevent="onSubmit">
     <h2 class="border-b pb-4">Load Demo</h2>
-    <BaseInput
+    <BaseNumberInput
       v-model="entityCount"
       v-bind="entityCountAttrs"
       class="mb-4"
@@ -12,7 +12,7 @@
       :rounded="'xl'"
       :error="errors.entityCount"
     />
-    <BaseInput
+    <BaseNumberInput
       v-model="activityCount"
       v-bind="activityCountAttrs"
       class="mb-4"
@@ -23,7 +23,7 @@
       :rounded="'xl'"
       :error="errors.activityCount"
     />
-    <BaseInput
+    <BaseNumberInput
       v-model="relationshipCount"
       v-bind="relationshipCountAttrs"
       class="mb-4"
@@ -34,7 +34,7 @@
       :rounded="'xl'"
       :error="errors.relationshipCount"
     />
-    <BaseInput
+    <BaseNumberInput
       v-model="tagCount"
       v-bind="tagCountAttrs"
       class="mb-4"
@@ -45,7 +45,7 @@
       :rounded="'xl'"
       :error="errors.tagCount"
     />
-    <BaseInput
+    <BaseNumberInput
       v-model="userCount"
       v-bind="userCountAttrs"
       class="mb-4"
@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { demoSchema } from "~/schemas/demo.schema";
+import { demoSchema } from "@/schemas/demo.schema";
 import { toTypedSchema } from "@vee-validate/valibot";
 
 const { onResponse, onResponseError } = useLogging();

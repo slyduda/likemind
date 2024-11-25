@@ -1,29 +1,38 @@
 import {
-  coerce,
-  number,
+  pipe,
   object,
   optional,
   parse,
-  toMaxValue,
-  toMinValue,
+  transform,
+  string,
+  minValue,
+  maxValue,
+  InferInput,
 } from "valibot";
 import { entityComplexById } from "~/services/entity/entityBy";
 import { entityIdSchema } from "~/schemas/entity.schema";
 
-const getEntityByIdBodySchema = object({
+const bodySchema = object({
   id: entityIdSchema,
 });
+type Body = InferInput<typeof bodySchema>;
 
-const getEntityByIdQuerySchema = object({
-  depth: optional(coerce(number([toMinValue(1), toMaxValue(3)]), Number), 1),
+const querySchema = object({
+  depth: pipe(
+    optional(string(), "1"),
+    transform((string) => Number(string)),
+    minValue(1),
+    maxValue(3),
+  ),
 });
+type Query = InferInput<typeof querySchema>;
 
-export default defineEventHandler(async (event) => {
-  const params = await getValidatedRouterParams(event, () =>
-    parse(getEntityByIdBodySchema, event.context.params),
+export default eventHandler<{ query: Query; body: Body }>(async (event) => {
+  const params = await getValidatedRouterParams(event, (params) =>
+    parse(bodySchema, params),
   );
-  const query = await getValidatedQuery(event, async () =>
-    parse(getEntityByIdQuerySchema, await getQuery(event)),
+  const query = await getValidatedQuery(event, (query) =>
+    parse(querySchema, query),
   );
   // Get the single entity and its related entities
   const payload = await entityComplexById({

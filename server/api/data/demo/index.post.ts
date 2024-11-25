@@ -2,7 +2,7 @@ import { optional, parse } from "valibot";
 import { loadDemo, userById } from "@/services";
 import { DemoLoadServiceConstants, demoSchema } from "~/schemas/demo.schema";
 
-const postDataDemoBodySchema = optional(demoSchema, {
+const bodySchema = optional(demoSchema, {
   entityCount: DemoLoadServiceConstants.entityCount.default,
   activityCount: DemoLoadServiceConstants.activityCount.default,
   tagCount: DemoLoadServiceConstants.tagCount.default,
@@ -10,10 +10,9 @@ const postDataDemoBodySchema = optional(demoSchema, {
   userCount: DemoLoadServiceConstants.userCount.default,
 });
 
-export default defineEventHandler<
-  { body: typeof postDataDemoBodySchema },
-  Promise<void>
->(async (event) => {
+type Body = typeof bodySchema;
+
+export default eventHandler<{ body: Body }>(async (event) => {
   // Get the user id from the context from our middleware
   const userId = event.context.user;
   if (!userId) throw Error("You are not authenticated");
@@ -24,7 +23,7 @@ export default defineEventHandler<
     throw Error("Account does not have sufficient permissions");
 
   const body = await readValidatedBody(event, async () =>
-    parse(postDataDemoBodySchema, await readBody(event)),
+    parse(bodySchema, await readBody(event)),
   );
 
   await loadDemo(body);

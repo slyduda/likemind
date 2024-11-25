@@ -1,11 +1,10 @@
 import {
   object,
   string,
-  transform,
-  type Input,
-  type Output,
   date,
   nullable,
+  type InferInput,
+  type InferOutput,
 } from "valibot";
 import { createInsertSchema, createSelectSchema } from "drizzle-valibot";
 import { activity } from "@/db/models";
@@ -21,16 +20,15 @@ export const activityStartedAtSchema = date();
 export const activityEndedAtSchema = nullable(date());
 
 // Create
-export const activityCreateSchema = transform(
-  object({
-    description: activityDescriptionSchema,
-    startedAt: activityStartedAtSchema,
-    endedAt: activityEndedAtSchema,
-  }),
-  (input) => input,
-);
-export type ActivityCreateInputSchema = Input<typeof activityCreateSchema>;
-export type ActivityCreateOutputSchema = Output<typeof activityCreateSchema>;
+export const activityCreateSchema = object({
+  description: activityDescriptionSchema,
+  startedAt: activityStartedAtSchema,
+  endedAt: activityEndedAtSchema,
+});
+export type ActivityCreateInputSchema = InferInput<typeof activityCreateSchema>;
+export type ActivityCreateOutputSchema = InferOutput<
+  typeof activityCreateSchema
+>;
 
 // Read
 export const activityReadSchema = object({
@@ -39,4 +37,4 @@ export const activityReadSchema = object({
   startedAt: activityStartedAtSchema,
   endedAt: activityEndedAtSchema,
 });
-export type ActivityReadSchema = Output<typeof activityReadSchema>;
+export type ActivityReadSchema = InferOutput<typeof activityReadSchema>;

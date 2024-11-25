@@ -1,18 +1,20 @@
 import {
   object,
-  type Input,
   optional,
   string,
-  transform,
   safeParse,
+  pipe,
+  type InferInput,
+  transform,
 } from "valibot";
 import "dotenv/config";
 
 export const envSchema = object({
   POSTGRES_URL: string(),
   POSTGRES_HOST: string(),
-  POSTGRES_PORT: transform(optional(string(), "5432"), (input) =>
-    Number(input),
+  POSTGRES_PORT: pipe(
+    optional(string(), "5432"),
+    transform((input) => Number(input)),
   ),
   POSTGRES_USER: string(),
   POSTGRES_PASSWORD: string(),
@@ -30,7 +32,7 @@ export const processEnv = safeProcessEnv.output;
 
 declare global {
   namespace NodeJS {
-    interface ProcessEnv extends Input<typeof envSchema> {}
+    interface ProcessEnv extends InferInput<typeof envSchema> {}
   }
 }
 

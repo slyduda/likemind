@@ -1,12 +1,9 @@
 <template>
-  <div>
-    <div>Involvements</div>
-    <ul>
-      <li v-for="involvement in data" :key="involvement.id">
-        {{ involvement }}
-      </li>
-    </ul>
-  </div>
+  <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <li v-for="involvement in data" :key="involvement.id" class="flex flex-1">
+      <AppInvolvement v-bind="involvement"></AppInvolvement>
+    </li>
+  </ul>
 </template>
 
 <script setup lang="ts">

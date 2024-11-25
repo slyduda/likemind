@@ -1,4 +1,4 @@
-import { maxValue, minValue, number, object, optional } from "valibot";
+import { maxValue, minValue, number, object, optional, pipe } from "valibot";
 
 export const DemoLoadServiceConstants = {
   entityCount: { min: 20, max: 200, default: 80 },
@@ -9,31 +9,45 @@ export const DemoLoadServiceConstants = {
   userCount: { min: 1, max: 20, default: 3 },
 };
 
-export const entityCountSchema = number([
+export const entityCountSchema = pipe(
+  number(),
   minValue(DemoLoadServiceConstants.entityCount.min),
   maxValue(DemoLoadServiceConstants.entityCount.max),
-]);
-export const activityCountSchema = number([
+);
+export const evidenceCountSchema = pipe(
+  number(),
+  minValue(DemoLoadServiceConstants.evidenceCount.min),
+  maxValue(DemoLoadServiceConstants.evidenceCount.max),
+);
+export const activityCountSchema = pipe(
+  number(),
   minValue(DemoLoadServiceConstants.activityCount.min),
   maxValue(DemoLoadServiceConstants.activityCount.max),
-]);
-export const tagCountSchema = number([
+);
+export const tagCountSchema = pipe(
+  number(),
   minValue(DemoLoadServiceConstants.tagCount.min),
   maxValue(DemoLoadServiceConstants.tagCount.max),
-]);
-export const relationshipCountSchema = number([
+);
+export const relationshipCountSchema = pipe(
+  number(),
   minValue(DemoLoadServiceConstants.relationshipCount.min),
   maxValue(DemoLoadServiceConstants.relationshipCount.max),
-]);
-export const userCountSchema = number([
+);
+export const userCountSchema = pipe(
+  number(),
   minValue(DemoLoadServiceConstants.userCount.min),
   maxValue(DemoLoadServiceConstants.userCount.max),
-]);
+);
 
 export const demoSchema = object({
   entityCount: optional(
     entityCountSchema,
     DemoLoadServiceConstants.entityCount.default,
+  ),
+  evidenceCount: optional(
+    evidenceCountSchema,
+    DemoLoadServiceConstants.evidenceCount.default,
   ),
   activityCount: optional(
     activityCountSchema,

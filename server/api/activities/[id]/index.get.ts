@@ -1,15 +1,14 @@
-import { activityById } from "~/services";
-
 import { object, parse } from "valibot";
-import { activityIdSchema } from "~/schemas/activity.schema";
+import { activityByIdComplex } from "@/services";
+import { activityIdSchema } from "@/schemas/activity.schema";
 
-const getActivityByIdBodySchema = object({
+const bodySchema = object({
   id: activityIdSchema,
 });
 
 export default defineEventHandler(async (event) => {
   const params = await getValidatedRouterParams(event, () =>
-    parse(getActivityByIdBodySchema, getRouterParams(event)),
+    parse(bodySchema, getRouterParams(event)),
   );
-  return await activityById({ id: params.id });
+  return await activityByIdComplex({ id: params.id });
 });
