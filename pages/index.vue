@@ -48,7 +48,7 @@ useSeoMeta({
 const logout = async () => {
   await $fetch("/api/logout", {
     method: "POST",
-    onResponseError,
+    onResponseError: (error) => onResponseError(error),
     onResponse: () => {
       // onResponse(request);
       router.push("/login");

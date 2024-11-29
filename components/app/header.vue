@@ -1,38 +1,43 @@
 <template>
-  <div
-    class="sticky top-0 mb-4 flex w-full justify-between border-b border-zinc-500 bg-zinc-100 pt-4"
-  >
-    <div class="w-full">
-      <div class="flex w-full items-center overflow-hidden pb-2">
-        <button
-          v-if="route.path !== '/'"
-          class="mr-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-zinc-200 text-zinc-500 hover:bg-zinc-300"
-          @click="router.back"
-        >
-          <SvgCaretDown class="h-6 rotate-90"></SvgCaretDown>
-        </button>
-        <h1
-          v-if="title"
-          class="archivo whitespace-nowrap text-4xl font-extrabold"
-        >
-          {{ title }}
-        </h1>
-        <slot v-else name="title"></slot>
-      </div>
-      <AppBreadcrumb v-if="!hidePath" :path="route.fullPath"></AppBreadcrumb>
-    </div>
-    <div class="flex items-center pb-2">
-      <slot></slot>
+  <div class="sticky top-0 z-20 mb-4">
+    <div
+      class="z-30 flex w-full justify-between border-b border-zinc-500 bg-zinc-100 pt-4"
+    >
+      <div class="w-full">
+        <div class="flex w-full justify-between pb-2">
+          <div class="flex w-full items-center overflow-hidden">
+            <button
+              v-if="route.path !== '/'"
+              class="mr-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-zinc-200 text-zinc-500 hover:bg-zinc-300"
+              @click="router.back"
+            >
+              <SvgCaretDown class="h-6 rotate-90"></SvgCaretDown>
+            </button>
+            <h1
+              v-if="title"
+              class="archivo whitespace-nowrap text-4xl font-extrabold"
+            >
+              {{ title }}
+            </h1>
+            <slot v-else name="title"></slot>
+          </div>
 
-      <a
-        v-if="false"
-        :href="bbUrl"
-        target="_blank"
-        class="ml-2 flex h-8 w-8 items-center justify-center"
-      >
-        <SvgBitbucket class="h-6" />
-      </a>
+          <div class="flex items-center">
+            <slot></slot>
+            <a
+              v-if="false"
+              :href="bbUrl"
+              target="_blank"
+              class="ml-2 flex h-8 w-8 items-center justify-center"
+            >
+              <SvgBitbucket class="h-6" />
+            </a>
+          </div>
+        </div>
+        <AppBreadcrumb v-if="!hidePath" :path="route.fullPath"></AppBreadcrumb>
+      </div>
     </div>
+    <slot name="bottom"></slot>
   </div>
 </template>
 

@@ -15,3 +15,4 @@ export * from "./relationshipArc";
 export * from "./relationshipReview";
 export * from "./tag";
 export * from "./user";
+export * from "./openai";

@@ -1,7 +1,11 @@
 <template>
   <div
     class="checkbox relative mb-2 last:mb-0"
-    :class="[{ 'opacity-50': disabled }, { 'mr-3 inline-flex': inline }]"
+    :class="[
+      { 'opacity-50': disabled },
+      { 'inline-flex': inline },
+      size === 'sm' ? 'checkbox-sm text-sm' : 'checkbox-base text-base',
+    ]"
   >
     <input
       :id="cbId"
@@ -10,7 +14,14 @@
       type="checkbox"
       :disabled="disabled"
     />
-    <label :for="cbId" class="cursor-pointer">
+    <label
+      :for="cbId"
+      class="flex cursor-pointer items-center gap-1.5"
+      :class="[
+        { checked: model },
+        position === 'left' ? 'flex-row-reverse' : 'flex-row',
+      ]"
+    >
       <slot>
         <span v-if="inline">&nbsp;</span>
       </slot>
@@ -22,13 +33,22 @@
 const model = defineModel({ type: Boolean });
 const cbId = ref(randomId(12));
 
-defineProps<{
-  disabled?: boolean;
-  inline?: boolean;
-}>();
+withDefaults(
+  defineProps<{
+    disabled?: boolean;
+    inline?: boolean;
+    size?: "sm" | "base"; // New size prop
+    position?: "left" | "right"; // New label position prop
+  }>(),
+  {
+    size: "base", // Default to 'base'
+    position: "right", // Default to 'right'
+  },
+);
 </script>
 
 <style>
+/* Checkbox Input: Hidden */
 input[type="checkbox"] {
   border: 0;
   clip: rect(0 0 0 0);
@@ -38,43 +58,103 @@ input[type="checkbox"] {
   width: 1px;
 }
 
-.checkbox label:before {
+/* Base Size Checkbox */
+.checkbox-base label:before {
   content: "";
   display: inline-block;
   width: 24px;
   height: 24px;
   vertical-align: -5px;
-  @apply border-2;
+  @apply border;
   @apply border-gray-300;
   @apply box-border;
-  @apply mr-1;
   @apply rounded-lg;
 }
 
-.checkbox input:hover:enabled + label:before {
+.checkbox-base input:hover:enabled + label:before {
   @apply border-blue-500;
 }
-/*
-.checkbox input:focus + label:before {
-  @apply ring-2;
-}*/
 
-.checkbox input:checked + label:before {
+.checkbox-base input:checked + label:before {
   @apply border-blue-500;
   @apply bg-blue-500;
 }
 
-.checkbox label:after {
+/* Checkmark for Base Size */
+.checkbox-base label.checked:after {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
   position: absolute;
-  margin-left: 7px;
-  margin-top: 7px;
-  top: 0px;
-  left: 0px;
   content: "";
   display: inline-block;
-  vertical-align: -7px;
   width: 10px;
   height: 10px;
+}
+
+/* Right Position (Default) */
+.flex-row .checkbox-base label.checked:after {
+  margin-left: 7px;
+  margin-right: unset;
+  top: 7px;
+  left: 0px;
+  right: unset;
+}
+
+/* Left Position */
+.flex-row-reverse .checkbox-base label.checked:after {
+  margin-right: 7px;
+  margin-left: unset;
+  top: 7px;
+  right: 0px;
+  left: unset;
+}
+
+/* Small Size Checkbox */
+.checkbox-sm label:before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  vertical-align: -4px;
+  @apply border;
+  @apply border-gray-300;
+  @apply box-border;
+  @apply rounded-lg;
+}
+
+.checkbox-sm input:hover:enabled + label:before {
+  @apply border-blue-500;
+}
+
+.checkbox-sm input:checked + label:before {
+  @apply border-blue-500;
+  @apply bg-blue-500;
+}
+
+/* Checkmark for Small Size */
+.checkbox-sm label.checked:after {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
+  position: absolute;
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+}
+
+/* Right Position for Small Size */
+.flex-row .checkbox-sm label.checked:after {
+  margin-left: 6px;
+  margin-right: unset;
+  top: 6.5px;
+  left: 0px;
+  right: unset;
+}
+
+/* Left Position for Small Size */
+.flex-row-reverse .checkbox-sm label.checked:after {
+  margin-right: 6px;
+  margin-left: unset;
+  top: 6.5px;
+  right: 5px;
+  left: unset;
 }
 </style>

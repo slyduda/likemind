@@ -1,5 +1,5 @@
 import type { Config } from "drizzle-kit";
-import { processEnv } from "./env";
+import { processEnv } from "./config";
 
 export default {
   schema: "./db/models", // Renamed to models to separate valibot schemas

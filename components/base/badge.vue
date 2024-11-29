@@ -12,22 +12,32 @@ const props = withDefaults(
 const sizeComputed = computed(() => {
   switch (props.size) {
     case "sm":
-      return "px-1 h-4 text-xs";
+      return "h-4 text-xs";
     case "md":
-      return "px-1 h-5 text-sm";
+      return "h-5 text-sm";
     case "lg":
-      return "px-1.5 h-6";
+      return "h-6";
+  }
+});
+
+const paddingComputed = computed(() => {
+  switch (props.size) {
+    case "sm":
+    case "md":
+      return "px-1";
+    case "lg":
+      return "px-1.5";
   }
 });
 </script>
 
 <template>
-  <div
+  <span
     :class="[sizeComputed]"
-    class="archivo relative flex items-center justify-center rounded"
+    class="archivo inline-flex items-center rounded"
   >
-    <div>
-      {{ label }}
-    </div>
-  </div>
+    <slot name="left"></slot>
+    <div :class="[paddingComputed]">{{ label }}</div>
+    <slot name="right"></slot>
+  </span>
 </template>

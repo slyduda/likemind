@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute top-0 z-10 bg-zinc-200 sm:relative dark:bg-stone-950"
+    class="absolute top-0 z-[51] bg-zinc-200 sm:relative dark:bg-stone-950"
     :class="[
       { 'left-0 sm:p-2': !hidden },
       { '-left-16 sm:-left-20 sm:w-0': hidden },
@@ -43,7 +43,9 @@
         >
           <template #icon>
             <AppNavIcon>
-              <SvgCalendar class="h-6 w-6"></SvgCalendar>
+              <SvgCalendarSearch
+                class="h-6 w-6 fill-[#1C274C]"
+              ></SvgCalendarSearch>
             </AppNavIcon>
           </template>
         </AppNavButton>

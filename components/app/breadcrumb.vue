@@ -22,8 +22,13 @@ const props = defineProps<{
   path: string;
   include?: boolean;
 }>();
+const stripQueryParams = (path: string): string => {
+  return path.split("?")[0]; // Take the part before the '?'
+};
+
 const pieces = computed(() => {
-  return props.path ? props.path.substring(1).split("/") : [];
+  const cleanedPath = stripQueryParams(props.path);
+  return cleanedPath ? cleanedPath.substring(1).split("/") : [];
 });
 const breadcrumbs = computed(() => {
   const pathSegments = props.path.substring(1).split("/");

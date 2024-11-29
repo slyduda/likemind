@@ -4,11 +4,13 @@ const props = withDefaults(
     pending?: boolean;
     disabled?: boolean;
     size?: "sm" | "md" | "lg" | "xs";
+    rounded?: "md" | "lg" | "xl" | "sm";
   }>(),
   {
     pending: false,
     disabled: false,
     size: "md",
+    rounded: "xl",
   },
 );
 
@@ -25,6 +27,19 @@ const sizeComputed = computed(() => {
   }
 });
 
+const roundedComputed = computed(() => {
+  switch (props.rounded) {
+    case "sm":
+      return "rounded-sm";
+    case "xl":
+      return "rounded-xl";
+    case "lg":
+      return "rounded-lg";
+    default:
+      return "rounded";
+  }
+});
+
 const isDisabledOrPending = computed(
   () => props.disabled == true || props.pending == true,
 );
@@ -33,8 +48,8 @@ const isDisabledOrPending = computed(
 <template>
   <button
     :disabled="isDisabledOrPending"
-    :class="[sizeComputed]"
-    class="archivo relative flex items-center justify-center rounded-xl transition-colors disabled:bg-zinc-300 disabled:text-zinc-500 dark:disabled:bg-zinc-800"
+    :class="[sizeComputed, roundedComputed]"
+    class="archivo relative flex items-center justify-center transition-colors disabled:bg-zinc-300 disabled:text-zinc-500 dark:disabled:bg-zinc-800"
   >
     <div :class="[{ invisible: pending }]">
       <slot></slot>

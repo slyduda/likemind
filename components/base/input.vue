@@ -7,15 +7,15 @@
 
     <!-- Input Wrapper -->
     <div
-      class="w-full border-solid bg-white focus:ring-4 dark:bg-stone-950"
+      class="w-full border-solid bg-white focus:ring-4 dark:bg-zinc-950"
       :class="[
         classes,
         shadowComputed,
         roundedComputed,
         borderComputed,
         validColorComputed,
-        { 'h-12': !height },
-        { 'bg-zinc-500 text-zinc-500': disabled },
+        sizeComputed,
+        { 'bg-zinc-300 text-zinc-500': disabled },
         { 'hover:border-blue-500': valid === null },
       ]"
     >
@@ -33,7 +33,7 @@
         :aria-labelledby="name + 'Label'"
         :aria-describedby="name + 'Description'"
         :aria-invalid="valid === Validations.INVALID || true"
-        class="h-full w-full appearance-none bg-transparent px-3 py-2 text-zinc-950 outline-none placeholder:text-zinc-700 dark:text-stone-50"
+        class="h-full w-full appearance-none bg-transparent px-3 py-2 text-zinc-950 outline-none placeholder:text-zinc-400 disabled:text-zinc-500 dark:text-stone-50"
         :class="[roundedComputed]"
         :placeholder="placeholder"
         @focus="focus"
@@ -72,6 +72,7 @@ interface Props {
   label?: string;
   grow?: boolean;
   error?: string | string[];
+  size?: "sm" | "md";
   shadow?: boolean | "sm" | "md" | "lg" | "xl";
   border?: boolean | number;
   rounded?: boolean | "sm" | "md" | "lg" | "xl" | "full";
@@ -94,6 +95,7 @@ const props = withDefaults(defineProps<Props>(), {
   label: "",
   grow: false,
   error: "",
+  size: "md",
   shadow: false,
   border: false,
   rounded: false,
@@ -141,6 +143,10 @@ const borderComputed = computed(() =>
         : props.border
           ? "border"
           : "",
+);
+
+const sizeComputed = computed(() =>
+  props.height ? "" : props.size === "md" ? "h-12" : "h-10",
 );
 
 const validColorComputed = computed(() =>

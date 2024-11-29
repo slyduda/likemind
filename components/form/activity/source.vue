@@ -1,0 +1,120 @@
+<template>
+  <div class="relative">
+    <BaseTagsInput
+      v-model="input"
+      required
+      :tags="activityStore.sourceTags"
+      class="mb-4"
+      :label-tags="['up to 3']"
+      placeholder="https://example.com"
+      label="Sources"
+      @enter="onEnter"
+      @paste="onPaste"
+      @remove="onRemove"
+    >
+      <template #label>
+        <BaseInputLabel name="source-tags" label="Sources">
+          <template #tags>
+            <BaseInputLabelBadge
+              label="required"
+              :type="requiredType"
+            ></BaseInputLabelBadge>
+            <BaseInputLabelBadge
+              label="up to 3"
+              :type="maxLengthType"
+            ></BaseInputLabelBadge>
+            <BaseInputLabelBadge
+              label="no duplicates"
+              :type="duplicatesType"
+            ></BaseInputLabelBadge>
+          </template>
+        </BaseInputLabel>
+      </template>
+    </BaseTagsInput>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { nonEmpty, pipe, safeParse, string, url } from "valibot";
+import { useActivityStore } from "@/stores/activity.ts";
+import {
+  activityFormSourcesMaxLengthSchema,
+  activityFormSourcesMinLengthSchema,
+  activityFormSourcesDuplicatesSchema,
+} from "~/schemas/activityForm.schema";
+
+const activityStore = useActivityStore();
+
+const requiredType = computed<"error" | "success" | "default">(() => {
+  const { success } = safeParse(
+    activityFormSourcesMinLengthSchema,
+    activityStore.sources,
+  );
+  if (success) return "success";
+  return "error";
+});
+const maxLengthType = computed<"error" | "success" | "default">(() => {
+  const { success } = safeParse(
+    activityFormSourcesMaxLengthSchema,
+    activityStore.sources,
+  );
+  if (success) return "default";
+  return "error";
+});
+const duplicatesType = computed<"error" | "success" | "default">(() => {
+  const { success } = safeParse(
+    activityFormSourcesDuplicatesSchema,
+    activityStore.sources,
+  );
+  if (success) return "default";
+  return "error";
+});
+
+const input = ref("");
+
+const onRemove = (index: number, element: HTMLInputElement | null) => {
+  const [source] = activityStore.sources.splice(index, 1);
+  if (element) {
+    input.value = source;
+    element.value = source;
+    element.select(); // Must do BOTH element and input value to set in same thread
+  }
+};
+
+const onEnter = async () => {
+  await addUrl(input.value);
+};
+
+const onPaste = async (event: ClipboardEvent) => {
+  event.preventDefault();
+  const text = event.clipboardData?.getData("text") ?? "";
+  await addUrl(text);
+};
+
+const addUrl = async (text: string) => {
+  const result = safeParse(pipe(string(), nonEmpty(), url()), text);
+  if (result.success) {
+    // reset the input
+    input.value = "";
+    // add the newly parsed url
+    activityStore.sources.push(result.output);
+
+    // get url content
+    const content = await checkUrl(result.output);
+    console.log(content);
+    if (!content) return;
+
+    // get the article tag
+    const article = await parseArticle(content);
+    console.log(article);
+    if (!article) return;
+
+    // transform the article tag
+
+    // get suggestions if ai assist is on
+    if (activityStore.assisted) {
+      console.log("assisting");
+    }
+  }
+};
+</script>

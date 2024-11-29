@@ -33,7 +33,7 @@ export const useActivityFactory = () => {
 
     return {
       id: faker.string.uuid(),
-      description: faker.lorem.paragraph({ max: 5, min: 2 }),
+      description: faker.lorem.paragraphs({ max: 8, min: 1 }, "\n\n"),
       startedAt,
       endedAt: isEvent ? startedAt : endedAt,
       isFake: true,

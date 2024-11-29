@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { drizzle } from "drizzle-orm/node-postgres";
 import pg from "pg";
-import { processEnv } from "@/env";
+import { processEnv } from "@/config";
 
 export const client = new pg.Client({
   host: processEnv.POSTGRES_HOST,

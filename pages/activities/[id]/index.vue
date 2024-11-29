@@ -18,7 +18,7 @@
             />
           </li>
         </ul>
-        <p>{{ data.description }}</p>
+        <p class="whitespace-pre-wrap">{{ data.description }}</p>
       </div>
 
       <div class="mt-4">

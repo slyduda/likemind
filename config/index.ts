@@ -8,6 +8,7 @@ import {
   transform,
 } from "valibot";
 import "dotenv/config";
+export * from "./openai";
 
 export const envSchema = object({
   POSTGRES_URL: string(),
@@ -20,6 +21,7 @@ export const envSchema = object({
   POSTGRES_PASSWORD: string(),
   POSTGRES_DB: string(),
   JWT_SECRET: string(),
+  OPENAI_SECRET: string(),
 });
 
 export const safeProcessEnv = safeParse(envSchema, process.env);

@@ -53,15 +53,24 @@ definePageMeta({
   middleware: "access",
 });
 
+const { onResponseRedirect, onRequestError } = useLogging();
+const route = useRoute();
+
+const redirect = computed(() => {
+  const queryRedirect = route.query?.redirect;
+  if (typeof queryRedirect === "string") {
+    return queryRedirect;
+  } else if (Array.isArray(queryRedirect)) {
+    return queryRedirect.join();
+  }
+  return undefined;
+});
+
 const body = reactive({
   email: "",
   password: "",
+  redirect: redirect,
 });
-
-const { onResponse, onRequestError } = useLogging();
-const route = useRoute();
-const router = useRouter();
-
 const pending = ref(false);
 const disabled = computed(() => !body.email || !body.password);
 
@@ -79,19 +88,8 @@ const postLogin = async () => {
   await $fetch("/api/login", {
     method: "POST",
     body,
-    onResponse,
+    onResponse: (response) => onResponseRedirect(response),
     onRequestError,
-  })
-    .then(() => {
-      if (route.query?.redirect) {
-        if (typeof route.query.redirect === "string") {
-          router.push(route.query.redirect);
-        } else {
-          router.push(route.query.redirect.join());
-        }
-      }
-      router.push("/");
-    })
-    .catch(() => {});
+  });
 };
 </script>

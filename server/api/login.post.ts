@@ -1,4 +1,4 @@
-import { Output, object, parse } from "valibot";
+import { InferOutput, object, optional, parse, string } from "valibot";
 import { userByEmail } from "~/services";
 import { userEmailSchema, userPasswordSchema } from "~/schemas/user.schema";
 import jwt from "jsonwebtoken";
@@ -8,8 +8,9 @@ import { compareSync } from "bcrypt";
 const loginSchema = object({
   email: userEmailSchema,
   password: userPasswordSchema,
+  redirect: optional(string()),
 });
-type LoginSchema = Output<typeof loginSchema>;
+type LoginSchema = InferOutput<typeof loginSchema>;
 
 export default defineEventHandler<{ body: LoginSchema }, Promise<void>>(
   async (event) => {
@@ -41,6 +42,10 @@ export default defineEventHandler<{ body: LoginSchema }, Promise<void>>(
       subject: user.id,
     });
     setCookie(event, "access_token", accessToken, { httpOnly: true });
+
+    if (body.redirect) {
+      return await sendRedirect(event, body.redirect, 302);
+    }
 
     return;
   },

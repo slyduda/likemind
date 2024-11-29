@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { entity } from "@/db/models";
-import { eq } from "drizzle-orm";
+import { ilike } from "drizzle-orm";
 
 export const entityList = async ({
   limit = 100,
@@ -17,14 +17,15 @@ export const entityListByName = async ({
   limit = 100,
   offset = 0,
 }: {
-  name: string;
+  name?: string;
   limit: number;
   offset: number;
 }) => {
-  return await db
-    .select()
-    .from(entity)
-    .where(eq(entity.name, name))
-    .limit(limit)
-    .offset(offset);
+  const query = db.select().from(entity).limit(limit).offset(offset);
+
+  if (name) {
+    query.where(ilike(entity.name, `%${name}%`));
+  }
+
+  return await query;
 };

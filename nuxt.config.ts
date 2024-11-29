@@ -1,9 +1,9 @@
 import "dotenv/config";
-import { processEnv } from "./env";
+import { processEnv } from "./config";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 
   runtimeConfig: {
     jwtSecret: processEnv.JWT_SECRET,
@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "@nuxt/content",
     "@nuxtjs/google-fonts",
+    "@samk-dev/nuxt-vcalendar",
   ],
 
   postcss: {

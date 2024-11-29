@@ -18,7 +18,7 @@ export default defineEventHandler<
 
   // Add the user to the DB
   const newUser = await userInsert(user);
-  if (!newUser) throw Error("Error creating the user");
+  if (!newUser) throw createError("Error creating the user");
 
   // Parse and return
   const userRead = parse(userReadSchema, newUser);

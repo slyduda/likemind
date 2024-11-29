@@ -3,7 +3,7 @@ import { timestamp, pgTable, text, uuid, boolean } from "drizzle-orm/pg-core";
 import { activityTag } from ".";
 
 export const tag = pgTable("tag", {
-  id: uuid("id").unique().defaultRandom(),
+  id: uuid("id").unique().notNull().defaultRandom(),
   name: text("name").primaryKey().notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   isFake: boolean("is_fake").notNull().default(false),

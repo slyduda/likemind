@@ -1,28 +1,32 @@
 <template>
-  <div v-if="data" class="flex h-full w-full flex-col">
-    <div class="sticky top-0">
-      <AppHeader class="relative" :title="`Activity ${data.id}`"></AppHeader>
-      <div
-        class="-mt-4 mb-4 flex w-full overflow-x-auto border-b border-zinc-500 bg-zinc-100 py-2"
-      >
-        <NuxtLink
-          exact-active-class="active-tab"
-          :to="`/activities/${id}`"
-          class="mr-2 rounded-lg px-2 py-1 hover:bg-zinc-300 dark:hover:bg-stone-800"
+  <div v-if="data">
+    <AppHeader title="Activity">
+      <template #bottom>
+        <div
+          class="mb-4 flex w-full overflow-x-auto border-b border-zinc-500 bg-zinc-100 py-2"
         >
-          About
-        </NuxtLink>
-        <NuxtLink
-          exact-active-class="active-tab"
-          :to="`/activities/${id}/involvements`"
-          class="mx-2 rounded-lg px-2 py-1 hover:bg-zinc-300 dark:hover:bg-stone-800"
-        >
-          Involvements
-        </NuxtLink>
+          <NuxtLink
+            exact-active-class="active-tab"
+            :to="`/activities/${id}`"
+            class="mr-2 rounded-lg px-2 py-1 hover:bg-zinc-300 dark:hover:bg-stone-800"
+          >
+            About
+          </NuxtLink>
+          <NuxtLink
+            exact-active-class="active-tab"
+            :to="`/activities/${id}/involvements`"
+            class="mx-2 rounded-lg px-2 py-1 hover:bg-zinc-300 dark:hover:bg-stone-800"
+          >
+            Involvements
+          </NuxtLink>
+        </div>
+      </template>
+      <AppActivityCreate></AppActivityCreate>
+    </AppHeader>
+    <div class="flex h-full w-full flex-col">
+      <div id="activity-content" class="flex-1">
+        <NuxtPage></NuxtPage>
       </div>
-    </div>
-    <div id="activity-content" class="flex-1">
-      <NuxtPage></NuxtPage>
     </div>
   </div>
   <div v-else>
@@ -52,7 +56,7 @@ const id = Array.isArray(route.params.id)
   : route.params.id;
 
 const { data } = await useFetch(`/api/activities/${id}`);
-
+console.log(data.value);
 useHead({
   title: data.value
     ? `Activity ${data.value.id} | likemind`

@@ -26,7 +26,7 @@
     </div>
 
     <div
-      class="absolute h-full w-full sm:hidden"
+      class="absolute z-50 h-full w-full sm:hidden"
       :class="[
         { 'pointer-events-none bg-black/0': mainStore.collapsedSidebar },
         { 'pointer-events-auto': holdMute },

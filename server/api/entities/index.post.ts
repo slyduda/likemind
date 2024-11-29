@@ -13,7 +13,7 @@ export default defineEventHandler<
 >(async (event) => {
   // Get the user id from the context from our middleware
   const userId = event.context.user;
-  if (!userId) throw Error("You are not authenticated");
+  if (!userId) throw createError("You are not authenticated");
 
   // Get the body and validate
   const body = await readBody(event);
@@ -21,7 +21,7 @@ export default defineEventHandler<
 
   // Do the insert on the db
   const newEntity = await entityInsert(entity);
-  if (!newEntity) throw Error("Error creating Entity");
+  if (!newEntity) throw createError("Error creating Entity");
 
   // Parse and return
   const paredEntity = parse(entityReadSchema, newEntity);
