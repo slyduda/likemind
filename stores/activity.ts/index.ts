@@ -5,15 +5,16 @@ import {
   activityFormPageOneSchema,
   activityFormPageThreeSchema,
   activityFormPageTwoSchema,
+  type ActivityFormSourceType,
 } from "~/schemas/activityForm.schema";
 
 export const useActivityStore = defineStore("activity", () => {
-  const sources = ref<string[]>([]);
+  const sources = ref<ActivityFormSourceType[]>([]);
   const sourceTags = computed(() => {
     const tags = sources.value.map(
-      (source) => getDomainAndTLD(source) ?? source,
+      (source) => getDomainAndTLD(source.url) ?? source.url,
     );
-    return tags.map((tag) => tag);
+    return tags.map((tag) => ({ value: tag, icon: "svg-ai" }));
   });
   const description = ref("");
   const assisted = ref(false);

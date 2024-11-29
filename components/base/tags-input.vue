@@ -17,24 +17,14 @@
         <ul class="relative m-2 mb-0 flex flex-wrap">
           <li
             v-for="(item, index) in tags"
-            :key="item"
+            :key="index"
             class="mb-2 mr-2 inline-flex"
           >
-            <BaseBadge
-              :id="item"
-              :label="truncateText(item, 32)"
-              size="lg"
-              class="bg-zinc-700 text-white"
-            >
-              <template #right>
-                <button
-                  class="flex h-6 w-6 flex-shrink-0 items-center justify-center hover:bg-white/40"
-                  @click="removeItem(index)"
-                >
-                  ✕
-                </button>
-              </template>
-            </BaseBadge>
+            <BaseTagsInputTab
+              :tag="item"
+              :index="index"
+              @remove-tab="removeItem"
+            ></BaseTagsInputTab>
           </li>
           <li class="relative mb-2 inline-flex h-6 min-w-32 flex-grow">
             <input
@@ -97,7 +87,7 @@ const props = defineProps<{
   label?: string;
   placeholder?: string;
   loading?: boolean;
-  tags: string[];
+  tags: string[] | { value: string; icon: string }[];
   required?: boolean;
   labelTags?: string[];
   options?: string[];

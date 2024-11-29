@@ -75,8 +75,8 @@ const input = ref("");
 const onRemove = (index: number, element: HTMLInputElement | null) => {
   const [source] = activityStore.sources.splice(index, 1);
   if (element) {
-    input.value = source;
-    element.value = source;
+    input.value = source.url;
+    element.value = source.url;
     element.select(); // Must do BOTH element and input value to set in same thread
   }
 };
@@ -97,7 +97,10 @@ const addUrl = async (text: string) => {
     // reset the input
     input.value = "";
     // add the newly parsed url
-    activityStore.sources.push(result.output);
+    activityStore.sources.push({
+      id: self.crypto.randomUUID(),
+      url: result.output,
+    });
 
     // get url content
     const content = await checkUrl(result.output);

@@ -16,31 +16,33 @@ import {
   toLowerCase,
   url,
   type InferOutput,
+  optional,
+  uuid,
 } from "valibot";
 
-// export const activityFormSourceIdTypeSchema = pipe(string(), uuid());
+export const activityFormSourceIdTypeSchema = pipe(string(), uuid());
 
-// export const activityFormSourceUrlTypeSchema = pipe(string(), url());
+export const activityFormSourceUrlTypeSchema = pipe(string(), url());
 
-// export const activityFormSourceDescriptionMaxLength = 200;
-// export const activityFormSourceDescriptionTypeSchema = string();
-// export const activityFormSourceDescriptionSchema = pipe(
-//   activityFormSourceDescriptionTypeSchema,
-//   maxLength(activityFormSourceDescriptionMaxLength),
-// );
+export const activityFormSourceDescriptionMaxLength = 200;
+export const activityFormSourceDescriptionTypeSchema = string();
+export const activityFormSourceDescriptionSchema = pipe(
+  activityFormSourceDescriptionTypeSchema,
+  maxLength(activityFormSourceDescriptionMaxLength),
+);
 
-// export const activityFormSourceSchema = object({
-//   id: activityFormSourceIdTypeSchema,
-//   url: activityFormSourceUrlTypeSchema,
-//   description: optional(activityFormSourceDescriptionSchema),
-//   title: optional(string()),
-//   article: optional(string()),
-// });
+export const activityFormSourceSchema = object({
+  id: activityFormSourceIdTypeSchema,
+  url: activityFormSourceUrlTypeSchema,
+  description: optional(activityFormSourceDescriptionSchema),
+  title: optional(string()),
+  article: optional(string()),
+});
 
 export const activityFormSourcesMinCount = 1;
 export const activityFormSourcesMaxCount = 3;
 export const activityFormSourcesTypeSchema = array(
-  pipe(string(), nonEmpty(), url()),
+  pipe(activityFormSourceSchema),
 );
 export const activityFormSourcesMinLengthSchema = pipe(
   activityFormSourcesTypeSchema,
@@ -196,7 +198,7 @@ export const activityFormSchema = intersect([
   activityFormPageThreeSchema,
 ]);
 
-// export type ActivityFormSourceType = InferOutput<
-//   typeof activityFormSourceSchema
-// >;
+export type ActivityFormSourceType = InferOutput<
+  typeof activityFormSourceSchema
+>;
 export type ActivityFormType = InferOutput<typeof activityFormSchema>;
