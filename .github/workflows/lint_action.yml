@@ -15,6 +15,7 @@ jobs:
       POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      OPENAI_SECRET: ${{ secrets.OPENAI_SECRET }}
 
     strategy:
       matrix:
