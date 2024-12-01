@@ -50,11 +50,11 @@
             </div>
           </div>
           <ul v-else-if="options.length">
-            <li v-for="option in options" :key="option">
+            <li v-for="(option, index) in options" :key="option">
               <button
                 class="w-full px-4 py-2 text-left hover:bg-gray-100 focus:bg-gray-100"
-                @click="select(option)"
-                @touchstart="select(option)"
+                @click="select(index)"
+                @touchstart="select(index)"
               >
                 {{ option }}
               </button>
@@ -131,9 +131,9 @@ const handleKeyDown = (event: KeyboardEvent) => {
   }
 };
 
-const select = (id: string | number) => {
+const select = (index: number) => {
   other.value?.focus();
-  emit("select", id);
+  emit("select", index);
 };
 
 const handleEnter = () => {

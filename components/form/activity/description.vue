@@ -26,6 +26,7 @@
             class="pt-0.5"
             size="sm"
             position="left"
+            @toggled="handleToggled"
           >
             AI Assist<SvgAi class="h-5 w-5 text-yellow-500"></SvgAi>
           </BaseCheckbox>
@@ -53,4 +54,10 @@ const minLengthType = computed<"error" | "success" | "default">(() => {
   if (success) return "success";
   return "error";
 });
+
+const handleToggled = async (value: boolean) => {
+  if (value) {
+    await activityStore.updateSuggestions();
+  }
+};
 </script>

@@ -45,6 +45,12 @@ withDefaults(
     position: "right", // Default to 'right'
   },
 );
+
+const emit = defineEmits(["toggled"]);
+
+watch(model, (val) => {
+  emit("toggled", val);
+});
 </script>
 
 <style>
@@ -69,6 +75,8 @@ input[type="checkbox"] {
   @apply border-gray-300;
   @apply box-border;
   @apply rounded-lg;
+  @apply bg-white;
+  /* Added white background */
 }
 
 .checkbox-base input:hover:enabled + label:before {
@@ -88,6 +96,7 @@ input[type="checkbox"] {
   display: inline-block;
   width: 10px;
   height: 10px;
+  margin-left: 7px;
 }
 
 /* Right Position (Default) */
@@ -97,6 +106,8 @@ input[type="checkbox"] {
   top: 7px;
   left: 0px;
   right: unset;
+  margin-left: 0px !important;
+  margin-right: 6px;
 }
 
 /* Left Position */
@@ -119,6 +130,9 @@ input[type="checkbox"] {
   @apply border-gray-300;
   @apply box-border;
   @apply rounded-lg;
+  @apply bg-white;
+
+  /* Added white background */
 }
 
 .checkbox-sm input:hover:enabled + label:before {
@@ -138,6 +152,7 @@ input[type="checkbox"] {
   display: inline-block;
   width: 8px;
   height: 8px;
+  margin-right: 6px;
 }
 
 /* Right Position for Small Size */

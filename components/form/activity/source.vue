@@ -35,12 +35,13 @@
 </template>
 
 <script setup lang="ts">
-import { nonEmpty, pipe, safeParse, string, url } from "valibot";
+import { safeParse } from "valibot";
 import { useActivityStore } from "@/stores/activity.ts";
 import {
   activityFormSourcesMaxLengthSchema,
   activityFormSourcesMinLengthSchema,
   activityFormSourcesDuplicatesSchema,
+  activityFormSourceUrlSchema,
 } from "~/schemas/activityForm.schema";
 
 const activityStore = useActivityStore();
@@ -92,32 +93,12 @@ const onPaste = async (event: ClipboardEvent) => {
 };
 
 const addUrl = async (text: string) => {
-  const result = safeParse(pipe(string(), nonEmpty(), url()), text);
+  const result = safeParse(activityFormSourceUrlSchema, text);
   if (result.success) {
     // reset the input
     input.value = "";
-    // add the newly parsed url
-    activityStore.sources.push({
-      id: self.crypto.randomUUID(),
-      url: result.output,
-    });
 
-    // get url content
-    const content = await checkUrl(result.output);
-    console.log(content);
-    if (!content) return;
-
-    // get the article tag
-    const article = await parseArticle(content);
-    console.log(article);
-    if (!article) return;
-
-    // transform the article tag
-
-    // get suggestions if ai assist is on
-    if (activityStore.assisted) {
-      console.log("assisting");
-    }
+    await activityStore.addSource(result.output);
   }
 };
 </script>

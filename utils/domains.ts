@@ -1,7 +1,6 @@
 import { load } from "cheerio";
 
 export function getDomainAndTLD(url: string) {
-  console.log("getting domain");
   try {
     const parsedUrl = new URL(url);
     // Split the hostname into parts by `.`
@@ -38,9 +37,33 @@ export const checkUrl = async (url: string): Promise<string | null> => {
 
 export const parseArticle = async (
   htmlText: string,
-): Promise<string | null> => {
-  const $ = load(htmlText);
-  const $article = $("article");
-  if ($article.length === 0) return null;
-  return $article.text().replace(/\s+/g, " ").trim();
+): Promise<{
+  title: string | null;
+  description: string | null;
+  article: string | null;
+} | null> => {
+  const cleanText = (text: string) => {
+    return text.replace(/\s+/g, " ").trim();
+  };
+
+  try {
+    const $ = load(htmlText);
+    const $article = $("article");
+    const $description = $("description");
+    const $title = $("title");
+    const payload = {
+      title: $title.length !== 0 ? cleanText($title.text()) : null,
+      description:
+        $description.length !== 0 ? cleanText($description.text()) : null,
+      article: $article.length !== 0 ? cleanText($article.text()) : null,
+    };
+    console.log(payload);
+    return payload;
+  } catch (error) {
+    return null;
+  }
 };
+
+export function trimArticleToMaxLength(str: string, maxLength: number) {
+  return str.length > maxLength ? str.slice(0, maxLength) : str;
+}

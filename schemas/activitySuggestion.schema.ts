@@ -1,6 +1,14 @@
-import { array, maxLength, object, optional, pipe, string } from "valibot";
+import {
+  array,
+  maxLength,
+  minLength,
+  object,
+  optional,
+  pipe,
+  string,
+} from "valibot";
 
-export const activitySuggestionSourceMaxLength = 1000;
+export const activitySuggestionSourceMaxLength = 2000;
 export const activitySuggestionSourceTypeSchema = string();
 export const activitySuggestionSourceMaxLengthSchema = pipe(
   activitySuggestionSourceTypeSchema,
@@ -11,7 +19,11 @@ export const activitySuggestionSourcesTypeSchema = array(
 );
 export const activitySuggestionSourcesMaxLengthSchema = pipe(
   activitySuggestionSourcesTypeSchema,
-  maxLength(5),
+  maxLength(3),
+);
+export const activitySuggestionSourcesMinLengthSchema = pipe(
+  activitySuggestionSourcesTypeSchema,
+  minLength(1),
 );
 export const activitySuggestionSourcesSchema = pipe(
   activitySuggestionSourcesTypeSchema,

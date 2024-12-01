@@ -77,17 +77,15 @@ const { onResponse, onResponseError } = useLogging();
 const activityStore = useActivityStore();
 
 const loading = ref(false);
-const body = reactive({
-  fake: true,
-});
 
 const submit = async () => {
+  console.log(activityStore.body);
   if (!activityStore.canSubmit) return;
   loading.value = true;
   try {
-    await $fetch("/api/activities", {
+    await $fetch("/api/activities/form", {
       method: "POST",
-      body,
+      body: activityStore.body,
       onResponseError,
       onResponse,
     });

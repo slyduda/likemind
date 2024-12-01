@@ -38,8 +38,8 @@ const remove = (index: number) => {
   };
 };
 
-const handleSelect = (id: string) => {
-  const found = results.value.find((tag) => tag === id);
+const handleSelect = (index: number) => {
+  const found = results.value[index];
   if (found)
     query.value = { ...query.value, tags: [...query.value.tags, found] };
   input.value = "";

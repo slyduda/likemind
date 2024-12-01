@@ -42,8 +42,8 @@ const remove = (index: number) => {
   };
 };
 
-const handleSelect = (id: string) => {
-  const found = results.value.find((entity) => entity === id);
+const handleSelect = (index: number) => {
+  const found = results.value[index];
   if (found)
     query.value = {
       ...query.value,

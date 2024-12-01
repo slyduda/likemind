@@ -2,7 +2,7 @@
   <div>
     <BaseTagsInput
       v-model="input"
-      :tags="activityStore.tags"
+      :tags="activityStore.tags.map((tag) => tag.name)"
       :options="filteredResults"
       class="mb-4"
       placeholder="add a tag..."
@@ -10,6 +10,7 @@
       @remove="remove"
       @select="handleSelect"
       @focus="search"
+      @enter="handleEnter"
     >
       <template #label>
         <BaseInputLabel name="tags" label="Tags">
@@ -30,6 +31,7 @@
 <script setup lang="ts">
 import { safeParse } from "valibot";
 import {
+  activityFormTagNameSchema,
   activityFormTagsMaxLength,
   activityFormTagsMaxLengthSchema,
 } from "~/schemas/activityForm.schema";
@@ -47,9 +49,12 @@ const maxLengthType = computed<"error" | "success" | "default">(() => {
 });
 
 const input = ref("");
-const results = ref<string[]>([]);
+const results = ref<{ id: string; name: string }[]>([]);
 const filteredResults = computed<string[]>(() => {
-  return results.value.filter((tag) => !activityStore.tags.includes(tag));
+  const tagIds = activityStore.tags.map((t) => t.id);
+  return results.value
+    .filter((result) => !tagIds.includes(result.id))
+    .map((t) => t.name);
 });
 const loading = ref(false);
 const error = ref<string | null>(null);
@@ -60,10 +65,24 @@ const remove = (index: number) => {
   activityStore.tags = tags;
 };
 
-const handleSelect = (id: string) => {
-  const found = results.value.find((tag) => tag === id);
+const handleSelect = (index: number) => {
+  const found = results.value[index];
+  console.log(found);
   if (found) activityStore.tags.push(found);
   input.value = "";
+};
+
+const handleEnter = () => {
+  const result = safeParse(activityFormTagNameSchema, input.value);
+  if (result.success) {
+    // reset the input
+    input.value = "";
+
+    activityStore.tags.push({
+      id: null,
+      name: result.output,
+    });
+  }
 };
 
 const search = async () => {
@@ -75,7 +94,7 @@ const search = async () => {
         name: input.value,
       },
     });
-    results.value = response.map((tag) => tag.name);
+    results.value = response.map((tag) => ({ id: tag.id, name: tag.name }));
   } catch {
     error.value = "An Error Occured";
   } finally {

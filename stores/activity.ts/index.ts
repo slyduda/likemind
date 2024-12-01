@@ -1,34 +1,83 @@
 import { defineStore } from "pinia";
 import { safeParse } from "valibot";
 import {
-  activityFormCurrentDate,
   activityFormPageOneSchema,
   activityFormPageThreeSchema,
   activityFormPageTwoSchema,
+  type ActivityFormEntityType,
   type ActivityFormSourceType,
+  type ActivityFormTagType,
+  type ActivityFormType,
 } from "~/schemas/activityForm.schema";
+import { activitySuggestionSourceMaxLength } from "~/schemas/activitySuggestion.schema";
+import { v4 as uuidv4 } from "uuid";
+
+const iconPicker = (source: ActivityFormSourceType) => {
+  if (source.assisted === "loading") return "svg-black-hole";
+  if (source.assisted === "failed") return "svg-list-check-bold";
+  if (source.assisted === "success") return "svg-ai";
+
+  // if (source.parsed === null) return "svg-black-hole";
+  if (source.parsed === true) return "svg-list-check-bold";
+  if (source.parsed === false) return "svg-list-cross-bold";
+
+  if (source.scraped === "loading") return "svg-cloud";
+  if (source.scraped === "failed") return "svg-cloud-cross";
+  if (source.scraped === "success") return "svg-cloud-check";
+
+  return "svg-link";
+};
+
+const fetchSuggestions = async (sources: string[]) => {
+  const suggestion = await $fetch("/api/activities/suggestions", {
+    method: "POST",
+    body: {
+      sources: [
+        ...sources.map((source) =>
+          trimArticleToMaxLength(source, activitySuggestionSourceMaxLength),
+        ),
+      ],
+    },
+  });
+  return suggestion;
+};
 
 export const useActivityStore = defineStore("activity", () => {
   const sources = ref<ActivityFormSourceType[]>([]);
   const sourceTags = computed(() => {
-    const tags = sources.value.map(
-      (source) => getDomainAndTLD(source.url) ?? source.url,
-    );
-    return tags.map((tag) => ({ value: tag, icon: "svg-ai" }));
+    return sources.value.map((source) => ({
+      value: getDomainAndTLD(source.url) ?? source.url,
+      icon: iconPicker(source),
+    }));
   });
+
+  const updateSource = <K extends keyof ActivityFormSourceType>(
+    id: string,
+    property: K,
+    value: ActivityFormSourceType[K],
+  ) => {
+    const index = sources.value.findIndex((source) => source.id === id);
+    if (index !== -1) {
+      const updatedSource = { ...sources.value[index], [property]: value };
+      // Use splice and spread to replace the entire array
+      sources.value.splice(index, 1, updatedSource);
+      sources.value = [...sources.value]; // Ensure reactivity
+    }
+  };
+
   const description = ref("");
   const assisted = ref(false);
-  const tags = ref<string[]>([]);
+  const tags = ref<ActivityFormTagType[]>([]);
 
-  const entities = ref<string[]>([]);
+  const entities = ref<ActivityFormEntityType[]>([]);
   const involvementSources = ref<{}>({});
 
   const range = ref<{
     start: Date;
     end: Date;
   }>({
-    start: activityFormCurrentDate,
-    end: activityFormCurrentDate,
+    start: new Date(),
+    end: new Date(),
   });
 
   const startedAt = computed(() => range.value.start);
@@ -110,10 +159,125 @@ export const useActivityStore = defineStore("activity", () => {
     page.value++;
   };
 
+  const addSuggestion = (suggestion: string) => {
+    if (description.value) {
+      description.value = description.value + "\n\n" + suggestion;
+    }
+    description.value = suggestion;
+  };
+
+  const addSource = async (url: string) => {
+    const id = uuidv4();
+    // add the newly parsed url
+    const source = {
+      id,
+      url,
+      scraped: null,
+      parsed: null,
+      assisted: null,
+      suggestion: null,
+      description: null,
+      title: null,
+      article: null,
+    };
+    sources.value.push(source);
+
+    await sleep(2000);
+
+    // get url content
+    updateSource(id, "scraped", "loading");
+    await sleep(2000);
+    const content = await checkUrl(source.url);
+
+    if (!content) {
+      updateSource(id, "scraped", "failed");
+      return;
+    }
+    updateSource(id, "scraped", "success");
+
+    await sleep(2000);
+
+    // get the article tag
+    const response = await parseArticle(content);
+    if (response === null) {
+      updateSource(id, "parsed", false);
+      return;
+    }
+    updateSource(id, "parsed", true);
+    const { article } = response;
+    if (!article) {
+      console.log("link had no article");
+      return;
+    }
+    // transform the article tag
+    updateSource(id, "article", article);
+    if (!assisted.value) return;
+
+    await sleep(2000);
+
+    // get suggestions if ai assist is on
+
+    updateSource(id, "assisted", "loading");
+    const suggestion = await fetchSuggestions([article]);
+    const suggestionContents = suggestion.choices[0].message.content;
+    if (!suggestionContents) {
+      updateSource(id, "assisted", "failed");
+      return;
+    }
+    updateSource(id, "assisted", "success");
+    updateSource(id, "suggestion", suggestionContents);
+
+    addSuggestion(suggestionContents);
+  };
+
+  const updateSuggestions = async () => {
+    const filteredSources = sources.value.filter(
+      (source) => source.article && source.assisted === null,
+    );
+    if (!filteredSources.length) return;
+
+    for (const source of filteredSources) {
+      updateSource(source.id, "assisted", "loading");
+    }
+
+    const suggestion = await fetchSuggestions(
+      sources.value.map((source) => source.article ?? ""),
+    );
+
+    const suggestionContents = suggestion.choices[0].message.content;
+    if (!suggestionContents) {
+      for (const source of filteredSources) {
+        updateSource(source.id, "assisted", "failed");
+      }
+      return;
+    }
+    for (const source of filteredSources) {
+      updateSource(source.id, "assisted", "success");
+      updateSource(source.id, "suggestion", suggestionContents);
+    }
+
+    addSuggestion(suggestionContents);
+  };
+
+  const body = computed<ActivityFormType>(() => {
+    return {
+      sources: sources.value,
+      description: description.value,
+      entities: entities.value,
+      tags: tags.value,
+      startedAt: startedAt.value,
+      endedAt: endedAt.value,
+    };
+  });
+
   return {
+    body,
     assisted,
     description,
     sources,
+    updateSource,
+    updateSuggestions,
+    addSource,
     sourceTags,
     tags,
     entities,

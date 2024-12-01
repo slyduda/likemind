@@ -2,13 +2,14 @@
   <div>
     <BaseTagsInput
       v-model="input"
-      :tags="activityStore.entities"
+      :tags="activityStore.entities.map((entity) => entity.name)"
       :options="filteredResults"
       class="mb-4"
       placeholder="add an entity..."
       label="Entities"
       @remove="remove"
       @select="handleSelect"
+      @enter="handleEnter"
       @focus="search"
     >
       <template #label>
@@ -32,6 +33,7 @@ import { safeParse } from "valibot";
 import {
   activityFormEntitiesMaxLength,
   activityFormEntitiesMaxLengthSchema,
+  activityFormEntityNameSchema,
 } from "~/schemas/activityForm.schema";
 import { useActivityStore } from "~/stores/activity.ts";
 
@@ -47,9 +49,12 @@ const maxLengthType = computed<"error" | "success" | "default">(() => {
 });
 
 const input = ref("");
-const results = ref<string[]>([]);
+const results = ref<{ id: string; name: string }[]>([]);
 const filteredResults = computed<string[]>(() => {
-  return results.value.filter((tag) => !activityStore.entities.includes(tag));
+  const entityIds = activityStore.entities.map((e) => e.id);
+  return results.value
+    .filter((result) => !entityIds.includes(result.id))
+    .map((e) => e.name);
 });
 const loading = ref(false);
 const error = ref<string | null>(null);
@@ -60,10 +65,23 @@ const remove = (index: number) => {
   activityStore.entities = entities;
 };
 
-const handleSelect = (id: string) => {
-  const found = results.value.find((entity) => entity === id);
+const handleSelect = (index: number) => {
+  const found = results.value[index];
   if (found) activityStore.entities.push(found);
   input.value = "";
+};
+
+const handleEnter = () => {
+  const result = safeParse(activityFormEntityNameSchema, input.value);
+  if (result.success) {
+    // reset the input
+    input.value = "";
+
+    activityStore.entities.push({
+      id: null,
+      name: result.output,
+    });
+  }
 };
 
 const search = async () => {
@@ -76,7 +94,10 @@ const search = async () => {
         limit: 10,
       },
     });
-    results.value = response.map((entity) => entity.name);
+    results.value = response.map((entity) => ({
+      id: entity.id,
+      name: entity.name,
+    }));
   } catch {
     error.value = "An Error Occured";
   } finally {
