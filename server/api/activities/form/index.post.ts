@@ -12,7 +12,6 @@ export default defineEventHandler<
   { body: ActivityFormType },
   Promise<ActivitySelect>
 >(async (event) => {
-  console.log(await readBody(event));
   const body = await readValidatedBody(event, (body) =>
     parse(bodySchema, body),
   );

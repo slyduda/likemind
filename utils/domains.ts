@@ -57,7 +57,6 @@ export const parseArticle = async (
         $description.length !== 0 ? cleanText($description.text()) : null,
       article: $article.length !== 0 ? cleanText($article.text()) : null,
     };
-    console.log(payload);
     return payload;
   } catch (error) {
     return null;

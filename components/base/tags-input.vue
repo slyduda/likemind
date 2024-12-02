@@ -104,7 +104,6 @@ const emit = defineEmits([
 ]);
 
 watch(focused, (newVal) => {
-  console.log("focusedInput" + newVal);
   if (newVal) {
     emit("focus");
   } else {

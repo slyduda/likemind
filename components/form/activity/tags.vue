@@ -67,7 +67,6 @@ const remove = (index: number) => {
 
 const handleSelect = (index: number) => {
   const found = results.value[index];
-  console.log(found);
   if (found) activityStore.tags.push(found);
   input.value = "";
 };

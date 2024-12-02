@@ -1,7 +1,20 @@
 <template>
   <div>
     <div v-if="data">
-      <div>
+      <div class="mb-4">
+        <div v-if="data.startedAt === data.endedAt">
+          <h3>Happened On</h3>
+          <p>{{ data.startedAt }}</p>
+        </div>
+        <div v-else>
+          <h3>Started</h3>
+          <p>{{ data.startedAt }}</p>
+          <p></p>
+          <h3>Ended</h3>
+          <p>{{ data.endedAt }}</p>
+        </div>
+      </div>
+      <div class="mb-4">
         <ul>
           <li v-if="data.endedAt === null" class="inline-block">
             <BaseBadge
@@ -21,7 +34,7 @@
         <p class="whitespace-pre-wrap">{{ data.description }}</p>
       </div>
 
-      <div class="mt-4">
+      <div class="mb-4">
         <h2>Entities</h2>
         <ul>
           <li
@@ -38,21 +51,7 @@
         </ul>
       </div>
 
-      <div class="mt-4">
-        <div v-if="data.startedAt === data.endedAt">
-          <h3>Happened On</h3>
-          <p>{{ data.startedAt }}</p>
-        </div>
-        <div v-else>
-          <h3>Started</h3>
-          <p>{{ data.startedAt }}</p>
-          <p></p>
-          <h3>Ended</h3>
-          <p>{{ data.endedAt }}</p>
-        </div>
-      </div>
-
-      <div class="mt-4">
+      <div class="mb-4">
         <h2>Sources</h2>
         <ul>
           <li v-for="evidence in data.evidences" :key="evidence.id">
@@ -82,9 +81,8 @@ const id = Array.isArray(route.params.id)
   : route.params.id;
 
 const { data } = await useFetch(`/api/activities/${id}`, {
+  method: "GET",
   onResponseError,
   onRequestError,
 });
-
-console.log(data);
 </script>

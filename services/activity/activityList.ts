@@ -32,18 +32,26 @@ export const activityList = async ({
       endedAt: activity.endedAt,
       createdAt: activity.createdAt,
       isFake: activity.isFake,
-      tags: sql<TagSelect[]>`array_agg(distinct jsonb_build_object(
-        'id', tag.id,
-        'name', tag.name,
-        'createdAt', tag.created_at,
-        'isFake', tag.is_fake
-      ))`,
-      entities: sql<EntitySelect[]>`array_agg(distinct jsonb_build_object(
-        'id', entity.id,
-        'name', entity.name,
-        'createdAt', entity.created_at,
-        'isFake', entity.is_fake
-      ))`,
+      tags: sql<TagSelect[]>`
+      COALESCE(
+        array_agg(distinct jsonb_build_object(
+          'id', tag.id,
+          'name', tag.name,
+          'createdAt', tag.created_at,
+          'isFake', tag.is_fake
+        )) FILTER (WHERE tag.id IS NOT NULL), 
+        ARRAY[]::jsonb[]
+      ) as tags`,
+      entities: sql<EntitySelect[]>`
+      COALESCE(
+        array_agg(distinct jsonb_build_object(
+          'id', entity.id,
+          'name', entity.name,
+          'createdAt', entity.created_at,
+          'isFake', entity.is_fake
+        )) FILTER (WHERE entity.id IS NOT NULL), 
+        ARRAY[]::jsonb[]
+      ) as entities`,
     })
     .from(activity)
     .leftJoin(activityTag, eq(activity.id, activityTag.activityId))
