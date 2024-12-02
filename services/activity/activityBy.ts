@@ -75,15 +75,15 @@ export const activityByIdComplex = async ({ id }: { id: string }) => {
     .groupBy(activity.id);
 
   if (activities.length) {
-    console.log(activities);
     const queriedActivity = {
       ...activities[0],
       reviewCount: activities[0].reviews.length,
-      importance:
-        activities[0].reviews.reduce(
-          (sum, review) => sum + (review.importance || 0),
-          0,
-        ) / activities[0].reviews.length,
+      importance: activities[0].reviews.length
+        ? activities[0].reviews.reduce(
+            (sum, review) => sum + (review.importance || 0),
+            0,
+          ) / activities[0].reviews.length
+        : null,
     };
 
     return queriedActivity;

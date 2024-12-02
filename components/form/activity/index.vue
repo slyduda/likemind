@@ -79,7 +79,6 @@ const activityStore = useActivityStore();
 const loading = ref(false);
 
 const submit = async () => {
-  console.log(activityStore.body);
   if (!activityStore.canSubmit) return;
   loading.value = true;
   try {

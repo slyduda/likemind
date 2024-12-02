@@ -9,10 +9,7 @@ export default defineEventHandler(async (event) => {
     return parse(bodySchema, query);
   });
 
-  console.log(body.sources);
-
   const result = await suggestDescription(body.sources);
-  console.log(result);
   return result;
   // if (body.description) {
   //   const result = await suggestDescriptionAdditions(
