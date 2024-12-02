@@ -14,5 +14,6 @@ useHead({
 
 definePageMeta({
   middleware: "auth",
+  scrollToTop: false,
 });
 </script>

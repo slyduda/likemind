@@ -1,5 +1,5 @@
 <template>
-  <BaseCheckbox v-model="activityStore.isEvent" class="mb-4">
+  <BaseCheckbox v-model="activityStore.isEvent" class="mb-4" name="event">
     This activity finished shortly after it started
   </BaseCheckbox>
 </template>

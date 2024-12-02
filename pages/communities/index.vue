@@ -9,5 +9,6 @@
 <script setup lang="ts">
 definePageMeta({
   middleware: "soft-auth",
+  scrollToTop: false,
 });
 </script>

@@ -108,11 +108,4 @@ watch(
     }
   },
 );
-
-const chat = () => {
-  $fetch("/api/activities/suggestions", {
-    method: "POST",
-    body: {},
-  });
-};
 </script>

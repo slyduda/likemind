@@ -58,7 +58,7 @@ const isDisabledOrPending = computed(
       class="absolute left-0 top-0 flex h-full w-full items-center justify-center"
     >
       <div v-if="pending" class="animate-spin">
-        <SvgSpinner></SvgSpinner>
+        <Icon name="gg:spinner"></Icon>
       </div>
     </div>
   </button>

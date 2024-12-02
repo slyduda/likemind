@@ -13,19 +13,19 @@ import { activitySuggestionSourceMaxLength } from "~/schemas/activitySuggestion.
 import { v4 as uuidv4 } from "uuid";
 
 const iconPicker = (source: ActivityFormSourceType) => {
-  if (source.assisted === "loading") return "svg-black-hole";
-  if (source.assisted === "failed") return "svg-list-check-bold";
-  if (source.assisted === "success") return "svg-ai";
+  if (source.assisted === "loading") return "solar:black-hole-line-duotone";
+  if (source.assisted === "failed") return "solar:list-check-bold-duoton";
+  if (source.assisted === "success") return "bi:stars";
 
   // if (source.parsed === null) return "svg-black-hole";
-  if (source.parsed === true) return "svg-list-check-bold";
-  if (source.parsed === false) return "svg-list-cross-bold";
+  if (source.parsed === true) return "solar:list-check-bold-duotone";
+  if (source.parsed === false) return "solar:list-cross-bold-duotone";
 
-  if (source.scraped === "loading") return "svg-cloud";
-  if (source.scraped === "failed") return "svg-cloud-cross";
-  if (source.scraped === "success") return "svg-cloud-check";
+  if (source.scraped === "loading") return "solar:cloud-bold";
+  if (source.scraped === "failed") return "solar:cloud-cross-bold-duotone";
+  if (source.scraped === "success") return "solar:cloud-check-bold-duotone";
 
-  return "svg-link";
+  return "solar:link-square-line-duotone";
 };
 
 const fetchSuggestions = async (sources: string[]) => {

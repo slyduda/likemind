@@ -10,6 +10,7 @@ export const relationshipInsert = async (insert: RelationshipInsert) => {
 };
 
 export const relationshipInsertMany = async (insert: RelationshipInsert[]) => {
+  if (insert.length === 0) return [];
   const relationships = await db
     .insert(relationship)
     .values(insert)

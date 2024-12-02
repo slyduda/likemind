@@ -26,9 +26,13 @@
             class="pt-0.5"
             size="sm"
             position="left"
+            name="assist"
             @toggled="handleToggled"
           >
-            AI Assist<SvgAi class="h-5 w-5 text-yellow-500"></SvgAi>
+            AI Assist<Icon
+              name="bi:stars"
+              class="h-5 w-5 text-yellow-500"
+            ></Icon>
           </BaseCheckbox>
         </div>
       </template>

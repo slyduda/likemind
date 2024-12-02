@@ -14,6 +14,7 @@ export const relationshipReviewInsert = async (
 export const relationshipReviewInsertMany = async (
   insert: RelationshipReviewInsert[],
 ) => {
+  if (insert.length === 0) return [];
   const relationshipReviews = await db
     .insert(relationshipReview)
     .values(insert)

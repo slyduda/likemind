@@ -13,5 +13,6 @@ useHead({
 
 definePageMeta({
   middleware: "soft-auth",
+  scrollToTop: false,
 });
 </script>

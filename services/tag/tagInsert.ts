@@ -7,6 +7,7 @@ export const tagInsert = async (insert: TagInsert) => {
 };
 
 export const tagInsertMany = async (insert: TagInsert[]) => {
+  if (insert.length === 0) return [];
   const tags = await db.insert(tag).values(insert).returning();
   return tags;
 };

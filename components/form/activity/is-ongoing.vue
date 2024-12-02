@@ -1,5 +1,5 @@
 <template>
-  <BaseCheckbox v-model="activityStore.isOngoing" class="mb-4"
+  <BaseCheckbox v-model="activityStore.isOngoing" class="mb-4" name="ongoing"
     >This activity is still ongoing
   </BaseCheckbox>
 </template>

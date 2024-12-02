@@ -17,6 +17,7 @@ export const relationshipEvidenceInsert = async (
 export const relationshipEvidenceInsertMany = async (
   insert: RelationshipEvidenceInsert[],
 ) => {
+  if (insert.length === 0) return [];
   const relationshipEvidences = await db
     .insert(relationshipEvidence)
     .values(insert)

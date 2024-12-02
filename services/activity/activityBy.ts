@@ -30,25 +30,39 @@ export const activityByIdComplex = async ({ id }: { id: string }) => {
       endedAt: activity.endedAt,
       createdAt: activity.createdAt,
       isFake: activity.isFake,
-      tags: sql<string>`array_agg(distinct activity_tag.tag_name) as tags`,
-      entities: sql<string>`array_agg(distinct entity.name) as entities`,
-      evidences: sql<EvidenceSelect[]>`array_agg(distinct jsonb_build_object(
-        'id', evidence.id,
-        'description', evidence.description,
-        'source', evidence.source,
-        'createdAt', evidence.created_at,
-        'isFake', evidence.is_fake
-      )) as evidences`,
-      reviews: sql<
-        ActivityReviewSelect[]
-      >`array_agg(distinct jsonb_build_object(
-        'id', activity_review.id,
-        'importance', activity_review.importance,
-        'activityId', activity_review.activity_id,
-        'userId', activity_review.user_id,
-        'createdAt', activity_review.created_at,
-        'isFake', activity_review.is_fake
-      )) as reviews`,
+      tags: sql<string[]>`
+      COALESCE(
+        array_agg(distinct activity_tag.tag_name) FILTER (WHERE activity_tag.tag_name IS NOT NULL), 
+        ARRAY[]::text[]
+      ) as tags`,
+      entities: sql<string[]>`
+      COALESCE(
+        array_agg(distinct entity.name) FILTER (WHERE entity.name IS NOT NULL), 
+        ARRAY[]::text[]
+      ) as entities`,
+      evidences: sql<EvidenceSelect[]>`
+      COALESCE(
+        array_agg(distinct jsonb_build_object(
+          'id', evidence.id,
+          'description', evidence.description,
+          'source', evidence.source,
+          'createdAt', evidence.created_at,
+          'isFake', evidence.is_fake
+        )) FILTER (WHERE evidence.id IS NOT NULL), 
+        ARRAY[]::jsonb[]
+      ) as evidences`,
+      reviews: sql<ActivityReviewSelect[]>`
+      COALESCE(
+        array_agg(distinct jsonb_build_object(
+          'id', activity_review.id,
+          'importance', activity_review.importance,
+          'activityId', activity_review.activity_id,
+          'userId', activity_review.user_id,
+          'createdAt', activity_review.created_at,
+          'isFake', activity_review.is_fake
+        )) FILTER (WHERE activity_review.id IS NOT NULL), 
+        ARRAY[]::jsonb[]
+      ) as reviews`,
     })
     .from(activity)
     .leftJoin(activityTag, eq(activityTag.activityId, activity.id))
@@ -61,6 +75,7 @@ export const activityByIdComplex = async ({ id }: { id: string }) => {
     .groupBy(activity.id);
 
   if (activities.length) {
+    console.log(activities);
     const queriedActivity = {
       ...activities[0],
       reviewCount: activities[0].reviews.length,
