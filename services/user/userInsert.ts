@@ -7,6 +7,7 @@ export const userInsert = async (insert: UserInsert) => {
 };
 
 export const userInsertMany = async (insert: UserInsert[]) => {
+  if (insert.length === 0) return [];
   const users = await db.insert(user).values(insert).returning();
   return users;
 };

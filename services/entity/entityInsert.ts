@@ -7,6 +7,7 @@ export const entityInsert = async (insert: EntityInsert) => {
 };
 
 export const entityInsertMany = async (insert: EntityInsert[]) => {
+  if (insert.length === 0) return [];
   const entities = await db.insert(entity).values(insert).returning();
   return entities;
 };

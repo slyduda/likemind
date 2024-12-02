@@ -8,14 +8,14 @@
     ]"
   >
     <input
-      :id="cbId"
+      :id="name"
       v-model="model"
       class="cursor-pointer"
       type="checkbox"
       :disabled="disabled"
     />
     <label
-      :for="cbId"
+      :for="name"
       class="flex cursor-pointer items-center gap-1.5"
       :class="[
         { checked: model },
@@ -31,7 +31,6 @@
 
 <script setup lang="ts">
 const model = defineModel({ type: Boolean });
-const cbId = ref(randomId(12));
 
 withDefaults(
   defineProps<{
@@ -39,6 +38,7 @@ withDefaults(
     inline?: boolean;
     size?: "sm" | "base"; // New size prop
     position?: "left" | "right"; // New label position prop
+    name: string;
   }>(),
   {
     size: "base", // Default to 'base'

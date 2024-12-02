@@ -7,6 +7,7 @@ export const involvementInsert = async (insert: InvolvementInsert) => {
 };
 
 export const involvementInsertMany = async (insert: InvolvementInsert[]) => {
+  if (insert.length === 0) return [];
   const involvments = await db.insert(involvement).values(insert).returning();
   return involvments;
 };

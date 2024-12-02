@@ -17,6 +17,7 @@ useHead({
 
 definePageMeta({
   middleware: "auth",
+  scrollToTop: false,
 });
 
 const { onResponseError, onRequestError } = useLogging();

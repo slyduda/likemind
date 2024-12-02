@@ -85,4 +85,6 @@ const { data } = await useFetch(`/api/activities/${id}`, {
   onResponseError,
   onRequestError,
 });
+
+console.log(data);
 </script>

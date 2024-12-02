@@ -9,6 +9,7 @@
 <script setup lang="ts">
 definePageMeta({
   middleware: "auth",
+  scrollToTop: false,
 });
 
 const { onResponseError, onRequestError } = useLogging();

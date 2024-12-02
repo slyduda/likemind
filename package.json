@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@nuxt/content": "^2.12.1",
+    "@nuxt/icon": "1.9.0",
     "@pinia/nuxt": "^0.5.1",
     "@samk-dev/nuxt-vcalendar": "^1.0.4",
     "@types/uuid": "^9.0.8",

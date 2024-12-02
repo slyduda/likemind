@@ -11,7 +11,10 @@
               class="mr-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-zinc-200 text-zinc-500 hover:bg-zinc-300"
               @click="router.back"
             >
-              <SvgCaretDown class="h-6 rotate-90"></SvgCaretDown>
+              <Icon
+                name="solar:arrow-left-bold-duotone"
+                class="h-full w-full"
+              ></Icon>
             </button>
             <h1
               v-if="title"
@@ -30,7 +33,7 @@
               target="_blank"
               class="ml-2 flex h-8 w-8 items-center justify-center"
             >
-              <SvgBitbucket class="h-6" />
+              <Icon name="mingcute:github-fill" class="h-6" />
             </a>
           </div>
         </div>

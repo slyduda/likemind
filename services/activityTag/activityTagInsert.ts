@@ -7,6 +7,7 @@ export const activityTagInsert = async (insert: ActivityTagInsert) => {
 };
 
 export const activityTagInsertMany = async (insert: ActivityTagInsert[]) => {
+  if (insert.length === 0) return [];
   const activityTags = await db.insert(activityTag).values(insert).returning();
   return activityTags;
 };

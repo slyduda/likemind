@@ -3,59 +3,43 @@
     <div class="rounded-xl border border-zinc-300 px-4 py-2">
       <div class="flex items-center text-sm font-semibold">
         <div v-if="isEvent" class="flex">
-          <SvgCalendarMark class="h-5 w-5"></SvgCalendarMark>
+          <Icon name="solar:calendar-mark-bold-duotone" class="h-5 w-5"></Icon>
           <div class="ml-1 inline-flex pt-0.5">
             {{ formatDate(started) }}
           </div>
         </div>
         <div v-else class="flex">
-          <SvgCalendar class="h-5 w-5"></SvgCalendar>
+          <Icon name="solar:calendar-bold-duotone" class="h-5 w-5"></Icon>
           <div class="ml-1 inline-flex pt-0.5">
             {{ formatDate(started) }} - {{ ended ? formatDate(ended) : "Now" }}
           </div>
         </div>
       </div>
+      <!--
       <ul v-if="tags || entities" class="mt-1 flex flex-wrap">
         <li>
-          <AppActivityBadge
-            v-for="tag in visibleTags[0]"
-            :key="tag.id"
-            :name="tag.name"
-            :overlaps="
-              Boolean(
-                overlappedTags.filter(
-                  (t) => t.id === tag.id || t.name === tag.name,
-                ).length,
-              )
-            "
-          >
+          <AppActivityBadge v-for="tag in visibleTags[0]" :key="tag.id" :name="tag.name" :overlaps="Boolean(
+            overlappedTags.filter(
+              (t) => t.id === tag.id || t.name === tag.name,
+            ).length,
+          )
+            ">
           </AppActivityBadge>
-          <AppActivityBadge
-            v-if="visibleTags[1].length"
-            :name="`+${visibleTags[1].length} tag`"
-          ></AppActivityBadge>
+          <AppActivityBadge v-if="visibleTags[1].length" :name="`+${visibleTags[1].length} tag`"></AppActivityBadge>
         </li>
         <li>
-          <AppActivityBadge
-            v-for="entity in visibleEntities[0]"
-            :key="entity.id"
-            :name="entity.name"
-            :overlaps="
-              Boolean(
-                overlappedEntities.filter(
-                  (e) => e.id === entity.id || e.name === entity.name,
-                ).length,
-              )
-            "
-          >
+          <AppActivityBadge v-for="entity in visibleEntities[0]" :key="entity.id" :name="entity.name" :overlaps="Boolean(
+            overlappedEntities.filter(
+              (e) => e.id === entity.id || e.name === entity.name,
+            ).length,
+          )
+            ">
           </AppActivityBadge>
-          <BaseBadge
-            v-if="visibleEntities[1].length"
-            :label="`+${visibleEntities[1].length} entity`"
-            class="mb-1 mr-1 bg-zinc-700 text-white"
-          />
+          <BaseBadge v-if="visibleEntities[1].length" :label="`+${visibleEntities[1].length} entity`"
+            class="mb-1 mr-1 bg-zinc-700 text-white" />
         </li>
       </ul>
+      -->
       <p class="whitespace-pre-wrap">
         {{ truncateFirstParagraph(description, 200) }}
       </p>
@@ -93,6 +77,8 @@ const props = defineProps<{
     name?: string;
   }[];
 }>();
+
+console.log(props.tags);
 
 const created = ref(new Date(props.createdAt));
 const started = ref(new Date(props.startedAt));

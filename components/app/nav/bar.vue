@@ -19,33 +19,40 @@
         <AppNavButton to="/" label="Home" :condensed="collapsed" class="mb-2">
           <template #icon>
             <AppNavIcon>
-              <SvgHomeSmile class="h-6 w-6"></SvgHomeSmile>
+              <Icon
+                name="solar:home-smile-bold-duotone"
+                class="h-full w-full"
+              ></Icon>
             </AppNavIcon>
           </template>
         </AppNavButton>
         <AppNavButton
-          :to="account ? `/entities/search` : `/entities`"
+          :to="`/entities`"
           label="Entities"
           :condensed="collapsed"
           class="mb-2"
         >
           <template #icon>
             <AppNavIcon>
-              <SvgBuildings class="h-6 w-6"></SvgBuildings>
+              <Icon
+                name="solar:buildings-bold-duotone"
+                class="h-full w-full"
+              ></Icon>
             </AppNavIcon>
           </template>
         </AppNavButton>
         <AppNavButton
-          :to="account ? `/activities/search` : `/activities`"
+          :to="`/activities`"
           label="Activities"
           :condensed="collapsed"
           class="mb-2"
         >
           <template #icon>
             <AppNavIcon>
-              <SvgCalendarSearch
-                class="h-6 w-6 fill-[#1C274C]"
-              ></SvgCalendarSearch>
+              <Icon
+                name="solar:calendar-search-bold-duotone"
+                class="h-full w-full"
+              ></Icon>
             </AppNavIcon>
           </template>
         </AppNavButton>
@@ -57,7 +64,10 @@
         >
           <template #icon>
             <AppNavIcon>
-              <SvgPeopleNearby class="h-6 w-6"></SvgPeopleNearby>
+              <Icon
+                name="solar:people-nearby-bold-duotone"
+                class="h-full w-full"
+              ></Icon>
             </AppNavIcon>
           </template>
         </AppNavButton>
@@ -73,14 +83,14 @@
         >
           <template #icon>
             <AppNavIcon>
-              <SvgCupPaper class="h-6 w-6"></SvgCupPaper>
+              <Icon class="h-6 w-6" name="solar:cup-paper-bold-duotone"></Icon>
             </AppNavIcon>
           </template>
         </AppNavButton>
         <AppNavButton to="/settings" label="Settings" :condensed="collapsed">
           <template #icon>
             <AppNavIcon>
-              <SvgSettings class="h-6 w-6"></SvgSettings>
+              <Icon class="h-6 w-6" name="solar:settings-bold-duotone"></Icon>
             </AppNavIcon>
           </template>
         </AppNavButton>
@@ -96,22 +106,11 @@
         stone
         @click="toggleSidebar"
       >
-        <ClientOnly>
-          <SvgCaretDown
-            :dark-mode="false"
-            class="h-6 w-6"
-            :class="[{ '-rotate-90': collapsed }, { 'rotate-90': !collapsed }]"
-          />
-          <template #fallback>
-            <SvgCaretDown
-              class="h-6 w-6"
-              :class="[
-                { '-rotate-90': collapsed },
-                { 'rotate-90': !collapsed },
-              ]"
-            />
-          </template>
-        </ClientOnly>
+        <Icon
+          name="solar:sidebar-minimalistic-bold-duotone"
+          :dark-mode="false"
+          class="h-6 w-6"
+        />
       </button>
     </div>
   </div>

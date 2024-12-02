@@ -12,6 +12,7 @@ export const relationshipArcInsert = async (insert: RelationshipArcInsert) => {
 export const relationshipArcInsertMany = async (
   insert: RelationshipArcInsert[],
 ) => {
+  if (insert.length === 0) return [];
   const relationshipArcs = await db
     .insert(relationshipArc)
     .values(insert)

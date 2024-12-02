@@ -14,6 +14,7 @@ export const involvementReviewInsert = async (
 export const involvementReviewInsertMany = async (
   insert: InvolvementReviewInsert[],
 ) => {
+  if (insert.length === 0) return [];
   const involvementReviews = await db
     .insert(involvementReview)
     .values(insert)

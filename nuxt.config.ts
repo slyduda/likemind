@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     "@nuxt/content",
     "@nuxtjs/google-fonts",
     "@samk-dev/nuxt-vcalendar",
+    "@nuxt/icon",
   ],
 
   postcss: {
