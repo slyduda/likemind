@@ -25,6 +25,8 @@
       </div>
     </div>
 
+    <AppSidebar></AppSidebar>
+
     <div
       class="absolute z-50 h-full w-full sm:hidden"
       :class="[

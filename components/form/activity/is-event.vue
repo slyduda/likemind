@@ -5,9 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { useActivityStore } from "@/stores/activity.ts";
-
-const activityStore = useActivityStore();
+const activityStore = useActivityFormStore();
 
 const ongoing = computed(() => (activityStore.isOngoing ? true : false));
 

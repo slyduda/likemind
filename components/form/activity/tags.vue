@@ -35,9 +35,8 @@ import {
   activityFormTagsMaxLength,
   activityFormTagsMaxLengthSchema,
 } from "~/schemas/activityForm.schema";
-import { useActivityStore } from "~/stores/activity.ts";
 
-const activityStore = useActivityStore();
+const activityStore = useActivityFormStore();
 
 const maxLengthType = computed<"error" | "success" | "default">(() => {
   const { success } = safeParse(

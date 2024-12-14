@@ -41,14 +41,13 @@
 </template>
 
 <script setup lang="ts">
-import { useActivityStore } from "@/stores/activity.ts";
 import { safeParse } from "valibot";
 import {
   activityFormDescriptionMinLength,
   activityFormDescriptionMinLengthSchema,
 } from "@/schemas/activityForm.schema";
 
-const activityStore = useActivityStore();
+const activityStore = useActivityFormStore();
 
 const minLengthType = computed<"error" | "success" | "default">(() => {
   const { success } = safeParse(

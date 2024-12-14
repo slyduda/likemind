@@ -13,7 +13,7 @@ useHead({
 });
 
 definePageMeta({
-  middleware: "auth",
+  // middleware: "auth",
   scrollToTop: false,
 });
 </script>

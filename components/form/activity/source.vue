@@ -36,7 +36,6 @@
 
 <script setup lang="ts">
 import { safeParse } from "valibot";
-import { useActivityStore } from "@/stores/activity.ts";
 import {
   activityFormSourcesMaxLengthSchema,
   activityFormSourcesMinLengthSchema,
@@ -44,7 +43,7 @@ import {
   activityFormSourceUrlSchema,
 } from "~/schemas/activityForm.schema";
 
-const activityStore = useActivityStore();
+const activityStore = useActivityFormStore();
 
 const requiredType = computed<"error" | "success" | "default">(() => {
   const { success } = safeParse(
