@@ -1,4 +1,3 @@
-import { defineStore } from "pinia";
 import { safeParse } from "valibot";
 import {
   activityFormPageOneSchema,
@@ -42,7 +41,7 @@ const fetchSuggestions = async (sources: string[]) => {
   return suggestion;
 };
 
-export const useActivityStore = defineStore("activity", () => {
+export const useActivityFormStore = defineStore("activity", () => {
   const sources = ref<ActivityFormSourceType[]>([]);
   const sourceTags = computed(() => {
     return sources.value.map((source) => ({
@@ -270,6 +269,8 @@ export const useActivityStore = defineStore("activity", () => {
     };
   });
 
+  const reset = () => {};
+
   return {
     body,
     assisted,
@@ -294,5 +295,6 @@ export const useActivityStore = defineStore("activity", () => {
     canGoBack,
     canGoNext,
     canSubmit,
+    reset,
   };
 });

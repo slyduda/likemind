@@ -55,7 +55,7 @@ import { safeParse } from "valibot";
 import { entityIdSchema } from "~/schemas/entity.schema";
 
 definePageMeta({
-  middleware: "auth",
+  // middleware: "auth",
   validate: async (route) => {
     const result = safeParse(entityIdSchema, route.params.id);
     if (!result.success) return false;

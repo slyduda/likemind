@@ -70,11 +70,9 @@
 </template>
 
 <script setup lang="ts">
-import { useActivityStore } from "@/stores/activity.ts";
-
 const { onResponse, onResponseError } = useLogging();
 
-const activityStore = useActivityStore();
+const activityStore = useActivityFormStore();
 
 const loading = ref(false);
 

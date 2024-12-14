@@ -35,13 +35,11 @@
 </template>
 
 <script setup lang="ts">
-import { useActivityStore } from "@/stores/activity.ts";
-
 const pair = ref(null);
 const input = ref<HTMLDivElement | null>(null);
 const visible = ref(false);
 
-const activityStore = useActivityStore();
+const activityStore = useActivityFormStore();
 const label = computed(() =>
   activityStore.isEvent
     ? "Took Place On"

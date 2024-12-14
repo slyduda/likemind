@@ -21,7 +21,7 @@
           </NuxtLink>
         </div>
       </template>
-      <AppActivityCreate></AppActivityCreate>
+      <AppActivityReview :id="id" />
     </AppHeader>
     <div class="flex h-full w-full flex-col">
       <div id="activity-content" class="flex-1">
@@ -42,7 +42,7 @@ import { safeParse } from "valibot";
 import { entityIdSchema } from "~/schemas/entity.schema";
 
 definePageMeta({
-  middleware: "auth",
+  // middleware: "auth",
   validate: async (route) => {
     const result = safeParse(entityIdSchema, route.params.id);
     if (!result.success) return false;

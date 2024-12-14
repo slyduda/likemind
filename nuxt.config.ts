@@ -40,6 +40,10 @@ export default defineNuxtConfig({
     },
   },
 
+  pinia: {
+    storesDirs: ["./stores/**"],
+  },
+
   app: {
     head: {
       meta: [
