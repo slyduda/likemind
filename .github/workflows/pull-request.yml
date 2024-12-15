@@ -20,3 +20,5 @@ jobs:
   migrate:
     name: Migrate Debug Variant
     uses: ./.github/workflows/migrate_action.yml
+    needs: [lint, format, test] # Make sure migrate waits for the previous jobs
+    if: success() # This ensures migrate only runs if all previous jobs succeed

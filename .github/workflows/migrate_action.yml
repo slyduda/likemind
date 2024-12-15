@@ -1,7 +1,7 @@
 name: Test Migrations
 
 on:
-  pull_request:
+  workflow_call:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -41,6 +41,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: test
 
+    env:
+      DATABASE_URL: ${{ needs.create_neon_branch.outputs.db_url_with_pooler }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      OPENAI_SECRET: ${{ secrets.OPENAI_SECRET }}
+      SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+      SUPABASE_KEY: ${{ vars.SUPABASE_KEY }}
+
     strategy:
       matrix:
         node-version: [20.x]
@@ -57,12 +64,6 @@ jobs:
 
       - name: Run Migrations
         run: yarn migrate:push
-        env:
-          DATABASE_URL: ${{ needs.create_neon_branch.outputs.db_url_with_pooler }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          OPENAI_SECRET: ${{ secrets.OPENAI_SECRET }}
-          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
-          SUPABASE_KEY: ${{ vars.SUPABASE_KEY }}
 
   delete_neon_branch:
     name: Delete Neon Branch
