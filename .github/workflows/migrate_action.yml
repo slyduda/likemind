@@ -31,7 +31,7 @@ jobs:
           cache: "yarn"
 
       - name: Set up PostgreSQL
-        uses: Harmon758/postgresql-action@v2
+        uses: harmon758/postgresql-action@v1
         with:
           postgresql version: "17"
           database: local_db
