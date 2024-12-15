@@ -42,7 +42,7 @@ docker compose up
 yarn dev
 ```
 
-Single terminal development will be enabled once installs are more stable.
+Single terminal development will be enabled once installs are more stable. Soon!
 
 ## Acknowledgements
 
