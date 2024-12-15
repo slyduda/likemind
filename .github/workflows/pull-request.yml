@@ -11,6 +11,7 @@ jobs:
   setup:
     name: Setup
     outputs:
+      api_key: ${{ secrets.NEON_API_KEY }}
       branch_name: ${{ steps.branch_name.outputs.current_branch }}
     runs-on: ubuntu-latest
 
@@ -43,3 +44,4 @@ jobs:
     with:
       branch_name: ${{ needs.setup.outputs.branch_name }} # Pass branch name from setup job
       pr_number: ${{ github.event.pull_request.number }} # Pass the PR number
+      api_key: ${{ needs.setup.outputs.api_key }}
