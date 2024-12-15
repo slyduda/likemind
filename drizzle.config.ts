@@ -4,8 +4,8 @@ import { processEnv } from "./config";
 export default {
   schema: "./db/models", // Renamed to models to separate valibot schemas
   out: "./db/migrations",
-  driver: "pg", // 'pg' | 'mysql2' | 'better-sqlite' | 'libsql' | 'turso'
+  dialect: "postgresql", // 'pg' | 'mysql2' | 'better-sqlite' | 'libsql' | 'turso'
   dbCredentials: {
-    connectionString: processEnv.POSTGRES_URL,
+    url: processEnv.DATABASE_URL,
   },
 } satisfies Config;

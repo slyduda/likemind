@@ -1,8 +1,16 @@
 import "dotenv/config";
 import { processEnv } from "./config";
+// We are prioritizing the yarn migrate:push (drizzle-kit migration) in the build command
+// import { runtimeMigrate } from "./db/migrations";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  // hooks: {
+  //   "build:before": async () => {
+  //     await runtimeMigrate();
+  //   },
+  // },
+
   devtools: { enabled: false },
 
   runtimeConfig: {
@@ -20,6 +28,7 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@samk-dev/nuxt-vcalendar",
     "@nuxt/icon",
+    "@nuxtjs/supabase",
   ],
 
   postcss: {

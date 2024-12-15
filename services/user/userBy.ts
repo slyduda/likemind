@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
-import { user } from "@/db/models";
+import { subject, user } from "@/db/models";
 
 export const userById = async ({ id }: { id: string }) => {
   const users = await db.select().from(user).where(eq(user.id, id));
@@ -12,7 +12,11 @@ export const userByHandle = async ({ handle }: { handle: string }) => {
   return users.length ? users[0] : null;
 };
 
-export const userByEmail = async ({ email }: { email: string }) => {
-  const users = await db.select().from(user).where(eq(user.email, email));
+export const userByNativeEmail = async ({ email }: { email: string }) => {
+  const users = await db
+    .select()
+    .from(user)
+    .innerJoin(subject, eq(user.id, subject.userId))
+    .where(eq(subject.email, email));
   return users.length ? users[0] : null;
 };

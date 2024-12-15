@@ -16,3 +16,7 @@ jobs:
   test:
     name: Test Debug Variant
     uses: ./.github/workflows/test_action.yml
+
+  migrate:
+    name: Migrate Debug Variant
+    uses: ./.github/workflows/migrate_action.yml

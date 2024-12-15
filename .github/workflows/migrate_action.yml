@@ -1,21 +1,21 @@
-name: Migrate Debug
+name: Test Migrations
 
 on:
-  workflow_call:
+  pull_request:
+    branches:
+      - main # Trigger workflow on pull requests targeting the main branch
 
 jobs:
-  migrate:
+  test-migrations:
     runs-on: ubuntu-latest
-    environment: production
+    environment: test
 
     env:
-      POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
-      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       OPENAI_SECRET: ${{ secrets.OPENAI_SECRET }}
+      SUPABASE_URL: ${{ env.SUPABASE_URL }}
+      SUPABASE_KEY: ${{ env.SUPABASE_KEY }}
 
     strategy:
       matrix:
@@ -29,5 +29,26 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
-      - run: yarn
-      - run: yarn migrate:push
+
+      - name: Set up PostgreSQL
+        uses: Harmon758/postgresql-action@v2
+        with:
+          postgresql version: "17"
+          database: local_db
+          username: postgres
+          password: postgres
+
+      - name: Dump production database
+        run: |
+          pg_dump $DATABASE_URL > prod_dump.sql
+
+      - name: Import into local database
+        env:
+          LOCAL_DATABASE_URL: postgres://postgres:postgres@localhost:5432/local_db
+        run: |
+          psql $LOCAL_DATABASE_URL < prod_dump.sql
+
+      - name: Run migrations
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/local_db
+        run: yarn migrate:push
