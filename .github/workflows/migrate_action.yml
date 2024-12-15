@@ -26,10 +26,10 @@ jobs:
         uses: neondatabase/create-branch-action@v5
         with:
           api_key: ${{ inputs.api_key }}
-          project_id: ${{ vars.NEON_PROJECT_ID }}
-          database: ${{ vars.DATABASE_ID }}
-          branch_name: pr/migration
-          username: ${{ vars.DATABASE_USERNAME }}
+          project_id: black-term-42385531
+          database: likemind_db
+          branch_name: pr/${{ inputs.branch_name }}-${{ inputs.pr_number }}
+          username: likemind_db_owner
 
   run_migrations:
     name: Run Migrations
