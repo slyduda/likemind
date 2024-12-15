@@ -22,11 +22,11 @@ jobs:
         id: create_neon_branch_encode
         uses: neondatabase/create-branch-action@v5
         with:
+          api_key: ${{ secrets.NEON_API_KEY }}
           project_id: ${{ vars.NEON_PROJECT_ID }}
           database: ${{ vars.DATABASE_ID }}
-          branch_name: pr/${{ inputs.branch_name }}-${{ github.event.number }}
+          branch_name: pr/migration
           username: ${{ vars.DATABASE_USERNAME }}
-          api_key: ${{ secrets.NEON_API_KEY }}
 
   run_migrations:
     name: Run Migrations
@@ -66,6 +66,6 @@ jobs:
       - name: Delete Neon Branch
         uses: neondatabase/delete-branch-action@v3
         with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
-          branch: pr/${{ inputs.branch_name }}-${{ github.event.number }}
           api_key: ${{ secrets.NEON_API_KEY }}
+          project_id: ${{ vars.NEON_PROJECT_ID }}
+          branch: pr/migration
