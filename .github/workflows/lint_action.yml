@@ -12,8 +12,8 @@ jobs:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       OPENAI_SECRET: ${{ secrets.OPENAI_SECRET }}
-      SUPABASE_URL: ${{ env.SUPABASE_URL }}
-      SUPABASE_KEY: ${{ env.SUPABASE_KEY }}
+      SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+      SUPABASE_KEY: ${{ vars.SUPABASE_KEY }}
 
     strategy:
       matrix:
