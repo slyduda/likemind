@@ -21,7 +21,7 @@ jobs:
         with:
           project_id: ${{ vars.NEON_PROJECT_ID }}
           database: ${{ vars.DATABASE_ID }}
-          branch_name: pr-${{ github.event.number }}/${{ inputs.branch_name }}#${{ github.sha }}
+          branch_name: pr-${{ github.event.number }}/${{ inputs.branch_name }}/${{ github.sha }}
           username: ${{ vars.DATABASE_USERNAME }}
           api_key: ${{ secrets.NEON_API_KEY }}
 
@@ -64,5 +64,5 @@ jobs:
         uses: neondatabase/delete-branch-action@v3
         with:
           project_id: ${{ vars.NEON_PROJECT_ID }}
-          branch_name: pr-${{ github.event.number }}/${{ inputs.branch_name }}#${{ github.sha }}
+          branch_name: pr-${{ github.event.number }}/${{ inputs.branch_name }}/${{ github.sha }}
           api_key: ${{ secrets.NEON_API_KEY }}
