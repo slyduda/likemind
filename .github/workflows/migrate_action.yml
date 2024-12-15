@@ -2,53 +2,78 @@ name: Test Migrations
 
 on:
   pull_request:
-    branches:
-      - main # Trigger workflow on pull requests targeting the main branch
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  test-migrations:
+  setup:
+    name: Setup
+    outputs:
+      branch: ${{ steps.branch_name.outputs.current_branch }}
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Get branch name
+        id: branch_name
+        uses: tj-actions/branch-names@v8
+
+
+  create_neon_branch:
+    name: Create Neon Branch
+    outputs:
+      db_url: ${{ steps.create_neon_branch_encode.outputs.db_url }}
+      db_url_with_pooler: ${{ steps.create_neon_branch_encode.outputs.db_url_with_pooler }}
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Neon Branch
+        id: create_neon_branch
+        uses: neondatabase/create-branch-action@v5
+        with:
+          project_id: ${{ vars.NEON_PROJECT_ID }}
+          branch_name: pr/${{ needs.setup.outputs.branch }}-${{ github.event.number }}
+          api_key: ${{ secrets.NEON_API_KEY }}
+
+
+  run_migrations:
+    name: Run Migrations
     runs-on: ubuntu-latest
     environment: test
-
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      OPENAI_SECRET: ${{ secrets.OPENAI_SECRET }}
-      SUPABASE_URL: ${{ vars.SUPABASE_URL }}
-      SUPABASE_KEY: ${{ vars.SUPABASE_KEY }}
 
     strategy:
       matrix:
         node-version: [20.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
+    needs: create_neon_branch
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "yarn"
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-      - name: Set up PostgreSQL
-        uses: harmon758/postgresql-action@v1
-        with:
-          postgresql version: "17"
-          database: local_db
-          username: postgres
-          password: postgres
+      - name: Install Dependencies
+        run: yarn
 
-      - name: Dump production database
-        run: |
-          pg_dump $DATABASE_URL > prod_dump.sql
-
-      - name: Import into local database
-        env:
-          LOCAL_DATABASE_URL: postgres://postgres:postgres@localhost:5432/local_db
-        run: |
-          psql $LOCAL_DATABASE_URL < prod_dump.sql
-
-      - name: Run migrations
-        env:
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/local_db
+      - name: Run Migrations
         run: yarn migrate:push
+        env:
+          DATABASE_URL: ${{ needs.create_neon_branch.outputs.db_url_with_pooler }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          OPENAI_SECRET: ${{ secrets.OPENAI_SECRET }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ vars.SUPABASE_KEY }}
+
+
+  delete_neon_branch:
+    name: Delete Neon Branch
+    needs: [setup, create_neon_branch, run_migrations]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete Neon Branch
+        uses: neondatabase/delete-branch-action@v3
+        with:
+          project_id: ${{ vars.NEON_PROJECT_ID }}
+          branch: pr/${{ needs.setup.outputs.branch }}-${{ github.event.number }}
+          api_key: ${{ secrets.NEON_API_KEY }}
