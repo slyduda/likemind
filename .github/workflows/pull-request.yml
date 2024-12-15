@@ -5,6 +5,17 @@ on:
     branches: ["main"]
 
 jobs:
+  setup:
+    name: Setup
+    outputs:
+      branch: ${{ steps.branch_name.outputs.current_branch }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get branch name
+        id: branch_name
+        uses: tj-actions/branch-names@v8
+
   lint:
     name: Lint Debug Variant
     uses: ./.github/workflows/lint_action.yml
@@ -20,5 +31,7 @@ jobs:
   migrate:
     name: Migrate Debug Variant
     uses: ./.github/workflows/migrate_action.yml
-    needs: [lint, format, test] # Make sure migrate waits for the previous jobs
+    needs: [setup, lint, format, test] # Make sure migrate waits for the previous jobs
     if: success() # This ensures migrate only runs if all previous jobs succeed
+    with:
+      branch_name: ${{ needs.setup.outputs.branch }}  # Pass branch name from setup job
