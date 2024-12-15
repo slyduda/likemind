@@ -25,7 +25,6 @@ jobs:
           api_key: ${{ secrets.NEON_API_KEY }}
           project_id: ${{ vars.NEON_PROJECT_ID }}
           database: ${{ vars.DATABASE_ID }}
-          branch_name: pr/migration
           username: ${{ vars.DATABASE_USERNAME }}
 
   run_migrations:
