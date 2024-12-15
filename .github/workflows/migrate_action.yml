@@ -32,7 +32,7 @@ jobs:
         with:
           project_id: ${{ vars.NEON_PROJECT_ID }}
           database: ${{ vars.DATABASE_ID }}
-          branch_name: pr/${{ needs.setup.outputs.branch }}-${{ github.event.number }}
+          branch_name: pr-${{ github.event.number }}/${{ needs.setup.outputs.branch }}#${{ github.sha }}
           username: ${{ vars.DATABASE_USERNAME }}
           api_key: ${{ secrets.NEON_API_KEY }}
 
