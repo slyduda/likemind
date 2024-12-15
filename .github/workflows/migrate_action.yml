@@ -7,9 +7,6 @@ on:
         required: true
         type: string
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-
 jobs:
   create_neon_branch:
     name: Create Neon Branch
@@ -59,7 +56,7 @@ jobs:
 
   delete_neon_branch:
     name: Delete Neon Branch
-    needs: [setup, create_neon_branch, run_migrations]
+    needs: [create_neon_branch, run_migrations]
     if: always()
     runs-on: ubuntu-latest
     steps:

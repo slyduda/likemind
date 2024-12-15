@@ -4,11 +4,14 @@ on:
   pull_request:
     branches: ["main"]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   setup:
     name: Setup
     outputs:
-      branch: ${{ steps.branch_name.outputs.current_branch }}
+      branch_name: ${{ steps.branch_name.outputs.current_branch }}
     runs-on: ubuntu-latest
 
     steps:
@@ -34,4 +37,4 @@ jobs:
     needs: [setup, lint, format, test] # Make sure migrate waits for the previous jobs
     if: success() # This ensures migrate only runs if all previous jobs succeed
     with:
-      branch_name: ${{ needs.setup.outputs.branch }}  # Pass branch name from setup job
+      branch_name: ${{ needs.setup.outputs.branch_name }} # Pass branch name from setup job
