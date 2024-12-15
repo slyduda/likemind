@@ -42,3 +42,4 @@ jobs:
     if: success() # This ensures migrate only runs if all previous jobs succeed
     with:
       branch_name: ${{ needs.setup.outputs.branch_name }} # Pass branch name from setup job
+      pr_number: ${{ github.event.pull_request.number }} # Pass the PR number
