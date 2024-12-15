@@ -19,12 +19,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Neon Branch
-        id: create_neon_branch
+        id: create_neon_branch_encode
         uses: neondatabase/create-branch-action@v5
         with:
           project_id: ${{ vars.NEON_PROJECT_ID }}
           database: ${{ vars.DATABASE_ID }}
-          branch_name: pr/${{ inputs.branch_name }}-${{ inputs.pr_number }}
+          branch_name: pr/${{ inputs.branch_name }}-${{ github.event.number }}
           username: ${{ vars.DATABASE_USERNAME }}
           api_key: ${{ secrets.NEON_API_KEY }}
 
@@ -67,5 +67,5 @@ jobs:
         uses: neondatabase/delete-branch-action@v3
         with:
           project_id: ${{ vars.NEON_PROJECT_ID }}
-          branch_name: pr/${{ inputs.branch_name }}-${{ inputs.pr_number }}
+          branch_name: pr/${{ inputs.branch_name }}-${{ github.event.number }}
           api_key: ${{ secrets.NEON_API_KEY }}
