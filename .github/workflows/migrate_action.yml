@@ -12,12 +12,11 @@ jobs:
     outputs:
       branch: ${{ steps.branch_name.outputs.current_branch }}
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Get branch name
         id: branch_name
         uses: tj-actions/branch-names@v8
-
 
   create_neon_branch:
     name: Create Neon Branch
@@ -32,9 +31,10 @@ jobs:
         uses: neondatabase/create-branch-action@v5
         with:
           project_id: ${{ vars.NEON_PROJECT_ID }}
+          database: ${{ vars.DATABASE_ID }}
           branch_name: pr/${{ needs.setup.outputs.branch }}-${{ github.event.number }}
+          username: ${{ vars.DATABASE_USERNAME }}
           api_key: ${{ secrets.NEON_API_KEY }}
-
 
   run_migrations:
     name: Run Migrations
@@ -63,7 +63,6 @@ jobs:
           OPENAI_SECRET: ${{ secrets.OPENAI_SECRET }}
           SUPABASE_URL: ${{ vars.SUPABASE_URL }}
           SUPABASE_KEY: ${{ vars.SUPABASE_KEY }}
-
 
   delete_neon_branch:
     name: Delete Neon Branch
