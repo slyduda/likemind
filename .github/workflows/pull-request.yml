@@ -19,6 +19,10 @@ jobs:
         id: branch_name
         uses: tj-actions/branch-names@v8
 
+      - name: Print branch name
+        run: |
+          echo "Branch name: ${{ steps.branch_name.outputs.current_branch }}"
+
   lint:
     name: Lint Debug Variant
     uses: ./.github/workflows/lint_action.yml
