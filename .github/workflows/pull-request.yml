@@ -8,22 +8,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  setup:
-    name: Setup
-    outputs:
-      api_key: ${{ secrets.NEON_API_KEY }}
-      branch_name: ${{ steps.branch_name.outputs.current_branch }}
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Get branch name
-        id: branch_name
-        uses: tj-actions/branch-names@v8
-
-      - name: Print branch name
-        run: |
-          echo "Branch name: ${{ steps.branch_name.outputs.current_branch }}"
-
   lint:
     name: Lint Debug Variant
     uses: ./.github/workflows/lint_action.yml
@@ -38,10 +22,67 @@ jobs:
 
   migrate:
     name: Migrate Debug Variant
-    uses: ./.github/workflows/migrate_action.yml
-    needs: [setup, lint, format, test] # Make sure migrate waits for the previous jobs
-    if: success() # This ensures migrate only runs if all previous jobs succeed
-    with:
-      branch_name: ${{ needs.setup.outputs.branch_name }} # Pass branch name from setup job
-      pr_number: ${{ github.event.pull_request.number }} # Pass the PR number
-      api_key: ${{ needs.setup.outputs.api_key }}
+    runs-on: ubuntu-latest
+    needs: [lint, format, test] # Ensure previous jobs are successful before running this job
+    if: success()
+
+    environment: test
+
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      OPENAI_SECRET: ${{ secrets.OPENAI_SECRET }}
+      SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+      SUPABASE_KEY: ${{ vars.SUPABASE_KEY }}
+      NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - name: Get branch name
+        id: branch_name
+        uses: tj-actions/branch-names@v8
+
+      - name: Print branch name
+        run: |
+          echo "Branch name: ${{ steps.branch_name.outputs.current_branch }}"
+
+      - name: Create Neon Branch
+        id: create_neon_branch
+        uses: neondatabase/create-branch-action@v5
+        with:
+          api_key: ${{ secrets.NEON_API_KEY }}
+          project_id: ${{ vars.NEON_PROJECT_ID }}
+          database: ${{ vars.DATABASE_ID }}
+          branch_name: pr/${{ steps.branch_name.outputs.current_branch }}-${{ github.event.pull_request.number }}
+          username: ${{ vars.DATABASE_USER }}
+
+      - uses: actions/checkout@v4
+        if: success()
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        if: success()
+
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+      - run: yarn
+        if: success()
+
+      - name: Run Migration
+        id: run_migration
+        run: yarn migrate:push
+        if: success()
+
+      - name: Delete Neon Branch
+        id: delete_neon_branch
+        uses: neondatabase/delete-branch-action@v3
+        with:
+          project_id: ${{ vars.NEON_PROJECT_ID }}
+          branch: pr/${{ steps.branch_name.outputs.current_branch }}-${{ github.event.pull_request.number }}
+          api_key: ${{ secrets.NEON_API_KEY }}
+        if: ${{ success() && steps.create_neon_branch.outcome == 'success' && steps.run_migration.outcome == 'success' }}
