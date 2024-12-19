@@ -1,17 +1,9 @@
-import { object, optional, string, safeParse, pipe, transform } from "valibot";
+import { object, string, safeParse } from "valibot";
 import type { InferInput } from "valibot";
 import "dotenv/config";
 
 export const envSchema = object({
-  POSTGRES_URL: string(),
-  POSTGRES_HOST: string(),
-  POSTGRES_PORT: pipe(
-    optional(string(), "5432"),
-    transform((input) => Number(input)),
-  ),
-  POSTGRES_USER: string(),
-  POSTGRES_PASSWORD: string(),
-  POSTGRES_DB: string(),
+  DATABASE_URL: string(),
   JWT_SECRET: string(),
   OPENAI_SECRET: string(),
 });

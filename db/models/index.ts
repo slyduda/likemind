@@ -15,3 +15,4 @@ export * from "./relationshipEvidence.model";
 export * from "./relationshipReview.model";
 export * from "./tag.model";
 export * from "./user.model";
+export * from "./subject.model";

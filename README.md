@@ -14,13 +14,11 @@ likemind is an open source app that aims to keep track of various companies and 
 Setup your `.env` file with the necessary config:
 
 ```bash
-POSTGRES_URL=postgres://default:password@localhost:5432/likemind_db
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
-POSTGRES_USER=default
-POSTGRES_PASSWORD=password
-POSTGRES_DB=likemind_db
+DATABASE_URL=postgres://default:password@localhost:5432/likemind_db
 JWT_SECRET=secret
+OPENAI_SECRET=secret
+SUPABASE_URL=https://example.supabase.co
+SUPABASE_KEY=public
 ```
 
 Install the dependencies:
@@ -44,7 +42,7 @@ docker compose up
 yarn dev
 ```
 
-Single terminal development will be enabled once installs are more stable.
+Single terminal development will be enabled once installs are more stable. Soon!
 
 ## Acknowledgements
 

@@ -1,33 +1,74 @@
-name: Migrate Debug
+name: Test Migrations
 
 on:
   workflow_call:
+    inputs:
+      branch_name:
+        required: true
+        type: string
+      pr_number:
+        required: true
+        type: string
+      api_key:
+        required: true
+        type: string
 
 jobs:
-  migrate:
+  create_neon_branch:
+    name: Create Neon Branch
+    outputs:
+      db_url: ${{ steps.create_neon_branch_encode.outputs.db_url }}
+      db_url_with_pooler: ${{ steps.create_neon_branch_encode.outputs.db_url_with_pooler }}
     runs-on: ubuntu-latest
-    environment: production
+    steps:
+      - name: Create Neon Branch
+        id: create_neon_branch_encode
+        uses: neondatabase/create-branch-action@v5
+        with:
+          api_key: ${{ inputs.api_key }}
+          project_id: black-term-42385531
+          database: likemind_db
+          branch_name: pr/${{ inputs.branch_name }}-${{ inputs.pr_number }}
+          username: likemind_db_owner
+
+  run_migrations:
+    name: Run Migrations
+    runs-on: ubuntu-latest
+    environment: test
 
     env:
-      POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
-      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      DATABASE_URL: ${{ needs.create_neon_branch.outputs.db_url_with_pooler }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       OPENAI_SECRET: ${{ secrets.OPENAI_SECRET }}
+      SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+      SUPABASE_KEY: ${{ vars.SUPABASE_KEY }}
 
     strategy:
       matrix:
         node-version: [20.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
+    needs: create_neon_branch
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Run Migrations
+        run: yarn migrate:push
+
+  delete_neon_branch:
+    name: Delete Neon Branch
+    needs: [create_neon_branch, run_migrations]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete Neon Branch
+        uses: neondatabase/delete-branch-action@v3
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: "yarn"
-      - run: yarn
-      - run: yarn migrate:push
+          project_id: ${{ vars.NEON_PROJECT_ID }}
+          branch: pr/${{ inputs.branch_name }}-${{ github.event.number }}
+          api_key: ${{ inputs.api_key }}

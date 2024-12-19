@@ -1,61 +1,12 @@
 {
-  "version": "5",
-  "dialect": "pg",
+  "version": "7",
+  "dialect": "postgresql",
   "entries": [
     {
       "idx": 0,
-      "version": "5",
-      "when": 1713030436505,
-      "tag": "0000_sly_grey_coyote",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1713045589021,
-      "tag": "0001_big_robbie_robertson",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1713046164624,
-      "tag": "0002_slim_felicia_hardy",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1713122035100,
-      "tag": "0003_steep_masked_marvel",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1713415636029,
-      "tag": "0004_freezing_frog_thor",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1714961348287,
-      "tag": "0005_high_nightcrawler",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "5",
-      "when": 1715666345094,
-      "tag": "0006_sleepy_bushwacker",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "5",
-      "when": 1734150999691,
-      "tag": "0007_last_xavin",
+      "version": "7",
+      "when": 1734229911738,
+      "tag": "0000_init",
       "breakpoints": true
     }
   ]
