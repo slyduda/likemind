@@ -14,8 +14,8 @@ jobs:
 
       - name: Set up Git
         run: |
-          git config --global user.name "github-actions" 
-          git config --global user.email "github-actions@github.com"
+          git config --global user.name "slyduda" 
+          git config --global user.email "me@slyduda.com"
 
       - name: Fetch all branches
         run: git fetch --all
@@ -23,11 +23,15 @@ jobs:
       - name: Check out staging branch
         run: git checkout staging
 
-      - name: Merge main into staging
-        run: git merge origin/main --no-ff --allow-unrelated-histories  --commit --message "Syncing staging with main"
-
-      - name: Push changes to staging
+      - name: Merge main into staging with conflict resolution
         run: |
-          git push origin staging
+          git merge origin/main --no-ff --allow-unrelated-histories || true
+          git checkout --theirs .
+          git add .
+          git commit -m "Force merge: Sync staging with main"
+
+      - name: Force push changes to staging
+        run: |
+          git push origin staging --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
