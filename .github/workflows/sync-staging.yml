@@ -1,0 +1,33 @@
+name: Sync Staging with Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions" 
+          git config --global user.email "github-actions@github.com"
+
+      - name: Fetch all branches
+        run: git fetch --all
+
+      - name: Check out staging branch
+        run: git checkout staging
+
+      - name: Merge main into staging
+        run: git merge origin/main --no-ff --commit --message "Syncing staging with main"
+
+      - name: Push changes to staging
+        run: |
+          git push origin staging
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
