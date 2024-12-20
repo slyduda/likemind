@@ -24,7 +24,7 @@ jobs:
         run: git checkout staging
 
       - name: Merge main into staging
-        run: git merge origin/main --no-ff --commit --message "Syncing staging with main"
+        run: git merge origin/main --no-ff --allow-unrelated-histories  --commit --message "Syncing staging with main"
 
       - name: Push changes to staging
         run: |
